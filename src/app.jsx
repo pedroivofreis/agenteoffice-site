@@ -81,7 +81,15 @@ function DemoModal({ onClose }) {
             <button onClick={onClose} className="bg-[#114552] text-white font-black px-8 py-3 rounded-xl text-sm">Fechar</button>
           </div>
         ) : (
-          <form onSubmit={e => { e.preventDefault(); setSent(true); }} className="px-6 py-6 space-y-4">
+          <form onSubmit={e => { 
+            e.preventDefault(); 
+            fetch("https://formsubmit.co/ajax/contato@agenteoffice.com.br", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(form)
+            });
+            setSent(true); 
+          }} className="px-6 py-6 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">Nome da agência *</label>
@@ -125,6 +133,77 @@ function DemoModal({ onClose }) {
               <Sparkles size={15} /> Quero minha demonstração gratuita
             </button>
             <p className="text-[10px] text-slate-400 text-center font-medium">Nenhum cartão exigido. Sem compromisso.</p>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── MODAL PLANO ────────────────────────────────── */
+function PlanModal({ planName, onClose }) {
+  const [form, setForm] = useState({ plano_escolhido: planName, agencia: '', nome: '', email: '', whatsapp: '' });
+  const [sent, setSent] = useState(false);
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-md overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
+          <div>
+            <div className="text-white font-black text-lg">Assinar Plano {planName}</div>
+            <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">Preencha os dados para prosseguir</div>
+          </div>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <X size={16} className="text-white" />
+          </button>
+        </div>
+        {sent ? (
+          <div className="px-6 py-10 text-center">
+            <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-5">
+              <CheckCircle2 className="w-8 h-8 text-[#5DA6AA]" />
+            </div>
+            <h3 className="text-xl font-black text-[#114552] mb-2">Pedido recebido!</h3>
+            <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">Em instantes nossa equipe entrará em contato para liberar seu acesso ao plano {planName}.</p>
+            <button onClick={onClose} className="bg-[#114552] text-white font-black px-8 py-3 rounded-xl text-sm">Entendi</button>
+          </div>
+        ) : (
+          <form onSubmit={e => { 
+            e.preventDefault(); 
+            fetch("https://formsubmit.co/ajax/contato@agenteoffice.com.br", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(form)
+            });
+            setSent(true); 
+          }} className="px-6 py-6 space-y-4">
+            <div className="space-y-4">
+              <div>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">Nome da agência *</label>
+                <input required value={form.agencia} onChange={e => set('agencia', e.target.value)} placeholder="Ex: Destinos Travel"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">Seu nome *</label>
+                <input required value={form.nome} onChange={e => set('nome', e.target.value)} placeholder="Ex: Rafaela Moura"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">E-mail *</label>
+                <input required type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="voce@agencia.com.br"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">WhatsApp *</label>
+                <input required value={form.whatsapp} onChange={e => set('whatsapp', e.target.value)} placeholder="(11) 99999-9999"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+              </div>
+            </div>
+            <button type="submit" className="w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm shadow-lg flex items-center justify-center gap-2 hover:bg-[#0a2c35] transition-colors mt-2">
+              <Sparkles size={15} /> Solicitar acesso ao Plano {planName}
+            </button>
+            <p className="text-[10px] text-slate-400 text-center font-medium">Nenhum cartão exigido agora.</p>
           </form>
         )}
       </div>
@@ -261,6 +340,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -271,9 +351,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-teal-100 selection:text-[#114552]">
       {demoOpen && <DemoModal onClose={() => setDemoOpen(false)} />}
+      {selectedPlan && <PlanModal planName={selectedPlan} onClose={() => setSelectedPlan(null)} />}
 
       {/* ── NAV ─────────────────────────────────────── */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <img src="/logo_hor_col.png" alt="AgenteOffice" className="h-9 w-auto" />
           <div className="hidden md:flex items-center gap-8">
@@ -317,7 +398,7 @@ export default function App() {
               <span className="text-[#5DA6AA]">a sua agência.</span>
             </h1>
             <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Rápido, prático e com IA que realmente funciona. Do primeiro contato com o cliente até o check-in — tudo em um lugar só.
+              Rápido, prático e focado em IA que realmente funciona. Tem IA em todo o sistema: para preencher automáticos, sugerir o melhor local da região e otimizar cada etapa da venda.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <a href="#precos" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
@@ -356,7 +437,7 @@ export default function App() {
             { value: '100%', label: 'das comissões calculadas', sub: 'automático, sem planilha' },
             { value: '1 clique', label: 'proposta e voucher ao cliente', sub: 'PDF ou link digital' },
           ].map((m, i) => (
-            <div key={i} className="text-center">
+            <div key={i} className="text-center group hover:-translate-y-1 transition-transform duration-300">
               <div className="text-3xl lg:text-4xl font-black text-[#5DA6AA] mb-2">{m.value}</div>
               <div className="text-sm font-bold text-white mb-1">{m.label}</div>
               <div className="text-[11px] text-white/40 font-medium uppercase tracking-wider">{m.sub}</div>
@@ -378,30 +459,29 @@ export default function App() {
             </p>
           </div>
 
-          {/* Timeline */}
-          <div className="relative">
-            {/* linha conectora desktop */}
-            <div className="hidden lg:block absolute top-10 left-[calc(8.33%-1px)] right-[calc(8.33%-1px)] h-0.5 bg-gradient-to-r from-slate-100 via-[#5DA6AA] to-slate-100" />
-
-            <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
-              {[
-                { icon: <MessageSquare className="w-5 h-5"/>, color: 'bg-blue-500', label: '01 · Lead', title: 'Cliente chega', desc: 'WhatsApp, e-mail ou indicação. O lead cai direto no pipeline.' },
-                { icon: <BrainCircuit className="w-5 h-5"/>, color: 'bg-[#5DA6AA]', label: '02 · IA', title: 'IA sugere destino', desc: 'Você informa o perfil e a IA recomenda o destino ideal para a época.' },
-                { icon: <FileText className="w-5 h-5"/>, color: 'bg-violet-500', label: '03 · Orçamento', title: 'Proposta gerada', desc: 'Em segundos: voo, hotel, passeios e comissão calculados automaticamente.' },
-                { icon: <Send className="w-5 h-5"/>, color: 'bg-emerald-500', label: '04 · Envio', title: 'Voucher bonito', desc: 'PDF profissional ou link digital. O cliente abre no celular e aprova.' },
-                { icon: <Wallet className="w-5 h-5"/>, color: 'bg-orange-500', label: '05 · Financeiro', title: 'Recebimentos', desc: 'Controle de entradas, pagamentos a fornecedores e comissões do mês.' },
-                { icon: <Bell className="w-5 h-5"/>, color: 'bg-rose-500', label: '06 · Embarque', title: 'Alerta de check-in', desc: 'O sistema avisa você e o cliente dos documentos, prazos e check-in.' },
-              ].map((step, i) => (
-                <div key={i} className="flex flex-col items-center text-center group">
-                  <div className={`w-10 h-10 ${step.color} rounded-2xl flex items-center justify-center text-white shadow-lg mb-4 relative z-10 group-hover:scale-110 transition-transform`}>
+          {/* Timeline em Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+            {[
+              { icon: <MessageSquare className="w-6 h-6"/>, color: 'text-blue-500 bg-blue-50', label: '01', title: 'Lead & Contato', desc: 'WhatsApp, e-mail ou indicação. O lead cai direto no pipeline visual do sistema.' },
+              { icon: <BrainCircuit className="w-6 h-6"/>, color: 'text-[#5DA6AA] bg-teal-50', label: '02', title: 'IA que Funciona', desc: 'Use a nossa IA: ela te ajuda a fechar negócios, sugere o melhor local da região e otimiza tudo.' },
+              { icon: <FileText className="w-6 h-6"/>, color: 'text-violet-500 bg-violet-50', label: '03', title: 'Orçamento com IA', desc: 'A Inteligência Artificial preenche tudo em segundos: voos, hotéis e passeios, já com a sua comissão calculada.' },
+              { icon: <Send className="w-6 h-6"/>, color: 'text-emerald-500 bg-emerald-50', label: '04', title: 'De Orçamento a Voucher', desc: 'Sem retrabalho! O orçamento vira um voucher digital lindo e incrivelmente rápido para o cliente abrir no celular.' },
+              { icon: <Wallet className="w-6 h-6"/>, color: 'text-orange-500 bg-orange-50', label: '05', title: 'Gestão Financeira', desc: 'Controle integrado de entradas, pagamentos a fornecedores e comissões do mês.' },
+              { icon: <Bell className="w-6 h-6"/>, color: 'text-rose-500 bg-rose-50', label: '06', title: 'Check-in & Embarque', desc: 'O sistema avisa você e o cliente proativamente dos documentos, prazos e check-in.' },
+            ].map((step, i) => (
+              <div key={i} className="bg-slate-50 border border-slate-100 p-8 rounded-[2rem] hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                <div className="absolute -right-2 -top-2 text-[100px] leading-none font-black text-slate-200/40 group-hover:text-slate-200/70 transition-colors pointer-events-none select-none">
+                  {step.label}
+                </div>
+                <div className="relative z-10">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${step.color}`}>
                     {step.icon}
                   </div>
-                  <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">{step.label}</div>
-                  <div className="text-sm font-black text-[#114552] mb-2">{step.title}</div>
-                  <div className="text-[11px] text-slate-400 leading-relaxed font-medium">{step.desc}</div>
+                  <h3 className="text-xl font-black text-[#114552] mb-3">{step.title}</h3>
+                  <p className="text-slate-500 font-medium leading-relaxed">{step.desc}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -416,14 +496,14 @@ export default function App() {
               <div className="p-10 lg:p-14 flex flex-col justify-center">
                 <SectionBadge icon={<Copy className="w-3.5 h-3.5"/>} label="Zero retrabalho" color="bg-orange-50 border-orange-200 text-orange-700" />
                 <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  Sakura, Amadeus, Sabre, Expedia.<br />Cole e pronto.
+                  Sakura, Flytour, Orinter, Expedia TAAP...<br />Tanto faz. Cole e pronto.
                 </h2>
                 <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
                   Fechou o pacote na consolidadora? Copia o texto e cola no chat. A IA identifica voos, hotéis, datas, passageiros e preenche o orçamento — com a comissão já calculada.
                 </p>
                 <ul className="space-y-3">
                   {[
-                    'Funciona com qualquer consolidadora: Sakura, GDS, Amadeus, Sabre, Galileo',
+                    'Automatizamos a leitura de basicamente todas as consolidadoras do mercado',
                     'Reconhece preços, datas e itinerários em texto livre',
                     'Preenche o orçamento automaticamente, linha por linha',
                     'Calcula comissão sobre cada serviço sem você digitar nada',
@@ -497,7 +577,7 @@ export default function App() {
                     </div>
                     <div className="p-4">
                       <div className="text-sm font-black text-[#114552] mb-0.5">🇵🇹 Portugal + Espanha</div>
-                      <div className="text-[10px] text-slate-400 mb-3">12 dias · 2 passageiros · Outubro 2025</div>
+                      <div className="text-[10px] text-slate-400 mb-3">12 dias · 2 passageiros · Outubro 2026</div>
                       <div className="space-y-1.5 mb-4">
                         {['✈️ Voos GRU → LIS → MAD → GRU', '🏨 Hotéis 4★ com café incluído', '🚌 Transfers e passeios', '🛡️ Seguro viagem premium'].map((i, j) => (
                           <div key={j} className="text-[10px] font-semibold text-slate-600">{i}</div>
@@ -520,7 +600,7 @@ export default function App() {
                     <div className="text-sm font-black mb-1">João e Maria Silva</div>
                     <div className="text-[10px] text-white/60 mb-3">Lisboa · Sintra · Madrid</div>
                     <div className="grid grid-cols-2 gap-2">
-                      {[{ l: 'Check-in', v: '14 Out 2025' }, { l: 'Check-out', v: '26 Out 2025' }, { l: 'Passageiros', v: '2 adultos' }, { l: 'Ref. voo', v: 'TAP-0842' }].map((f, i) => (
+                      {[{ l: 'Check-in', v: '14 Out 2026' }, { l: 'Check-out', v: '26 Out 2026' }, { l: 'Passageiros', v: '2 adultos' }, { l: 'Ref. voo', v: 'TAP-0842' }].map((f, i) => (
                         <div key={i}>
                           <div className="text-[8px] text-white/40 font-bold uppercase">{f.l}</div>
                           <div className="text-[10px] font-bold">{f.v}</div>
@@ -534,197 +614,41 @@ export default function App() {
               <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
                 <SectionBadge icon={<FileText className="w-3.5 h-3.5"/>} label="Proposta + Voucher" color="bg-violet-50 border-violet-200 text-violet-700" />
                 <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  Proposta linda.<br />Voucher digital.<br />Cliente encantado.
+                  Orçamento virou Voucher.<br />Rápido e lindo.<br />Cliente encantado.
                 </h2>
                 <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Gere uma proposta visual e profissional em um clique. Depois que fechar, envie o voucher digital com todos os detalhes da viagem — o cliente recebe no celular e tem tudo organizado.
+                  O seu orçamento se transforma instantaneamente em um voucher digital com todos os detalhes da viagem — o cliente recebe no celular, vê a viagem linda estruturada e você ganha agilidade sem retrabalho.
                 </p>
                 <ul className="space-y-3">
                   {[
                     'Proposta com layout da sua marca, sem expor o custo interno',
                     'Link único por cliente — sem precisar instalar nada',
                     'Voucher com itinerário completo: voos, hotéis, transfers e passeios',
-                    'O cliente aprova direto pelo link, sem e-mail ou impressão',
+                    'Você não perde tempo refazendo as informações da venda',
                   ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* ── BLOCO 3: Pipeline + Dashboard ── */}
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-              <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Kanban className="text-[#5DA6AA] w-4 h-4" />
-                  <span className="text-white text-sm font-bold">Pipeline de Vendas</span>
+          {/* ── OUTRAS FUNCIONALIDADES ── */}
+          <div className="grid md:grid-cols-3 gap-6 pt-8 pb-16">
+            {[
+              { icon: <Kanban className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Pipeline Visual', desc: 'Acompanhe todas as suas negociações em um quadro Kanban intuitivo e fácil de usar.' },
+              { icon: <BarChart3 className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Dashboard de Vendas', desc: 'Métricas em tempo real de conversão, ticket médio e projeção de comissões.' },
+              { icon: <Wallet className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Gestão Financeira', desc: 'Controle de contas a pagar, receber e conciliação de pagamentos sem planilhas.' },
+              { icon: <Bell className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Alertas Automáticos', desc: 'Avisos proativos de check-in, vencimentos e envio de documentos aos clientes.' },
+              { icon: <Users className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Gestão de Equipe', desc: 'Acompanhe a performance individual e as vendas de cada agente da sua agência.' },
+              { icon: <ShieldCheck className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Segurança Total', desc: 'Seus dados e de seus clientes protegidos na nuvem com criptografia de ponta.' },
+            ].map((f, i) => (
+              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6">
+                  {f.icon}
                 </div>
-                <span className="text-[#5DA6AA] text-[10px] font-black">R$ 187k em aberto</span>
+                <h3 className="text-xl font-black text-[#114552] mb-3">{f.title}</h3>
+                <p className="text-slate-500 font-medium leading-relaxed">{f.desc}</p>
               </div>
-              <div className="p-5">
-                <div className="flex gap-2.5 overflow-x-auto pb-2">
-                  {[
-                    { stage: 'Lead', color: 'bg-slate-100 text-slate-600', cards: [{ d: 'Casal Dubai', v: 'R$ 12k', tag: '🇦🇪' }, { d: 'Família Europa', v: 'R$ 28k', tag: '🇪🇺' }], total: 'R$ 40k', dot: 'bg-slate-300' },
-                    { stage: 'Orçamento', color: 'bg-blue-50 text-blue-700', cards: [{ d: 'Lua de mel Maldivas', v: 'R$ 18k', tag: '🏝️' }, { d: 'Grupo Japão', v: 'R$ 54k', tag: '🇯🇵' }], total: 'R$ 72k', dot: 'bg-blue-400' },
-                    { stage: 'Negociação', color: 'bg-orange-50 text-orange-700', cards: [{ d: 'Casal Patagônia', v: 'R$ 15k', tag: '🏔️' }], total: 'R$ 15k', dot: 'bg-orange-400' },
-                    { stage: 'Confirmado', color: 'bg-teal-50 text-teal-700', cards: [{ d: 'Lisboa + Madrid', v: 'R$ 22k', tag: '🇵🇹' }, { d: 'NYC família', v: 'R$ 38k', tag: '🗽' }], total: 'R$ 60k', dot: 'bg-teal-400' },
-                  ].map((col, i) => (
-                    <div key={i} className="w-32 shrink-0">
-                      <div className={`text-[10px] font-black px-2 py-1.5 rounded-lg mb-3 text-center flex items-center justify-center gap-1.5 ${col.color}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${col.dot}`} />{col.stage}
-                      </div>
-                      <div className="space-y-2 mb-2">
-                        {col.cards.map((c, j) => (
-                          <div key={j} className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 hover:shadow-md transition-shadow cursor-pointer">
-                            <div className="text-sm mb-1">{c.tag}</div>
-                            <div className="text-[10px] font-bold text-slate-700 leading-tight">{c.d}</div>
-                            <div className="text-[10px] font-black text-[#5DA6AA] mt-1">{c.v}</div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="text-[10px] font-black text-[#114552] text-center border-t border-slate-100 pt-2">{col.total}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-              <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <BarChart3 className="text-[#5DA6AA] w-4 h-4" />
-                  <span className="text-white text-sm font-bold">Dashboard</span>
-                </div>
-                <span className="text-[#5DA6AA] text-[10px] font-black">Junho 2025</span>
-              </div>
-              <div className="p-5 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { label: 'Pipeline total', val: 'R$ 187k', color: 'text-[#114552]', bg: 'bg-slate-50', bar: null },
-                    { label: 'Confirmados', val: 'R$ 60k', color: 'text-emerald-600', bg: 'bg-emerald-50', bar: null },
-                    { label: 'Ticket médio', val: 'R$ 18.400', color: 'text-[#5DA6AA]', bg: 'bg-teal-50', bar: null },
-                    { label: 'Conversão', val: '32%', color: 'text-violet-600', bg: 'bg-violet-50', bar: null },
-                  ].map((k, i) => (
-                    <div key={i} className={`${k.bg} rounded-xl p-3`}>
-                      <div className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">{k.label}</div>
-                      <div className={`text-base font-black ${k.color}`}>{k.val}</div>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Performance por agente</div>
-                  {[
-                    { name: 'Rafaela M.', conv: '42%', val: 'R$ 74k', pct: 100 },
-                    { name: 'Bruno T.', conv: '33%', val: 'R$ 51k', pct: 69 },
-                    { name: 'Carla N.', conv: '29%', val: 'R$ 38k', pct: 51 },
-                  ].map((a, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2.5 border-b border-slate-50 last:border-0">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#114552] to-[#5DA6AA] flex items-center justify-center text-white text-[9px] font-black shrink-0">{a.name[0]}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between mb-1">
-                          <span className="text-[10px] font-bold text-slate-700">{a.name}</span>
-                          <span className="text-[10px] font-black text-slate-400">{a.conv}</span>
-                        </div>
-                        <div className="h-1.5 bg-slate-100 rounded-full">
-                          <div className="h-1.5 bg-gradient-to-r from-[#114552] to-[#5DA6AA] rounded-full" style={{width:`${a.pct}%`}} />
-                        </div>
-                      </div>
-                      <div className="text-[10px] font-black text-[#114552] shrink-0">{a.val}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── BLOCO 4: Financeiro + Alertas ── */}
-          <div className="grid lg:grid-cols-2 gap-8 pb-16">
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-emerald-700 to-teal-600 px-6 py-5 flex items-center gap-2">
-                <Wallet className="text-white w-4 h-4" />
-                <span className="text-white text-sm font-bold">Controle Financeiro</span>
-                <span className="ml-auto text-emerald-200 text-[10px] font-bold">Sem planilha</span>
-              </div>
-              <div className="p-5 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { label: 'A receber', val: 'R$ 48.600', color: 'text-[#114552]', bg: 'bg-blue-50' },
-                    { label: 'Recebido no mês', val: 'R$ 31.200', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-                    { label: 'A pagar fornec.', val: 'R$ 19.400', color: 'text-orange-600', bg: 'bg-orange-50' },
-                    { label: 'Comissões', val: 'R$ 6.820', color: 'text-violet-600', bg: 'bg-violet-50' },
-                  ].map((k, i) => (
-                    <div key={i} className={`${k.bg} rounded-xl p-3`}>
-                      <div className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">{k.label}</div>
-                      <div className={`text-base font-black ${k.color}`}>{k.val}</div>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Recebimentos recentes</div>
-                  {[
-                    { trip: 'Maldivas — João e Ana', source: 'Pix · Asaas', val: 'R$ 9.000', dot: 'bg-emerald-400', status: 'Recebido' },
-                    { trip: 'Europa família Silva', source: 'Cartão 2x · Asaas', val: 'R$ 14.000', dot: 'bg-orange-400', status: '1ª parcela' },
-                    { trip: 'NYC — Carla N.', source: 'Pix pendente', val: 'R$ 8.200', dot: 'bg-slate-300', status: 'Aguardando' },
-                  ].map((r, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2.5 border-b border-slate-50 last:border-0">
-                      <div className={`w-2 h-2 rounded-full shrink-0 ${r.dot}`} />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-bold text-slate-700 truncate">{r.trip}</div>
-                        <div className="text-[9px] text-slate-400">{r.source}</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[10px] font-black text-[#114552]">{r.val}</div>
-                        <div className="text-[9px] text-slate-400 font-medium">{r.status}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Alertas de check-in */}
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-rose-600 to-pink-500 px-6 py-5 flex items-center gap-2">
-                <Bell className="text-white w-4 h-4" />
-                <span className="text-white text-sm font-bold">Alertas e Check-in</span>
-                <span className="ml-auto text-rose-200 text-[10px] font-bold">Automático</span>
-              </div>
-              <div className="p-5 space-y-3">
-                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Próximos embarques</div>
-                {[
-                  { client: 'João e Maria Silva', dest: 'Lisboa · 14 Out', days: 3, type: 'check-in', color: 'border-l-rose-400 bg-rose-50', icon: <AlertCircle size={14} className="text-rose-500 shrink-0"/> },
-                  { client: 'Família Souza', dest: 'Tóquio · 22 Out', days: 11, type: 'documentos', color: 'border-l-orange-400 bg-orange-50', icon: <FileText size={14} className="text-orange-500 shrink-0"/> },
-                  { client: 'Casal Ferreira', dest: 'Maldivas · 1 Nov', days: 21, type: 'saldo', color: 'border-l-yellow-400 bg-yellow-50', icon: <Wallet size={14} className="text-yellow-600 shrink-0"/> },
-                  { client: 'Rodrigo Alves', dest: 'Nova York · 15 Nov', days: 35, type: 'OK', color: 'border-l-emerald-400 bg-emerald-50', icon: <CheckCircle2 size={14} className="text-emerald-500 shrink-0"/> },
-                ].map((a, i) => (
-                  <div key={i} className={`border-l-4 rounded-xl p-3 flex items-center gap-3 ${a.color}`}>
-                    {a.icon}
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[10px] font-black text-slate-700">{a.client}</div>
-                      <div className="text-[9px] text-slate-500 font-medium">{a.dest}</div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <div className="text-[10px] font-black text-slate-700">{a.days}d</div>
-                      <div className="text-[9px] text-slate-400 uppercase font-bold">{a.type}</div>
-                    </div>
-                  </div>
-                ))}
-                <div className="mt-2 bg-slate-50 rounded-xl p-3 border border-slate-100">
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">Alertas automáticos para o cliente</div>
-                  <div className="space-y-1.5">
-                    {[
-                      '7 dias antes: lembrete de check-in online',
-                      '3 dias antes: lista de documentos necessários',
-                      '1 dia antes: confirmação de transfer e horários',
-                    ].map((t, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[10px] font-semibold text-slate-600">
-                        <CheckCircle2 size={11} className="text-[#5DA6AA] shrink-0" />{t}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -737,7 +661,7 @@ export default function App() {
           </div>
           <div className="grid md:grid-cols-3 gap-7">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="p-7 rounded-[2rem] border border-slate-100 bg-slate-50/60 hover:bg-white hover:shadow-lg transition-all">
+              <div key={i} className="p-7 rounded-[2rem] border border-slate-100 bg-white hover:border-[#5DA6AA]/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <div className="flex gap-0.5 mb-5">
                   {Array.from({length: t.stars}).map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400"/>)}
                 </div>
@@ -784,7 +708,7 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-4 rounded-2xl font-black text-sm transition-all active:scale-95 ${plan.highlight ? 'bg-[#114552] text-white hover:bg-[#0a2c35] shadow-xl' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}>
+                <button onClick={() => setSelectedPlan(plan.name)} className={`w-full py-4 rounded-2xl font-black text-sm transition-all active:scale-95 ${plan.highlight ? 'bg-[#114552] text-white hover:bg-[#0a2c35] shadow-xl' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}>
                   {plan.cta}
                 </button>
               </div>
@@ -799,7 +723,7 @@ export default function App() {
       </section>
 
       {/* ── CTA FINAL ────────────────────────────────── */}
-      <section className="py-24 bg-[#114552] px-4 relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-[#114552] to-[#0a2c35] px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-30" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='g' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M10 0L0 0 0 10' fill='none' stroke='white' stroke-width='0.3' opacity='0.15'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E")`}} />
         <div className="max-w-3xl mx-auto text-center relative">
           <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
@@ -836,7 +760,7 @@ export default function App() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center mt-10 gap-4 text-white/25 text-[10px] font-bold uppercase tracking-widest">
-            <p>© 2025 AgenteOffice CRM. Todos os direitos reservados.</p>
+            <p>© 2026 AgenteOffice CRM. Todos os direitos reservados.</p>
             <p>Feito para agências que pensam grande.</p>
           </div>
         </div>
