@@ -141,72 +141,178 @@ function DemoModal({ onClose }) {
   );
 }
 
-/* ─── MODAL PLANO ────────────────────────────────── */
-function PlanModal({ planName, onClose }) {
-  const [form, setForm] = useState({ plano_escolhido: planName, agencia: '', nome: '', email: '', whatsapp: '' });
-  const [sent, setSent] = useState(false);
+/* ─── MODAL CHECKOUT ─────────────────────────────── */
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.agenteoffice.com.br';
+const PLAN_SLUG = { Basic: 'basic', Team: 'team', Enterprise: 'enterprise' };
+const INPUT_CLS = 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all';
+const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5';
+
+function PlanModal({ planName, onClose, openDemo }) {
+  const [step, setStep] = useState(1);
+  const [form, setForm] = useState({
+    agencia_nome: '', agencia_email: '', agencia_cnpj: '',
+    admin_nome: '', admin_username: '', admin_senha: '', admin_senha2: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  // Enterprise → abre demo em vez de checkout
+  if (planName === 'Enterprise') {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
+            <div>
+              <div className="text-white font-black text-lg">Plano Enterprise</div>
+              <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">Redes e franquias</div>
+            </div>
+            <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><X size={16} className="text-white"/></button>
+          </div>
+          <div className="px-6 py-8 text-center">
+            <p className="text-slate-600 text-sm font-medium leading-relaxed mb-6">Para redes e franquias, fazemos uma proposta personalizada com usuários ilimitados, IA sem limite e gerente de conta dedicado.</p>
+            <button onClick={() => { onClose(); setTimeout(openDemo, 50); }}
+              className="w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm hover:bg-[#0a2c35] transition-colors flex items-center justify-center gap-2">
+              <Sparkles size={15}/> Agendar conversa gratuita
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const priceMap = { Basic: 'R$ 129,90/mês', Team: 'R$ 199/mês' };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (form.admin_senha !== form.admin_senha2) { setError('As senhas não coincidem.'); return; }
+    if (form.admin_senha.length < 6) { setError('Senha deve ter ao menos 6 caracteres.'); return; }
+    setError(''); setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/billing/checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plano_slug: PLAN_SLUG[planName],
+          agencia_nome: form.agencia_nome,
+          agencia_email: form.agencia_email,
+          agencia_cnpj: form.agencia_cnpj,
+          admin_nome: form.admin_nome,
+          admin_username: form.admin_username,
+          admin_senha: form.admin_senha,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Erro ao processar.');
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url;
+      } else {
+        setError('Não foi possível obter o link de pagamento. Tente novamente.');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"/>
       <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-md overflow-hidden" onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
         <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
           <div>
-            <div className="text-white font-black text-lg">Assinar Plano {planName}</div>
-            <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">Preencha os dados para prosseguir</div>
+            <div className="text-white font-black text-lg">Plano {planName} — {priceMap[planName]}</div>
+            <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">
+              {step === 1 ? 'Dados da sua agência' : 'Crie seu acesso ao sistema'}
+            </div>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-            <X size={16} className="text-white" />
-          </button>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><X size={16} className="text-white"/></button>
         </div>
-        {sent ? (
-          <div className="px-6 py-10 text-center">
-            <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-5">
-              <CheckCircle2 className="w-8 h-8 text-[#5DA6AA]" />
+
+        {/* Steps indicator */}
+        <div className="flex border-b border-slate-100">
+          {['Agência', 'Acesso'].map((label, i) => (
+            <div key={i} className={`flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-wider transition-colors ${step === i+1 ? 'text-[#114552] border-b-2 border-[#114552]' : 'text-slate-300'}`}>{label}</div>
+          ))}
+        </div>
+
+        <form onSubmit={step === 1 ? (e) => { e.preventDefault(); setError(''); setStep(2); } : handleSubmit}
+          className="px-6 py-6 space-y-4">
+
+          {step === 1 && <>
+            <div>
+              <label className={LABEL_CLS}>Nome da agência *</label>
+              <input required value={form.agencia_nome} onChange={e => set('agencia_nome', e.target.value)}
+                placeholder="Ex: Destinos Travel" className={INPUT_CLS}/>
             </div>
-            <h3 className="text-xl font-black text-[#114552] mb-2">Pedido recebido!</h3>
-            <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">Em instantes nossa equipe entrará em contato para liberar seu acesso ao plano {planName}.</p>
-            <button onClick={onClose} className="bg-[#114552] text-white font-black px-8 py-3 rounded-xl text-sm">Entendi</button>
-          </div>
-        ) : (
-          <form onSubmit={e => {
-            e.preventDefault();
-            fetch("https://formsubmit.co/ajax/contato@agenteoffice.com.br", {
-              method: "POST",
-              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-              body: JSON.stringify(form)
-            });
-            setSent(true);
-          }} className="px-6 py-6 space-y-4">
-            <div className="space-y-4">
+            <div>
+              <label className={LABEL_CLS}>E-mail da agência *</label>
+              <input required type="email" value={form.agencia_email} onChange={e => set('agencia_email', e.target.value)}
+                placeholder="contato@suaagencia.com.br" className={INPUT_CLS}/>
+            </div>
+            <div>
+              <label className={LABEL_CLS}>CPF ou CNPJ *</label>
+              <input required value={form.agencia_cnpj} onChange={e => set('agencia_cnpj', e.target.value)}
+                placeholder="00.000.000/0000-00 ou 000.000.000-00" className={INPUT_CLS}/>
+              <p className="text-[10px] text-slate-400 font-medium mt-1">Necessário para emissão da nota fiscal.</p>
+            </div>
+          </>}
+
+          {step === 2 && <>
+            <div>
+              <label className={LABEL_CLS}>Seu nome completo *</label>
+              <input required value={form.admin_nome} onChange={e => set('admin_nome', e.target.value)}
+                placeholder="Ex: Rafaela Moura" className={INPUT_CLS}/>
+            </div>
+            <div>
+              <label className={LABEL_CLS}>Usuário para login *</label>
+              <input required value={form.admin_username} onChange={e => set('admin_username', e.target.value.toLowerCase().replace(/\s/g,''))}
+                placeholder="rafaela.moura" className={INPUT_CLS}/>
+              <p className="text-[10px] text-slate-400 font-medium mt-1">Sem espaços ou caracteres especiais.</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">Nome da agência *</label>
-                <input required value={form.agencia} onChange={e => set('agencia', e.target.value)} placeholder="Ex: Destinos Travel"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+                <label className={LABEL_CLS}>Senha *</label>
+                <input required type="password" value={form.admin_senha} onChange={e => set('admin_senha', e.target.value)}
+                  placeholder="Mín. 6 caracteres" className={INPUT_CLS}/>
               </div>
               <div>
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">Seu nome *</label>
-                <input required value={form.nome} onChange={e => set('nome', e.target.value)} placeholder="Ex: Rafaela Moura"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
-              </div>
-              <div>
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">E-mail *</label>
-                <input required type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="voce@agencia.com.br"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
-              </div>
-              <div>
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5">WhatsApp *</label>
-                <input required value={form.whatsapp} onChange={e => set('whatsapp', e.target.value)} placeholder="(11) 99999-9999"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all" />
+                <label className={LABEL_CLS}>Confirmar *</label>
+                <input required type="password" value={form.admin_senha2} onChange={e => set('admin_senha2', e.target.value)}
+                  placeholder="Repita a senha" className={INPUT_CLS}/>
               </div>
             </div>
-            <button type="submit" className="w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm shadow-lg flex items-center justify-center gap-2 hover:bg-[#0a2c35] transition-colors mt-2">
-              <Sparkles size={15} /> Solicitar acesso ao Plano {planName}
+          </>}
+
+          {error && <p className="text-red-500 text-xs font-semibold bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+
+          <div className="flex gap-3 pt-1">
+            {step === 2 && (
+              <button type="button" onClick={() => setStep(1)}
+                className="px-5 py-3.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-colors">
+                Voltar
+              </button>
+            )}
+            <button type="submit" disabled={loading}
+              className="flex-1 bg-[#114552] text-white font-black py-3.5 rounded-xl text-sm shadow-lg flex items-center justify-center gap-2 hover:bg-[#0a2c35] transition-colors disabled:opacity-60">
+              {loading
+                ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>&nbsp;Processando…</>
+                : step === 1
+                  ? <>{planName === 'Team' ? 'Continuar' : 'Continuar'} <ArrowRight size={15}/></>
+                  : <><Sparkles size={15}/> Ir para pagamento</>
+              }
             </button>
-            <p className="text-[10px] text-slate-400 text-center font-medium">Nenhum cartão exigido agora.</p>
-          </form>
-        )}
+          </div>
+          {step === 2 && (
+            <p className="text-[10px] text-slate-400 text-center font-medium">
+              Você será redirecionado ao Asaas para inserir os dados do cartão com segurança.
+            </p>
+          )}
+        </form>
       </div>
     </div>
   );
@@ -709,7 +815,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-teal-100 selection:text-[#114552]">
       {demoOpen && <DemoModal onClose={() => setDemoOpen(false)} />}
-      {selectedPlan && <PlanModal planName={selectedPlan} onClose={() => setSelectedPlan(null)} />}
+      {selectedPlan && <PlanModal planName={selectedPlan} onClose={() => setSelectedPlan(null)} openDemo={() => setDemoOpen(true)} />}
 
       {/* ── NAV ─────────────────────────────────────── */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
