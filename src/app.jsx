@@ -142,7 +142,7 @@ function DemoModal({ onClose }) {
 }
 
 /* ─── MODAL CHECKOUT ─────────────────────────────── */
-const API_URL = import.meta.env.VITE_API_URL || 'https://api.agenteoffice.com.br';
+const API_URL = import.meta.env.VITE_API_URL || 'https://web-production-32a87up.railway.app';
 const PLAN_SLUG = { Basic: 'basic', Team: 'team', Enterprise: 'enterprise' };
 const INPUT_CLS = 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all';
 const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5';
