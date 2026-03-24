@@ -12,18 +12,18 @@ import {
 /* ─── PLANOS ─────────────────────────────────────── */
 const PLANS = [
   {
-    name: 'Solo', price: '97', desc: 'Para o agente autônomo.',
-    features: ['1 usuário', 'IA de roteiros ilimitada', 'Pipeline + Orçamentos', 'Propostas e vouchers', 'Suporte por e-mail'],
+    name: 'Basic', price: '129,90', desc: 'Para começar com IA de verdade.',
+    features: ['Até 2 usuários', 'Bom limite de IA mensal', '2 GB de documentos', 'Pipeline + Orçamentos', 'Propostas e vouchers digitais', 'Suporte por e-mail'],
     cta: 'Começar agora', highlight: false,
   },
   {
-    name: 'Team', price: '180', desc: 'Para equipes de até 5 agentes.',
-    features: ['Até 5 usuários', 'Tudo do Solo', 'Dashboard por agente', 'Financeiro completo', 'Suporte WhatsApp'],
+    name: 'Team', price: '199', desc: 'Para equipes que vendem mais.',
+    features: ['Até 5 usuários', 'Ótimo limite de IA mensal', '5 GB de documentos', 'Tudo do Basic', 'Dashboard por agente', 'Financeiro completo', 'Suporte WhatsApp prioritário'],
     cta: 'Escolher Team', highlight: true,
   },
   {
-    name: 'Enterprise', price: 'Custom', desc: 'Redes e franquias.',
-    features: ['Usuários ilimitados', 'IA treinada sob medida', 'API + integrações', 'Gerente de conta', 'Relatórios customizados'],
+    name: 'Enterprise', price: 'Consultar', desc: 'Para redes e franquias.',
+    features: ['Usuários ilimitados', 'IA sem limite mensal', 'Armazenamento customizado', 'API + integrações', 'Gerente de conta dedicado', 'Relatórios customizados'],
     cta: 'Falar com consultor', highlight: false,
   },
 ];
@@ -352,6 +352,259 @@ function ChatDemo() {
   );
 }
 
+/* ─── PROPOSTA SHOWCASE ──────────────────────────── */
+function PropostaShowcase() {
+  const [tab, setTab] = useState('proposta');
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const HOTEL_PHOTOS = [
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&fit=crop',
+    'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&fit=crop',
+    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&fit=crop',
+  ];
+
+  return (
+    <section className="py-24 bg-white px-4 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <SectionBadge icon={<Send className="w-3.5 h-3.5"/>} label="O que o cliente vê" color="bg-violet-50 border-violet-200 text-violet-700" />
+          <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            A proposta mais bonita<br />que seu cliente já recebeu.
+          </h2>
+          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
+            Link digital com a sua marca. Sem custo exposto, sem planilha. O cliente abre no celular e se encanta — aí a venda já está quase fechada.
+          </p>
+        </div>
+
+        {/* ── Browser frame ── */}
+        <div className="relative">
+          {/* Glow */}
+          <div className="absolute -inset-8 bg-gradient-to-br from-[#5DA6AA]/15 via-[#114552]/10 to-violet-400/10 rounded-[4rem] blur-3xl pointer-events-none" />
+
+          <div className="relative bg-white rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden max-w-4xl mx-auto">
+            {/* Browser chrome */}
+            <div className="bg-slate-100 border-b border-slate-200 px-4 py-3 flex items-center gap-3">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-400/70" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
+                <div className="w-3 h-3 rounded-full bg-green-400/70" />
+              </div>
+              <div className="flex-1 bg-white rounded-lg px-3 py-1.5 flex items-center gap-2 border border-slate-200">
+                <div className="w-3 h-3 text-slate-400">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <span className="text-[11px] font-mono text-slate-500 tracking-tight">agenteoffice.com.br/p/88472</span>
+                <div className="ml-auto flex items-center gap-1 text-emerald-500">
+                  <CheckCheck size={11} />
+                  <span className="text-[10px] font-bold">Seguro</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-4 h-4 text-slate-400"><NavLeft /></div>
+                <div className="w-4 h-4 text-slate-400"><NavRight /></div>
+              </div>
+            </div>
+
+            {/* Proposta content */}
+            <div className="overflow-hidden">
+
+              {/* Hero da proposta */}
+              <div className="relative h-48 bg-gradient-to-br from-[#042F2E] via-[#0F766E] to-[#5DA6AA] overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&fit=crop"
+                  alt="Toscana"
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                <div className="relative h-full flex flex-col justify-between p-6">
+                  <div className="flex items-start justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-white/15 text-white px-3 py-1 rounded-full border border-white/20 backdrop-blur-sm">
+                      ✈ Proposta de Viagem
+                    </span>
+                    <img src="/logo_hor_white.png" alt="logo" className="h-6 w-auto opacity-90" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-black text-2xl mb-1 drop-shadow-lg">Lua de Mel — Toscana & Roma</h3>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">📅 14–22 Abr 2026</span>
+                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">👥 2 viajantes</span>
+                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">Casal Ferreira</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sticky bar simulada */}
+              <div className="bg-white border-b border-slate-100 px-4 py-0 flex items-center justify-between shadow-sm">
+                <div className="flex gap-0">
+                  {['📄 Proposta','📋 Voucher 🔒'].map((t, i) => (
+                    <button key={i} onClick={() => setTab(i === 0 ? 'proposta' : 'voucher')}
+                      className={`px-4 py-3 text-[11px] font-black border-b-2 transition-all ${(i === 0 && tab === 'proposta') ? 'border-[#0F766E] text-[#0F766E]' : 'border-transparent text-slate-400'}`}>
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                <button className="text-[10px] font-black text-white bg-[#114552] px-3 py-1.5 rounded-lg flex items-center gap-1 my-2">
+                  ⬇ PDF
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="bg-slate-50 p-4 space-y-4">
+
+                {/* Strip de categorias */}
+                <div className="flex gap-3 overflow-x-auto pb-1">
+                  {[
+                    { icon: '✈️', label: 'Voos', count: 2 },
+                    { icon: '🏨', label: 'Hotéis', count: 3 },
+                    { icon: '🚌', label: 'Transfers', count: 4 },
+                    { icon: '🎭', label: 'Passeios', count: 3 },
+                    { icon: '🛡️', label: 'Seguro', count: 1 },
+                  ].map((c, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-white rounded-xl px-3 py-2 border border-slate-100 shadow-sm shrink-0">
+                      <span className="text-base">{c.icon}</span>
+                      <div>
+                        <div className="text-[10px] font-black text-[#114552]">{c.label}</div>
+                        <div className="text-[9px] text-slate-400 font-medium">{c.count} {c.count === 1 ? 'item' : 'itens'}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Voo — ticket style */}
+                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                  <div className="px-4 py-2.5 border-b border-slate-50 flex items-center gap-2">
+                    <span className="text-base">✈️</span>
+                    <span className="text-[11px] font-black text-[#114552] uppercase tracking-widest">Voos</span>
+                  </div>
+                  <div className="p-4">
+                    {/* Ticket */}
+                    <div className="flex items-center gap-4 bg-gradient-to-r from-[#042F2E] to-[#0F766E] rounded-xl p-4 text-white relative overflow-hidden">
+                      <div className="absolute inset-0 opacity-10" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='white' stroke-width='0.5'/%3E%3C/svg%3E")`}} />
+                      <div className="text-center relative z-10">
+                        <div className="text-2xl font-black tracking-tight">GRU</div>
+                        <div className="text-[9px] text-white/60 font-bold uppercase">São Paulo</div>
+                        <div className="text-[10px] font-bold text-white/80 mt-1">08:45</div>
+                      </div>
+                      <div className="flex-1 relative z-10 flex flex-col items-center gap-1">
+                        <div className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Voo direto · 11h20</div>
+                        <div className="w-full flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-full border-2 border-white/60" />
+                          <div className="flex-1 h-px bg-white/30" />
+                          <span className="text-sm">✈</span>
+                          <div className="flex-1 h-px bg-white/30" />
+                          <div className="w-2 h-2 rounded-full border-2 border-white/60" />
+                        </div>
+                        <div className="text-[9px] font-bold text-white/50">LATAM LA8025</div>
+                      </div>
+                      <div className="text-center relative z-10">
+                        <div className="text-2xl font-black tracking-tight">FCO</div>
+                        <div className="text-[9px] text-white/60 font-bold uppercase">Roma</div>
+                        <div className="text-[10px] font-bold text-white/80 mt-1">06:05+1</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hotel — card imersivo */}
+                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                  <div className="px-4 py-2.5 border-b border-slate-50 flex items-center gap-2">
+                    <span className="text-base">🏨</span>
+                    <span className="text-[11px] font-black text-[#114552] uppercase tracking-widest">Hotéis</span>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    {/* Hotel com carrossel de fotos */}
+                    <div className="rounded-xl overflow-hidden border border-slate-100">
+                      <div className="relative h-36">
+                        <img src={HOTEL_PHOTOS[photoIdx]} alt="hotel" className="w-full h-full object-cover transition-all duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        {/* Nav */}
+                        <button onClick={() => setPhotoIdx(i => (i - 1 + HOTEL_PHOTOS.length) % HOTEL_PHOTOS.length)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white text-sm flex items-center justify-center backdrop-blur-sm">‹</button>
+                        <button onClick={() => setPhotoIdx(i => (i + 1) % HOTEL_PHOTOS.length)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white text-sm flex items-center justify-center backdrop-blur-sm">›</button>
+                        {/* Dots */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                          {HOTEL_PHOTOS.map((_, i) => (
+                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === photoIdx ? 'bg-white' : 'bg-white/40'}`} />
+                          ))}
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-12">
+                          <div className="text-white font-black text-sm drop-shadow">Castello di Casole · Toscana</div>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-[9px] text-white/70 font-bold">☕ Café da manhã</span>
+                            <span className="text-white/40 text-[9px]">·</span>
+                            <span className="text-[9px] text-white/70 font-bold">⭐⭐⭐⭐⭐</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-3 py-2.5 flex items-center justify-between bg-teal-50/50">
+                        <div className="flex gap-3 text-[10px] font-semibold text-slate-600">
+                          <span>📅 Check-in: 14/04</span>
+                          <span>·</span>
+                          <span>Check-out: 18/04</span>
+                          <span>·</span>
+                          <span>4 diárias</span>
+                        </div>
+                        <span className="text-[10px] font-black text-[#0F766E]">✓ Incluso</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Total */}
+                <div className="rounded-2xl overflow-hidden" style={{background:'linear-gradient(135deg,#042F2E 0%,#0F766E 60%,#2DD4BF 100%)'}}>
+                  <div className="p-5 flex items-center justify-between">
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{color:'rgba(255,255,255,.55)'}}>Investimento total · 2 viajantes</div>
+                      <div className="text-3xl font-black text-white">R$ 24.048</div>
+                      <div className="text-[11px] mt-1" style={{color:'rgba(255,255,255,.55)'}}>⏰ Proposta válida 7 dias · Sujeito à disponibilidade</div>
+                    </div>
+                    <button className="bg-white text-[#0F766E] font-black text-sm px-5 py-3 rounded-xl shadow-lg">
+                      ✓ Aprovar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Nota de rodapé */}
+                <p className="text-center text-[10px] text-slate-400 font-medium pb-2">
+                  💳 Valores em R$ · Custo e comissão da agência são sempre confidenciais
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Badges flutuantes */}
+          <div className="hidden lg:block absolute -left-4 top-40 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
+            <div className="text-2xl mb-2">🔒</div>
+            <div className="text-[12px] font-black text-[#114552] mb-1">100% confidencial</div>
+            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">O cliente nunca vê seu custo ou comissão.</div>
+          </div>
+
+          <div className="hidden lg:block absolute -right-4 top-52 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
+            <div className="text-2xl mb-2">📱</div>
+            <div className="text-[12px] font-black text-[#114552] mb-1">Link no WhatsApp</div>
+            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">Compartilhe em 1 toque. Abre no celular, tablet ou PC.</div>
+          </div>
+
+          <div className="hidden lg:block absolute -right-4 bottom-32 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
+            <div className="text-2xl mb-2">✈️</div>
+            <div className="text-[12px] font-black text-[#114552] mb-1">Voucher incluso</div>
+            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">Aprovado, vira voucher em 1 clique. Sem retrabalho.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── HELPERS ────────────────────────────────────── */
+function NavLeft() {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path d="M15 18l-6-6 6-6"/></svg>;
+}
+function NavRight() {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path d="M9 18l6-6-6-6"/></svg>;
+}
+
 /* ─── APP ────────────────────────────────────────── */
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -379,7 +632,7 @@ export default function App() {
             <NavLink href="#jornada">Jornada</NavLink>
             <NavLink href="#precos">Preços</NavLink>
             <div className="w-px h-4 bg-slate-200" />
-            <a href="/app" className="flex items-center gap-1.5 text-sm font-bold text-[#114552] hover:text-[#5DA6AA] transition-colors">
+            <a href="https://app.agenteoffice.com.br" className="flex items-center gap-1.5 text-sm font-bold text-[#114552] hover:text-[#5DA6AA] transition-colors">
               <LogIn size={15} /> Já sou cliente
             </a>
             <a href="#precos" className="bg-[#114552] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#0a2c35] transition-all shadow-md active:scale-95">
@@ -395,7 +648,7 @@ export default function App() {
             <NavLink href="#funcionalidades">Funcionalidades</NavLink>
             <NavLink href="#jornada">Jornada</NavLink>
             <NavLink href="#precos">Preços</NavLink>
-            <a href="/app" className="text-sm font-bold text-[#114552]">Já sou cliente</a>
+            <a href="https://app.agenteoffice.com.br" className="text-sm font-bold text-[#114552]">Já sou cliente</a>
             <a href="#precos" className="bg-[#114552] text-white text-center py-3 rounded-xl text-sm font-bold">Assinar agora</a>
           </div>
         )}
@@ -409,14 +662,14 @@ export default function App() {
           <div>
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-7">
               <Sparkles className="w-3.5 h-3.5 text-[#5DA6AA]" />
-              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Feito para agências de viagem</span>
+              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">IA que funciona de verdade · CRM para agências</span>
             </div>
             <h1 className="text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
-              O sistema<br />definitivo para<br />
-              <span className="text-[#5DA6AA]">a sua agência.</span>
+              Cole a confirmação.<br />
+              <span className="text-[#5DA6AA]">A IA faz o resto.</span>
             </h1>
             <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Do primeiro contato ao embarque — rápido, prático e com IA que realmente funciona. Orçamentos em segundos, financeiro no controle e clientes encantados.
+              Sakura, Flytour, Orinter, CVC — cole o texto da consolidadora e em segundos o orçamento está pronto, com comissão calculada, proposta gerada e voucher digital. Feito por quem entende de agente.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <a href="#precos" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
@@ -457,10 +710,10 @@ export default function App() {
       <section className="py-14 bg-[#114552]">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { value: '< 1 min', label: 'para gerar um orçamento completo', sub: 'antes levava mais de 1 hora' },
-            { value: 'Zero', label: 'redigitações de consolidadora', sub: 'a IA lê e preenche por você' },
-            { value: '100%', label: 'das comissões calculadas', sub: 'sem planilha, sem erro' },
-            { value: '1 clique', label: 'proposta e voucher ao cliente', sub: 'PDF ou link digital' },
+            { value: '< 1 min', label: 'cotação completa com comissão', sub: 'antes levava mais de 1 hora' },
+            { value: 'Zero', label: 'redigitações de consolidadora', sub: 'a IA lê, interpreta e preenche' },
+            { value: '8+', label: 'consolidadoras integradas via IA', sub: 'Sakura, Flytour, CVC, Trend…' },
+            { value: '1 clique', label: 'proposta e voucher ao cliente', sub: 'link digital profissional' },
           ].map((m, i) => (
             <div key={i} className="text-center group hover:-translate-y-1 transition-transform duration-300">
               <div className="text-3xl lg:text-4xl font-black text-[#5DA6AA] mb-2">{m.value}</div>
@@ -511,8 +764,8 @@ export default function App() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: <MessageSquare className="w-6 h-6"/>, color: 'text-blue-500 bg-blue-50', label: '01', title: 'Lead entra no pipeline', desc: 'WhatsApp, e-mail ou indicação. O cliente cai direto no funil visual — você nunca mais perde um lead.' },
-              { icon: <Compass className="w-6 h-6"/>, color: 'text-[#5DA6AA] bg-teal-50', label: '02', title: 'Mar.ia monta o roteiro', desc: 'A sua assistente de IA escreve o itinerário, busca voos em tempo real e gera o orçamento enquanto você atende o próximo cliente.' },
-              { icon: <FileText className="w-6 h-6"/>, color: 'text-violet-500 bg-violet-50', label: '03', title: 'Orçamento em segundos', desc: 'Sakura, Flytour, Orinter, CVC, Trend — cole a confirmação no chat. A IA preenche o orçamento com a comissão calculada.' },
+              { icon: <Sparkles className="w-6 h-6"/>, color: 'text-[#5DA6AA] bg-teal-50', label: '02', title: 'Mar.ia monta o roteiro', desc: 'A IA da sua agência escreve o itinerário dia a dia, sugere destinos, lê confirmações de consolidadora e calcula comissão — tudo enquanto você atende o próximo cliente.' },
+              { icon: <FileText className="w-6 h-6"/>, color: 'text-violet-500 bg-violet-50', label: '03', title: 'Cotação em menos de 1 minuto', desc: 'Sakura, Flytour, Orinter, CVC, Trend — cole a confirmação no chat. A IA lê, interpreta e preenche o orçamento linha por linha com a comissão calculada.' },
               { icon: <Send className="w-6 h-6"/>, color: 'text-emerald-500 bg-emerald-50', label: '04', title: 'Proposta linda + Voucher', desc: 'O orçamento vira uma proposta profissional com a sua marca. Aprovado? Gera o voucher digital em 1 clique.' },
               { icon: <Wallet className="w-6 h-6"/>, color: 'text-orange-500 bg-orange-50', label: '05', title: 'Financeiro no controle', desc: 'Recebimentos do cliente, pagamentos a fornecedores e comissões do mês — tudo em um painel, sem planilha.' },
               { icon: <Bell className="w-6 h-6"/>, color: 'text-rose-500 bg-rose-50', label: '06', title: 'Alertas até o embarque', desc: 'O sistema avisa você e o cliente: prazo de documentos, check-in online, transfer e tudo que não pode ser esquecido.' },
@@ -882,7 +1135,7 @@ export default function App() {
           {/* ── MINI CARDS ── */}
           <div className="grid md:grid-cols-3 gap-6 pt-4 pb-16">
             {[
-              { icon: <Compass className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Mar.ia — sua assistente IA', desc: 'Ela gera roteiros, lê confirmações de consolidadora, calcula comissão e ainda responde dúvidas do cliente — tudo para você gastar menos tempo e vender mais.' },
+              { icon: <Sparkles className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Mar.ia — IA que trabalha de verdade', desc: 'Lê e interpreta confirmações de qualquer consolidadora, gera roteiros dia a dia, calcula comissão automaticamente e responde dúvidas do cliente. Você atende; ela executa.' },
               { icon: <BarChart3 className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Dashboard de vendas', desc: 'Métricas em tempo real: ticket médio, conversão, comissões do mês e ranking de destinos mais vendidos.' },
               { icon: <Users className="w-6 h-6 text-[#5DA6AA]"/>, title: 'CRM de clientes', desc: 'Histórico completo de cada cliente: preferências, documentos, viagens anteriores e o canal por onde veio.' },
               { icon: <Receipt className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Contrato digital', desc: 'Gere o contrato de prestação de serviços direto do orçamento, com os dados já preenchidos. Um clique, pronto.' },
@@ -901,36 +1154,16 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── DEPOIMENTOS ──────────────────────────────── */}
-      <section className="py-24 bg-white px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-black text-[#114552] tracking-tight">Agentes que viraram fãs.</h2>
-            <p className="text-slate-400 font-medium mt-3">De autônomos a equipes com +10 agentes.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-7">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="p-7 rounded-[2rem] border border-slate-100 bg-white hover:border-[#5DA6AA]/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex gap-0.5 mb-5">
-                  {Array.from({length: t.stars}).map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400"/>)}
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed font-medium mb-6 italic">"{t.text}"</p>
-                <div>
-                  <div className="text-sm font-black text-[#114552]">{t.name}</div>
-                  <div className="text-[11px] text-slate-400 font-medium">{t.role}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
+      <PropostaShowcase />
 
       {/* ── PREÇOS ───────────────────────────────────── */}
       <section id="precos" className="py-24 bg-slate-50 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
+            <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="IA incluída em todos os planos" />
             <h2 className="text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
-            <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser.</p>
+            <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. IA ativa desde o primeiro dia.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-7 items-start">
             {PLANS.map((plan, i) => (
@@ -943,9 +1176,9 @@ export default function App() {
                 <div className="mb-8">
                   <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">{plan.name}</h3>
                   <div className="flex items-baseline gap-1 text-[#114552] mb-2">
-                    {plan.price !== 'Custom' && <span className="text-xl font-bold">R$</span>}
+                    {plan.price !== 'Consultar' && <span className="text-xl font-bold">R$</span>}
                     <span className="text-5xl font-black tracking-tight">{plan.price}</span>
-                    {plan.price !== 'Custom' && <span className="text-slate-400 font-bold">/mês</span>}
+                    {plan.price !== 'Consultar' && <span className="text-slate-400 font-bold">/mês</span>}
                   </div>
                   <p className="text-slate-400 text-sm font-medium italic">"{plan.desc}"</p>
                 </div>
@@ -979,10 +1212,10 @@ export default function App() {
             <Zap className="w-8 h-8 text-[#5DA6AA]" />
           </div>
           <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
-            Chega de planilha.<br />Chega de redigitar.
+            Chega de planilha.<br />Chega de redigitar.<br />A IA faz isso por você.
           </h2>
           <p className="text-xl text-white/60 mb-10 font-medium leading-relaxed">
-            Em menos de 1 hora a sua agência opera com IA de verdade. Veja o primeiro orçamento gerado automaticamente — e não volta mais.
+            Em menos de 1 hora sua agência opera com IA que realmente funciona — lê consolidadoras, gera orçamentos, calcula comissão e entrega proposta para o cliente. Sem enrolação.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#precos" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#5DA6AA] text-white rounded-2xl font-black text-lg hover:bg-[#4a8f93] transition-all shadow-xl group">
@@ -1004,7 +1237,7 @@ export default function App() {
               <a href="#jornada" className="text-white/50 hover:text-white transition-colors">Jornada</a>
               <a href="#funcionalidades" className="text-white/50 hover:text-white transition-colors">Funcionalidades</a>
               <a href="#precos" className="text-white/50 hover:text-white transition-colors">Preços</a>
-              <a href="/app" className="text-[#5DA6AA] hover:text-white transition-colors">Login</a>
+              <a href="https://app.agenteoffice.com.br" className="text-[#5DA6AA] hover:text-white transition-colors">Login</a>
               <a href="#" className="text-white/50 hover:text-white transition-colors">Suporte</a>
             </div>
           </div>
