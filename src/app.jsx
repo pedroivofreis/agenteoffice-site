@@ -354,243 +354,344 @@ function ChatDemo() {
 
 /* ─── PROPOSTA SHOWCASE ──────────────────────────── */
 function PropostaShowcase() {
-  const [tab, setTab] = useState('proposta');
   const [photoIdx, setPhotoIdx] = useState(0);
-  const HOTEL_PHOTOS = [
+  const [photo2Idx, setPhoto2Idx] = useState(0);
+
+  const PHOTOS1 = [
     'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&fit=crop',
     'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&fit=crop',
     'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&fit=crop',
   ];
+  const PHOTOS2 = [
+    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&fit=crop',
+    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&fit=crop',
+    'https://images.unsplash.com/photo-1455587734955-081b22074882?w=800&fit=crop',
+  ];
+
+  const Ticket = ({ orig, origCity, dest, destCity, dep, arr, flight, direct }) => (
+    <div className="flex items-center gap-3 bg-gradient-to-r from-[#042F2E] to-[#0F766E] rounded-xl p-3.5 text-white relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='13' fill='none' stroke='white' stroke-width='0.5'/%3E%3C/svg%3E")`}} />
+      <div className="text-center relative z-10 w-14">
+        <div className="text-xl font-black tracking-tight">{orig}</div>
+        <div className="text-[8px] text-white/50 font-bold">{origCity}</div>
+        <div className="text-[10px] font-bold text-white/80 mt-0.5">{dep}</div>
+      </div>
+      <div className="flex-1 relative z-10 flex flex-col items-center gap-0.5">
+        <div className="text-[8px] font-bold text-white/40 uppercase tracking-widest">{direct ? 'Voo direto' : 'Com escala'}</div>
+        <div className="w-full flex items-center gap-1">
+          <div className="w-1.5 h-1.5 rounded-full border-2 border-white/50" />
+          <div className="flex-1 h-px bg-white/25" />
+          <span className="text-xs">✈</span>
+          <div className="flex-1 h-px bg-white/25" />
+          <div className="w-1.5 h-1.5 rounded-full border-2 border-white/50" />
+        </div>
+        <div className="text-[8px] font-bold text-white/40">{flight}</div>
+      </div>
+      <div className="text-center relative z-10 w-14">
+        <div className="text-xl font-black tracking-tight">{dest}</div>
+        <div className="text-[8px] text-white/50 font-bold">{destCity}</div>
+        <div className="text-[10px] font-bold text-white/80 mt-0.5">{arr}</div>
+      </div>
+    </div>
+  );
+
+  const HotelCard = ({ photos, idx, setIdx, name, location, stars, regime, checkin, checkout, nights, price }) => (
+    <div className="rounded-xl overflow-hidden border border-slate-100 shadow-sm">
+      <div className="relative h-32">
+        <img src={photos[idx]} alt={name} className="w-full h-full object-cover transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        <button onClick={() => setIdx(i => (i - 1 + photos.length) % photos.length)}
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-black/50 text-white text-xs flex items-center justify-center backdrop-blur-sm">‹</button>
+        <button onClick={() => setIdx(i => (i + 1) % photos.length)}
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-black/50 text-white text-xs flex items-center justify-center backdrop-blur-sm">›</button>
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+          {photos.map((_, i) => <div key={i} className={`w-1 h-1 rounded-full transition-all ${i === idx ? 'bg-white' : 'bg-white/35'}`} />)}
+        </div>
+        <div className="absolute top-2 right-2 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full text-[9px] text-white font-bold">{stars}</div>
+        <div className="absolute bottom-2.5 left-3">
+          <div className="text-white font-black text-xs drop-shadow">{name}</div>
+          <div className="text-white/70 text-[9px] font-medium">{location}</div>
+        </div>
+      </div>
+      <div className="px-3 py-2 bg-white flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 text-[10px]">
+          <span className="text-slate-500 font-semibold">📅 {checkin} → {checkout}</span>
+          <span className="text-slate-400">·</span>
+          <span className="text-slate-500 font-semibold">{nights} diárias</span>
+          <span className="text-slate-400">·</span>
+          <span className="text-[#0F766E] font-bold">{regime}</span>
+        </div>
+        <span className="text-[10px] font-black text-[#114552]">{price}</span>
+      </div>
+    </div>
+  );
 
   return (
-    <section className="py-24 bg-white px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <SectionBadge icon={<Send className="w-3.5 h-3.5"/>} label="O que o cliente vê" color="bg-violet-50 border-violet-200 text-violet-700" />
-          <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+    <section className="py-24 overflow-hidden" style={{background:'linear-gradient(160deg,#0a1f24 0%,#0d2d35 40%,#0a1f24 100%)'}}>
+      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Heading */}
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-1.5 rounded-full mb-6">
+            <Send className="w-3.5 h-3.5 text-[#5DA6AA]"/><span className="text-[#5DA6AA] text-[10px] font-black uppercase tracking-widest">O que o cliente recebe</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
             A proposta mais bonita<br />que seu cliente já recebeu.
           </h2>
-          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
-            Link digital com a sua marca. Sem custo exposto, sem planilha. O cliente abre no celular e se encanta — aí a venda já está quase fechada.
+          <p className="text-white/50 font-medium text-lg max-w-2xl mx-auto">
+            Link digital com a cara da sua agência. Sem custo exposto. O cliente abre no celular e já quer confirmar.
           </p>
         </div>
 
-        {/* ── Browser frame ── */}
-        <div className="relative">
-          {/* Glow */}
-          <div className="absolute -inset-8 bg-gradient-to-br from-[#5DA6AA]/15 via-[#114552]/10 to-violet-400/10 rounded-[4rem] blur-3xl pointer-events-none" />
+        {/* Layout: browser frame + side features */}
+        <div className="lg:grid lg:grid-cols-[1fr_340px] gap-8 items-start">
 
-          <div className="relative bg-white rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden max-w-4xl mx-auto">
-            {/* Browser chrome */}
-            <div className="bg-slate-100 border-b border-slate-200 px-4 py-3 flex items-center gap-3">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400/70" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
-                <div className="w-3 h-3 rounded-full bg-green-400/70" />
-              </div>
-              <div className="flex-1 bg-white rounded-lg px-3 py-1.5 flex items-center gap-2 border border-slate-200">
-                <div className="w-3 h-3 text-slate-400">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          {/* ── Browser frame ── */}
+          <div className="relative">
+            <div className="absolute -inset-4 bg-[#5DA6AA]/10 rounded-[3rem] blur-2xl pointer-events-none" />
+            <div className="relative bg-white rounded-[1.5rem] shadow-2xl overflow-hidden border border-white/10">
+
+              {/* Chrome */}
+              <div className="bg-[#1e1e1e] px-4 py-2.5 flex items-center gap-3">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500 tracking-tight">agenteoffice.com.br/p/88472</span>
-                <div className="ml-auto flex items-center gap-1 text-emerald-500">
-                  <CheckCheck size={11} />
-                  <span className="text-[10px] font-bold">Seguro</span>
+                <div className="flex-1 bg-[#2d2d2d] rounded-md px-3 py-1 flex items-center gap-2">
+                  <svg className="w-2.5 h-2.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span className="text-[10px] font-mono text-slate-400">agenteoffice.com.br/p/88472</span>
+                  <CheckCheck size={9} className="ml-auto text-emerald-400" />
                 </div>
               </div>
-              <div className="flex gap-2">
-                <div className="w-4 h-4 text-slate-400"><NavLeft /></div>
-                <div className="w-4 h-4 text-slate-400"><NavRight /></div>
-              </div>
-            </div>
 
-            {/* Proposta content */}
-            <div className="overflow-hidden">
-
-              {/* Hero da proposta */}
-              <div className="relative h-48 bg-gradient-to-br from-[#042F2E] via-[#0F766E] to-[#5DA6AA] overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&fit=crop"
-                  alt="Toscana"
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-                <div className="relative h-full flex flex-col justify-between p-6">
+              {/* Hero */}
+              <div className="relative h-44 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1400&fit=crop" alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
+                <div className="relative h-full flex flex-col justify-between p-5">
                   <div className="flex items-start justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-widest bg-white/15 text-white px-3 py-1 rounded-full border border-white/20 backdrop-blur-sm">
-                      ✈ Proposta de Viagem
-                    </span>
-                    <img src="/logo_hor_white.png" alt="logo" className="h-6 w-auto opacity-90" />
+                    <span className="text-[9px] font-black uppercase tracking-widest bg-white/15 text-white px-2.5 py-1 rounded-full border border-white/20 backdrop-blur-sm">✈ Proposta de Viagem</span>
+                    <img src="/logo_hor_white.png" alt="logo" className="h-5 w-auto opacity-90" />
                   </div>
                   <div>
-                    <h3 className="text-white font-black text-2xl mb-1 drop-shadow-lg">Lua de Mel — Toscana & Roma</h3>
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">📅 14–22 Abr 2026</span>
-                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">👥 2 viajantes</span>
-                      <span className="text-white/80 text-xs font-medium bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">Casal Ferreira</span>
+                    <h3 className="text-white font-black text-xl mb-2 drop-shadow-lg">Lua de Mel — Toscana & Roma</h3>
+                    <div className="flex gap-2 flex-wrap">
+                      {['📅 14–22 Abr 2026','👥 2 viajantes','Casal Ferreira'].map((t,i) => (
+                        <span key={i} className="text-white/80 text-[10px] font-medium bg-black/25 px-2 py-0.5 rounded-full backdrop-blur-sm">{t}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Sticky bar simulada */}
-              <div className="bg-white border-b border-slate-100 px-4 py-0 flex items-center justify-between shadow-sm">
-                <div className="flex gap-0">
-                  {['📄 Proposta','📋 Voucher 🔒'].map((t, i) => (
-                    <button key={i} onClick={() => setTab(i === 0 ? 'proposta' : 'voucher')}
-                      className={`px-4 py-3 text-[11px] font-black border-b-2 transition-all ${(i === 0 && tab === 'proposta') ? 'border-[#0F766E] text-[#0F766E]' : 'border-transparent text-slate-400'}`}>
-                      {t}
-                    </button>
+              {/* Bar */}
+              <div className="bg-white border-b border-slate-100 px-4 flex items-center justify-between">
+                <div className="flex">
+                  {['📄 Proposta','📋 Voucher'].map((t, i) => (
+                    <div key={i} className={`px-4 py-2.5 text-[10px] font-black border-b-2 ${i === 0 ? 'border-[#0F766E] text-[#0F766E]' : 'border-transparent text-slate-400'}`}>{t}</div>
                   ))}
                 </div>
-                <button className="text-[10px] font-black text-white bg-[#114552] px-3 py-1.5 rounded-lg flex items-center gap-1 my-2">
-                  ⬇ PDF
-                </button>
+                <div className="flex items-center gap-2 py-1.5">
+                  <div className="flex gap-1 text-[8px] font-black text-[#0F766E]">
+                    <span className="bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded">Op. 1</span>
+                    <span className="bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded text-slate-400">Op. 2</span>
+                  </div>
+                  <button className="text-[9px] font-black text-white bg-[#114552] px-2.5 py-1 rounded-lg">⬇ PDF</button>
+                </div>
               </div>
 
               {/* Body */}
-              <div className="bg-slate-50 p-4 space-y-4">
+              <div className="bg-slate-50 p-3 space-y-3 max-h-[580px] overflow-y-auto">
 
-                {/* Strip de categorias */}
-                <div className="flex gap-3 overflow-x-auto pb-1">
-                  {[
-                    { icon: '✈️', label: 'Voos', count: 2 },
-                    { icon: '🏨', label: 'Hotéis', count: 3 },
-                    { icon: '🚌', label: 'Transfers', count: 4 },
-                    { icon: '🎭', label: 'Passeios', count: 3 },
-                    { icon: '🛡️', label: 'Seguro', count: 1 },
-                  ].map((c, i) => (
-                    <div key={i} className="flex items-center gap-2 bg-white rounded-xl px-3 py-2 border border-slate-100 shadow-sm shrink-0">
-                      <span className="text-base">{c.icon}</span>
-                      <div>
-                        <div className="text-[10px] font-black text-[#114552]">{c.label}</div>
-                        <div className="text-[9px] text-slate-400 font-medium">{c.count} {c.count === 1 ? 'item' : 'itens'}</div>
-                      </div>
+                {/* Strip */}
+                <div className="flex gap-2 overflow-x-auto pb-0.5">
+                  {[{e:'✈️',l:'Voos',n:2},{e:'🏨',l:'Hotéis',n:2},{e:'🚌',l:'Transfers',n:3},{e:'🎭',l:'Passeios',n:4},{e:'🛡️',l:'Seguro',n:1}].map((c,i) => (
+                    <div key={i} className="flex items-center gap-1.5 bg-white rounded-lg px-2.5 py-1.5 border border-slate-100 shrink-0">
+                      <span className="text-sm">{c.e}</span>
+                      <div><div className="text-[9px] font-black text-[#114552]">{c.l}</div><div className="text-[8px] text-slate-400">{c.n} {c.n===1?'item':'itens'}</div></div>
                     </div>
                   ))}
                 </div>
 
-                {/* Voo — ticket style */}
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-slate-50 flex items-center gap-2">
-                    <span className="text-base">✈️</span>
-                    <span className="text-[11px] font-black text-[#114552] uppercase tracking-widest">Voos</span>
+                {/* Voos */}
+                <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+                    <span>✈️</span><span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Voos</span>
                   </div>
-                  <div className="p-4">
-                    {/* Ticket */}
-                    <div className="flex items-center gap-4 bg-gradient-to-r from-[#042F2E] to-[#0F766E] rounded-xl p-4 text-white relative overflow-hidden">
-                      <div className="absolute inset-0 opacity-10" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='white' stroke-width='0.5'/%3E%3C/svg%3E")`}} />
-                      <div className="text-center relative z-10">
-                        <div className="text-2xl font-black tracking-tight">GRU</div>
-                        <div className="text-[9px] text-white/60 font-bold uppercase">São Paulo</div>
-                        <div className="text-[10px] font-bold text-white/80 mt-1">08:45</div>
-                      </div>
-                      <div className="flex-1 relative z-10 flex flex-col items-center gap-1">
-                        <div className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Voo direto · 11h20</div>
-                        <div className="w-full flex items-center gap-1">
-                          <div className="w-2 h-2 rounded-full border-2 border-white/60" />
-                          <div className="flex-1 h-px bg-white/30" />
-                          <span className="text-sm">✈</span>
-                          <div className="flex-1 h-px bg-white/30" />
-                          <div className="w-2 h-2 rounded-full border-2 border-white/60" />
+                  <div className="p-3 space-y-2">
+                    <Ticket orig="GRU" origCity="São Paulo" dest="FCO" destCity="Roma" dep="08:45" arr="06:05+1" flight="LATAM LA8025" direct={true} />
+                    <Ticket orig="FCO" origCity="Roma" dest="GRU" destCity="São Paulo" dep="10:30" arr="18:55" flight="LATAM LA8026" direct={true} />
+                  </div>
+                </div>
+
+                {/* Hotéis */}
+                <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+                    <span>🏨</span><span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Hotéis</span>
+                  </div>
+                  <div className="p-3 space-y-2.5">
+                    <HotelCard
+                      photos={PHOTOS1} idx={photoIdx} setIdx={setPhotoIdx}
+                      name="Castello di Casole" location="Toscana, Itália"
+                      stars="⭐⭐⭐⭐⭐" regime="☕ Café da manhã"
+                      checkin="14/04" checkout="18/04" nights="4" price="✓ Incluso" />
+                    <HotelCard
+                      photos={PHOTOS2} idx={photo2Idx} setIdx={setPhoto2Idx}
+                      name="Hotel de Russie" location="Roma, Itália"
+                      stars="⭐⭐⭐⭐⭐" regime="🍽 Meia pensão"
+                      checkin="18/04" checkout="22/04" nights="4" price="✓ Incluso" />
+                  </div>
+                </div>
+
+                {/* Passeios */}
+                <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+                    <span>🎭</span><span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Passeios & Experiências</span>
+                  </div>
+                  <div className="p-3 space-y-2">
+                    {[
+                      { name: 'Tour privê Vinícolas do Chianti', detail: 'Toscana · Dia inteiro', badge: '🍷 Exclusivo', img: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&fit=crop' },
+                      { name: 'Coliseu com acesso prioritário', detail: 'Roma · Guia bilíngue · 3h', badge: '🏛 Histórico', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&fit=crop' },
+                      { name: 'Jantar romântico — Castel Sant\'Angelo', detail: 'Roma · Vista panorâmica', badge: '🌙 Romântico', img: 'https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=400&fit=crop' },
+                    ].map((p, i) => (
+                      <div key={i} className="flex gap-2.5 items-center">
+                        <img src={p.img} alt={p.name} className="w-12 h-12 rounded-lg object-cover shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[10px] font-black text-[#114552] leading-tight">{p.name}</div>
+                          <div className="text-[9px] text-slate-400 font-medium mt-0.5">{p.detail}</div>
                         </div>
-                        <div className="text-[9px] font-bold text-white/50">LATAM LA8025</div>
+                        <span className="text-[8px] font-black bg-teal-50 text-[#0F766E] px-1.5 py-0.5 rounded-full border border-teal-100 shrink-0">{p.badge}</span>
                       </div>
-                      <div className="text-center relative z-10">
-                        <div className="text-2xl font-black tracking-tight">FCO</div>
-                        <div className="text-[9px] text-white/60 font-bold uppercase">Roma</div>
-                        <div className="text-[10px] font-bold text-white/80 mt-1">06:05+1</div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Transfers */}
+                <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+                    <span>🚌</span><span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Transfers</span>
+                  </div>
+                  <div className="divide-y divide-slate-50">
+                    {[
+                      { desc: 'FCO → Castello di Casole (Van privativa)', data: '14/04 · Chegada' },
+                      { desc: 'Toscana → Roma (Van privativa)', data: '18/04 · Transferência' },
+                      { desc: 'Hotel de Russie → FCO', data: '22/04 · Saída 06h' },
+                    ].map((t, i) => (
+                      <div key={i} className="px-3 py-2 flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0 text-xs">🚌</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[10px] font-bold text-slate-700 leading-tight">{t.desc}</div>
+                          <div className="text-[9px] text-slate-400">{t.data}</div>
+                        </div>
+                        <span className="text-[9px] font-black text-[#0F766E] shrink-0">✓ Incluso</span>
                       </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Seguro */}
+                <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+                    <span>🛡️</span><span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Seguro Viagem</span>
+                  </div>
+                  <div className="px-3 py-2.5 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center text-base shrink-0">🛡️</div>
+                    <div className="flex-1">
+                      <div className="text-[10px] font-black text-slate-700">Assistência Total Premium · Affinity</div>
+                      <div className="flex gap-2 mt-0.5 flex-wrap">
+                        {['Médico ilimitado','Bagagem','Covid','Odonto'].map(c => (
+                          <span key={c} className="text-[8px] font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full">{c}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-[8px] text-slate-400 font-bold">14 dias · 2 pax</div>
+                      <div className="text-[10px] font-black text-[#114552]">✓ Incluso</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Hotel — card imersivo */}
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-slate-50 flex items-center gap-2">
-                    <span className="text-base">🏨</span>
-                    <span className="text-[11px] font-black text-[#114552] uppercase tracking-widest">Hotéis</span>
-                  </div>
-                  <div className="p-4 space-y-4">
-                    {/* Hotel com carrossel de fotos */}
-                    <div className="rounded-xl overflow-hidden border border-slate-100">
-                      <div className="relative h-36">
-                        <img src={HOTEL_PHOTOS[photoIdx]} alt="hotel" className="w-full h-full object-cover transition-all duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        {/* Nav */}
-                        <button onClick={() => setPhotoIdx(i => (i - 1 + HOTEL_PHOTOS.length) % HOTEL_PHOTOS.length)}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white text-sm flex items-center justify-center backdrop-blur-sm">‹</button>
-                        <button onClick={() => setPhotoIdx(i => (i + 1) % HOTEL_PHOTOS.length)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white text-sm flex items-center justify-center backdrop-blur-sm">›</button>
-                        {/* Dots */}
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                          {HOTEL_PHOTOS.map((_, i) => (
-                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === photoIdx ? 'bg-white' : 'bg-white/40'}`} />
-                          ))}
-                        </div>
-                        <div className="absolute bottom-3 left-3 right-12">
-                          <div className="text-white font-black text-sm drop-shadow">Castello di Casole · Toscana</div>
-                          <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-[9px] text-white/70 font-bold">☕ Café da manhã</span>
-                            <span className="text-white/40 text-[9px]">·</span>
-                            <span className="text-[9px] text-white/70 font-bold">⭐⭐⭐⭐⭐</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="px-3 py-2.5 flex items-center justify-between bg-teal-50/50">
-                        <div className="flex gap-3 text-[10px] font-semibold text-slate-600">
-                          <span>📅 Check-in: 14/04</span>
-                          <span>·</span>
-                          <span>Check-out: 18/04</span>
-                          <span>·</span>
-                          <span>4 diárias</span>
-                        </div>
-                        <span className="text-[10px] font-black text-[#0F766E]">✓ Incluso</span>
-                      </div>
-                    </div>
+                {/* Mensagem do agente */}
+                <div className="bg-gradient-to-r from-teal-50 to-white rounded-xl border border-teal-100 p-3 flex gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#5DA6AA] to-[#114552] flex items-center justify-center shrink-0 text-white font-black text-xs" style={{fontStyle:'italic'}}>M</div>
+                  <div>
+                    <div className="text-[9px] font-black text-[#114552] mb-1">Mensagem da sua agente</div>
+                    <p className="text-[10px] text-slate-600 font-medium leading-relaxed italic">
+                      "Elaboramos cada detalhe desta lua de mel com muito carinho. Dos vinhedos da Toscana às noites eternas de Roma — cada momento foi pensado para ser inesquecível. Qualquer dúvida, estou aqui! 🥂"
+                    </p>
                   </div>
                 </div>
 
                 {/* Total */}
-                <div className="rounded-2xl overflow-hidden" style={{background:'linear-gradient(135deg,#042F2E 0%,#0F766E 60%,#2DD4BF 100%)'}}>
-                  <div className="p-5 flex items-center justify-between">
-                    <div>
-                      <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{color:'rgba(255,255,255,.55)'}}>Investimento total · 2 viajantes</div>
-                      <div className="text-3xl font-black text-white">R$ 24.048</div>
-                      <div className="text-[11px] mt-1" style={{color:'rgba(255,255,255,.55)'}}>⏰ Proposta válida 7 dias · Sujeito à disponibilidade</div>
+                <div className="rounded-xl overflow-hidden" style={{background:'linear-gradient(135deg,#042F2E 0%,#0F766E 60%,#2DD4BF 100%)'}}>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <div className="text-[9px] font-black uppercase tracking-widest text-white/50 mb-1">Investimento total</div>
+                        <div className="text-3xl font-black text-white">R$ 24.048</div>
+                        <div className="text-[10px] text-white/50 mt-0.5">Para 2 viajantes · R$ 12.024 / pessoa</div>
+                      </div>
+                      <button className="bg-white text-[#0F766E] font-black text-xs px-4 py-2.5 rounded-xl shadow-lg whitespace-nowrap">✓ Aprovar viagem</button>
                     </div>
-                    <button className="bg-white text-[#0F766E] font-black text-sm px-5 py-3 rounded-xl shadow-lg">
-                      ✓ Aprovar
-                    </button>
+                    <div className="grid grid-cols-4 gap-1.5 pt-3 border-t border-white/10">
+                      {[
+                        {l:'Voos',v:'R$ 8.968'},
+                        {l:'Hotéis',v:'R$ 9.912'},
+                        {l:'Passeios',v:'R$ 2.856'},
+                        {l:'Outros',v:'R$ 2.312'},
+                      ].map((i,k) => (
+                        <div key={k} className="text-center">
+                          <div className="text-[8px] text-white/40 font-bold uppercase">{i.l}</div>
+                          <div className="text-[10px] text-white font-black">{i.v}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="px-4 pb-3">
+                    <div className="text-[9px] text-white/40 font-medium text-center">⏰ Proposta válida 7 dias · Sujeito à disponibilidade · Pagamento em até 12x</div>
                   </div>
                 </div>
 
-                {/* Nota de rodapé */}
-                <p className="text-center text-[10px] text-slate-400 font-medium pb-2">
-                  💳 Valores em R$ · Custo e comissão da agência são sempre confidenciais
-                </p>
+                <div className="pb-2 text-center text-[9px] text-slate-400 font-medium">💳 Comissão e custo da agência são sempre confidenciais — só você vê.</div>
               </div>
             </div>
           </div>
 
-          {/* Badges flutuantes */}
-          <div className="hidden lg:block absolute -left-4 top-40 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
-            <div className="text-2xl mb-2">🔒</div>
-            <div className="text-[12px] font-black text-[#114552] mb-1">100% confidencial</div>
-            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">O cliente nunca vê seu custo ou comissão.</div>
+          {/* ── Side features ── */}
+          <div className="hidden lg:flex flex-col gap-4 pt-16">
+            {[
+              { icon: '🔒', title: '100% confidencial', desc: 'Custo e comissão nunca aparecem para o cliente. Só você tem acesso.' },
+              { icon: '📱', title: 'Link no WhatsApp', desc: 'Compartilhe em 1 toque. Abre bonito no celular, tablet ou desktop.' },
+              { icon: '🎨', title: 'Com a sua marca', desc: 'Logo, cores e nome da sua agência em tudo — do hero ao rodapé.' },
+              { icon: '✅', title: '2 opções por proposta', desc: 'Envie op. 1 e op. 2 para o mesmo cliente. Ele compara e decide.' },
+              { icon: '✈️', title: 'Voucher em 1 clique', desc: 'Cliente aprovou? O voucher digital fica pronto na hora. Sem retrabalho.' },
+              { icon: '📄', title: 'Exporta em PDF', desc: 'Gera PDF profissional para quem prefere receber por e-mail ou imprimir.' },
+            ].map((f, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-3 hover:bg-white/8 transition-colors">
+                <div className="text-2xl shrink-0">{f.icon}</div>
+                <div>
+                  <div className="text-[12px] font-black text-white mb-0.5">{f.title}</div>
+                  <div className="text-[11px] text-white/45 font-medium leading-relaxed">{f.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
 
-          <div className="hidden lg:block absolute -right-4 top-52 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
-            <div className="text-2xl mb-2">📱</div>
-            <div className="text-[12px] font-black text-[#114552] mb-1">Link no WhatsApp</div>
-            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">Compartilhe em 1 toque. Abre no celular, tablet ou PC.</div>
-          </div>
-
-          <div className="hidden lg:block absolute -right-4 bottom-32 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 max-w-[200px]">
-            <div className="text-2xl mb-2">✈️</div>
-            <div className="text-[12px] font-black text-[#114552] mb-1">Voucher incluso</div>
-            <div className="text-[11px] text-slate-400 font-medium leading-relaxed">Aprovado, vira voucher em 1 clique. Sem retrabalho.</div>
-          </div>
+        {/* Mobile features (visible only on small screens) */}
+        <div className="lg:hidden mt-8 grid grid-cols-2 gap-3">
+          {[
+            { icon: '🔒', title: '100% confidencial' },
+            { icon: '📱', title: 'Link no WhatsApp' },
+            { icon: '✅', title: '2 opções por proposta' },
+            { icon: '✈️', title: 'Voucher em 1 clique' },
+          ].map((f, i) => (
+            <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2">
+              <span className="text-xl">{f.icon}</span>
+              <span className="text-[11px] font-black text-white">{f.title}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -665,8 +766,8 @@ export default function App() {
               <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">IA que funciona de verdade · CRM para agências</span>
             </div>
             <h1 className="text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
-              Cole a confirmação.<br />
-              <span className="text-[#5DA6AA]">A IA faz o resto.</span>
+              Sua agência.<br />
+              <span className="text-[#5DA6AA]">Com IA que trabalha.</span>
             </h1>
             <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
               Sakura, Flytour, Orinter, CVC — cole o texto da consolidadora e em segundos o orçamento está pronto, com comissão calculada, proposta gerada e voucher digital. Feito por quem entende de agente.
@@ -681,21 +782,9 @@ export default function App() {
               </button>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {['R','M','C','B','A'].map((l, i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-[#114552] to-[#5DA6AA] border-2 border-white flex items-center justify-center text-white text-[10px] font-black">{l}</div>
-                  ))}
-                </div>
-                <div className="text-sm">
-                  <span className="font-black text-[#114552]">+200 agências</span>
-                  <span className="text-slate-400 font-medium ml-1">já operam com o sistema</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
-                <div className="w-1 h-1 bg-slate-300 rounded-full hidden sm:block" />
-                <CheckCheck size={15} className="text-emerald-500" />
-                <span>Sem contrato de fidelidade</span>
+              <div className="flex items-center gap-2 text-sm text-slate-600 font-semibold">
+                <ShieldCheck size={16} className="text-[#5DA6AA]" />
+                <span>Sem contrato de fidelidade — queremos você feliz e livre</span>
               </div>
             </div>
           </div>
@@ -712,7 +801,7 @@ export default function App() {
           {[
             { value: '< 1 min', label: 'cotação completa com comissão', sub: 'antes levava mais de 1 hora' },
             { value: 'Zero', label: 'redigitações de consolidadora', sub: 'a IA lê, interpreta e preenche' },
-            { value: '8+', label: 'consolidadoras integradas via IA', sub: 'Sakura, Flytour, CVC, Trend…' },
+            { value: 'IA real', label: 'que lê, interpreta e preenche', sub: 'sem redigitar nenhuma linha' },
             { value: '1 clique', label: 'proposta e voucher ao cliente', sub: 'link digital profissional' },
           ].map((m, i) => (
             <div key={i} className="text-center group hover:-translate-y-1 transition-transform duration-300">
@@ -812,7 +901,7 @@ export default function App() {
                   ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
                 </ul>
                 <div className="flex flex-wrap gap-2 mt-7">
-                  {['Sakura', 'Flytour', 'Orinter', 'CVC', 'Trend', 'Queensberry', 'Expedia TAAP', 'Decolar'].map(c => (
+                  {['Sakura', 'Flytour', 'Orinter', 'CVC', 'Trend', 'Queensberry', 'Expedia TAAP', 'TBO'].map(c => (
                     <span key={c} className="text-[10px] font-black bg-slate-100 text-slate-500 px-3 py-1.5 rounded-full uppercase tracking-wider">{c}</span>
                   ))}
                 </div>
