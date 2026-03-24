@@ -143,7 +143,7 @@ function DemoModal({ onClose }) {
 
 /* ─── MODAL CHECKOUT ─────────────────────────────── */
 const API_URL = 'https://web-production-32a87.up.railway.app';
-const PLAN_SLUG = { Basic: 'basic', Team: 'team', Enterprise: 'enterprise' };
+const PLAN_SLUG = { Basic: 'basic', Team: 'team', Enterprise: 'enterprise', Founder: 'founder' };
 const INPUT_CLS = 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all';
 const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5';
 
@@ -182,7 +182,7 @@ function PlanModal({ planName, onClose, openDemo }) {
     );
   }
 
-  const priceMap = { Basic: 'R$ 129,90/mês', Team: 'R$ 199/mês' };
+  const priceMap = { Basic: 'R$ 129,90/mês', Team: 'R$ 199/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -809,6 +809,9 @@ export default function App() {
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', fn);
+    // Abre modal de fundador via ?plano=founder
+    const p = new URLSearchParams(window.location.search).get('plano');
+    if (p === 'founder') setSelectedPlan('Founder');
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
