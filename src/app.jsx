@@ -395,7 +395,7 @@ function PropostaShowcase() {
     </div>
   );
 
-  const HotelCard = ({ photos, idx, setIdx, name, location, stars, regime, checkin, checkout, nights, price }) => (
+  const HotelCard = ({ photos, idx, setIdx, name, location, stars, regime, checkin, checkout, nights, price, desc }) => (
     <div className="rounded-xl overflow-hidden border border-slate-100 shadow-sm">
       <div className="relative h-32">
         <img src={photos[idx]} alt={name} className="w-full h-full object-cover transition-all duration-500" />
@@ -413,6 +413,7 @@ function PropostaShowcase() {
           <div className="text-white/70 text-[9px] font-medium">{location}</div>
         </div>
       </div>
+      {desc && <div className="px-3 pt-2 pb-1 bg-white text-[9px] text-slate-500 font-medium leading-relaxed border-b border-slate-50">{desc}</div>}
       <div className="px-3 py-2 bg-white flex items-center justify-between flex-wrap gap-2">
         <div className="flex flex-wrap gap-2 text-[10px]">
           <span className="text-slate-500 font-semibold">📅 {checkin} → {checkout}</span>
@@ -535,12 +536,14 @@ function PropostaShowcase() {
                       photos={PHOTOS1} idx={photoIdx} setIdx={setPhotoIdx}
                       name="Castello di Casole" location="Toscana, Itália"
                       stars="⭐⭐⭐⭐⭐" regime="☕ Café da manhã"
-                      checkin="14/04" checkout="18/04" nights="4" price="✓ Incluso" />
+                      checkin="14/04" checkout="18/04" nights="4" price="✓ Incluso"
+                      desc="Hotel boutique histórico em meio aos vinhedos toscanos. Quarto superior com vista para a colina, spa e piscina infinity exclusivos." />
                     <HotelCard
                       photos={PHOTOS2} idx={photo2Idx} setIdx={setPhoto2Idx}
                       name="Hotel de Russie" location="Roma, Itália"
                       stars="⭐⭐⭐⭐⭐" regime="🍽 Meia pensão"
-                      checkin="18/04" checkout="22/04" nights="4" price="✓ Incluso" />
+                      checkin="18/04" checkout="22/04" nights="4" price="✓ Incluso"
+                      desc="Ícone romano a 2 min da Piazza del Popolo. Jardins secretos, suíte deluxe com banheira e café da manhã no terraço com vista para o Vaticano." />
                   </div>
                 </div>
 
@@ -634,22 +637,6 @@ function PropostaShowcase() {
                       </div>
                       <button className="bg-white text-[#0F766E] font-black text-xs px-4 py-2.5 rounded-xl shadow-lg whitespace-nowrap">✓ Aprovar viagem</button>
                     </div>
-                    <div className="grid grid-cols-4 gap-1.5 pt-3 border-t border-white/10">
-                      {[
-                        {l:'Voos',v:'R$ 8.968'},
-                        {l:'Hotéis',v:'R$ 9.912'},
-                        {l:'Passeios',v:'R$ 2.856'},
-                        {l:'Outros',v:'R$ 2.312'},
-                      ].map((i,k) => (
-                        <div key={k} className="text-center">
-                          <div className="text-[8px] text-white/40 font-bold uppercase">{i.l}</div>
-                          <div className="text-[10px] text-white font-black">{i.v}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="px-4 pb-3">
-                    <div className="text-[9px] text-white/40 font-medium text-center">⏰ Proposta válida 7 dias · Sujeito à disponibilidade · Pagamento em até 12x</div>
                   </div>
                 </div>
 
@@ -770,7 +757,7 @@ export default function App() {
               <span className="text-[#5DA6AA]">Com IA que trabalha.</span>
             </h1>
             <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Sakura, Flytour, Orinter, CVC — cole o texto da consolidadora e em segundos o orçamento está pronto, com comissão calculada, proposta gerada e voucher digital. Feito por quem entende de agente.
+              Do lead à proposta aprovada — tudo em um lugar só, simples de verdade. Pipeline, orçamento, proposta linda pro cliente e financeiro no controle. Sem planilha, sem retrabalho, sem complicação.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <a href="#precos" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
