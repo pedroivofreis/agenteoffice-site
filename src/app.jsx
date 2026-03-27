@@ -909,72 +909,37 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── MULTI-DEVICE ─────────────────────────────── */}
-      <section className="py-12 bg-white border-b border-slate-100 px-4">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
-          <div className="text-center sm:text-left">
-            <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Disponível em</div>
-            <div className="text-2xl font-black text-[#114552]">Desktop, tablet ou celular.</div>
-            <div className="text-slate-400 text-sm font-medium mt-1">Sem instalar nada — acesse pelo navegador.</div>
-          </div>
-          <div className="flex items-end gap-8">
-            {[
-              { icon: <Monitor className="w-7 h-7" />, label: 'Desktop', height: 'h-14', active: true },
-              { icon: <Tablet className="w-6 h-6" />, label: 'Tablet', height: 'h-12', active: false },
-              { icon: <Smartphone className="w-5 h-5" />, label: 'Mobile', height: 'h-10', active: false },
-            ].map((d, i) => (
-              <div key={i} className="flex flex-col items-center gap-2">
-                <div className={`${d.height} aspect-square flex items-center justify-center rounded-2xl transition-all ${d.active ? 'bg-[#114552] text-white shadow-lg' : 'bg-slate-100 text-slate-400'}`}>
-                  {d.icon}
-                </div>
-                <span className={`text-[10px] font-black uppercase tracking-widest ${d.active ? 'text-[#114552]' : 'text-slate-400'}`}>{d.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── JORNADA COMPLETA ─────────────────────────── */}
-      <section id="jornada" className="py-24 bg-white px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <SectionBadge icon={<Zap className="w-3.5 h-3.5"/>} label="Do lead ao embarque" />
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
-              A jornada completa do seu cliente,<br />dentro de um só sistema.
-            </h2>
-            <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
-              Nada cai no vazio. Cada etapa conectada, com alertas automáticos e histórico completo.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: <MessageSquare className="w-6 h-6"/>, color: 'text-blue-500 bg-blue-50', label: '01', title: 'Lead entra no pipeline', desc: 'WhatsApp, e-mail ou indicação. O cliente cai direto no funil visual — você nunca mais perde um lead.' },
-              { icon: <Sparkles className="w-6 h-6"/>, color: 'text-[#5DA6AA] bg-teal-50', label: '02', title: 'Mar.ia monta o roteiro', desc: 'A IA da sua agência escreve o itinerário dia a dia, sugere destinos, lê confirmações de consolidadora e calcula comissão — tudo enquanto você atende o próximo cliente.' },
-              { icon: <FileText className="w-6 h-6"/>, color: 'text-violet-500 bg-violet-50', label: '03', title: 'Cotação em menos de 1 minuto', desc: 'Sakura, Flytour, Orinter, CVC, Trend — cole a confirmação no chat. A IA lê, interpreta e preenche o orçamento linha por linha com a comissão calculada.' },
-              { icon: <Send className="w-6 h-6"/>, color: 'text-emerald-500 bg-emerald-50', label: '04', title: 'Proposta linda + Voucher', desc: 'O orçamento vira uma proposta profissional com a sua marca. Aprovado? Gera o voucher digital em 1 clique.' },
-              { icon: <Wallet className="w-6 h-6"/>, color: 'text-orange-500 bg-orange-50', label: '05', title: 'Financeiro no controle', desc: 'Recebimentos do cliente, pagamentos a fornecedores e comissões do mês — tudo em um painel, sem planilha.' },
-              { icon: <Bell className="w-6 h-6"/>, color: 'text-rose-500 bg-rose-50', label: '06', title: 'Alertas até o embarque', desc: 'O sistema avisa você e o cliente: prazo de documentos, check-in online, transfer e tudo que não pode ser esquecido.' },
-            ].map((step, i) => (
-              <div key={i} className="bg-slate-50 border border-slate-100 p-8 rounded-[2rem] hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
-                <div className="absolute -right-2 -top-2 text-[100px] leading-none font-black text-slate-200/40 group-hover:text-slate-200/70 transition-colors pointer-events-none select-none">
-                  {step.label}
-                </div>
-                <div className="relative z-10">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${step.color}`}>
-                    {step.icon}
-                  </div>
-                  <h3 className="text-xl font-black text-[#114552] mb-3">{step.title}</h3>
-                  <p className="text-slate-500 font-medium leading-relaxed">{step.desc}</p>
-                </div>
-              </div>
+      {/* ── CONSOLIDADORAS STRIP ────────────────────── */}
+      <section className="py-10 bg-white border-b border-slate-100 px-4">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400 mb-7">
+            A IA lê confirmações de todas as consolidadoras
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+            {['Sakura', 'Flytour', 'Orinter', 'CVC', 'Trend Operadora', 'Queensberry', 'Interpoint'].map((name, i) => (
+              <span key={i} className="text-[15px] font-black text-slate-300 hover:text-slate-500 transition-colors tracking-tight">{name}</span>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── FUNCIONALIDADES ──────────────────────────── */}
-      <section id="funcionalidades" className="py-6 bg-slate-50 px-4">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <section id="funcionalidades" className="py-20 bg-slate-50 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
+              <Zap className="w-3.5 h-3.5 text-[#5DA6AA]"/>
+              <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Tudo dentro de um só sistema</span>
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+              IA + WhatsApp + Financeiro.<br />
+              <span className="text-[#5DA6AA]">Feito para agências de viagem.</span>
+            </h2>
+            <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
+              Cada módulo resolve um problema real da sua operação — sem planilha, sem retrabalho, sem aba extra.
+            </p>
+          </div>
+        <div className="space-y-8">
 
           {/* ── BLOCO 1: Consolidadoras ── */}
           <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
@@ -1615,30 +1580,48 @@ export default function App() {
             </div>
           </div>}
 
-          {/* ── MINI CARDS ── */}
-          <div className="grid md:grid-cols-3 gap-6 pt-4 pb-16">
-            {[
-              { icon: <Sparkles className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Mar.ia — IA que trabalha de verdade', desc: 'Lê e interpreta confirmações de qualquer consolidadora, gera roteiros dia a dia, calcula comissão automaticamente e responde dúvidas do cliente. Você atende; ela executa.' },
-              { icon: <BarChart3 className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Dashboard de vendas', desc: 'Métricas em tempo real: ticket médio, conversão, comissões do mês e ranking de destinos mais vendidos.' },
-              { icon: <Users className="w-6 h-6 text-[#5DA6AA]"/>, title: 'CRM de clientes', desc: 'Histórico completo de cada cliente: preferências, documentos, viagens anteriores e o canal por onde veio.' },
-              { icon: <Receipt className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Contrato digital', desc: 'Gere o contrato de prestação de serviços direto do orçamento, com os dados já preenchidos. Um clique, pronto.' },
-              { icon: <Calendar className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Agenda de viagens', desc: 'Visualize todas as viagens programadas por data. Nunca perca um embarque, check-in ou vencimento.' },
-              { icon: <ShieldCheck className="w-6 h-6 text-[#5DA6AA]"/>, title: 'Dados na nuvem', desc: 'Seus dados e os de seus clientes protegidos com criptografia. Acesse de qualquer lugar, sem instalar nada.' },
-            ].map((f, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6">
-                  {f.icon}
-                </div>
-                <h3 className="text-xl font-black text-[#114552] mb-3">{f.title}</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
+        </div>
         </div>
       </section>
 
       {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
       <PropostaShowcase />
+
+      {/* ── DEPOIMENTOS ──────────────────────────────── */}
+      <section className="py-24 bg-white px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
+              <Star className="w-3.5 h-3.5 text-[#5DA6AA]"/>
+              <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Quem já usa</span>
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight">
+              Agências que pararam<br />de usar planilha.
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8 flex flex-col gap-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex gap-0.5">
+                  {Array.from({length: t.stars}).map((_, s) => (
+                    <Star key={s} className="w-4 h-4 text-amber-400 fill-amber-400"/>
+                  ))}
+                </div>
+                <p className="text-slate-600 font-medium leading-relaxed flex-1">"{t.text}"</p>
+                <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                  <div className="w-9 h-9 rounded-full bg-[#114552] flex items-center justify-center text-white text-[12px] font-black flex-shrink-0">
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-black text-[#114552]">{t.name}</div>
+                    <div className="text-[11px] text-slate-400 font-medium">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── PREÇOS ───────────────────────────────────── */}
       <section id="precos" className="py-24 bg-slate-50 px-4">
