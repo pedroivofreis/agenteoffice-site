@@ -18,12 +18,12 @@ const PLANS = [
   },
   {
     name: 'Team', price: '199', desc: 'Para equipes que vendem mais.',
-    features: ['Até 5 usuários', 'Ótimo limite de IA mensal', '5 GB de documentos', 'Tudo do Basic', 'Dashboard por agente', 'Financeiro completo', 'Suporte WhatsApp prioritário'],
+    features: ['Até 5 usuários', 'Ótimo limite de IA mensal', '5 GB de documentos', 'Tudo do Basic', 'Dashboard por agente', 'Financeiro completo', 'Atendimento WhatsApp centralizado', 'Suporte WhatsApp prioritário'],
     cta: 'Escolher Team', highlight: true,
   },
   {
     name: 'Enterprise', price: 'Consultar', desc: 'Para redes e franquias.',
-    features: ['Usuários ilimitados', 'IA sem limite mensal', 'Armazenamento customizado', 'API + integrações', 'Gerente de conta dedicado', 'Relatórios customizados'],
+    features: ['Usuários ilimitados', 'IA sem limite mensal', 'Armazenamento customizado', 'Atendimento WhatsApp centralizado', 'API + integrações', 'Gerente de conta dedicado', 'Relatórios customizados'],
     cta: 'Falar com consultor', highlight: false,
   },
 ];
@@ -1313,6 +1313,55 @@ export default function App() {
                     'Histórico completo de cada cliente em um lugar só',
                   ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
                 </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ── BLOCO 5: Atendimento WhatsApp ── */}
+          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-0">
+              <div className="p-10 lg:p-14 flex flex-col justify-center">
+                <SectionBadge icon={<MessageSquare className="w-3.5 h-3.5"/>} label="Atendimento centralizado" color="bg-green-50 border-green-200 text-green-700" />
+                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                  WhatsApp da agência,<br />dentro do sistema.
+                  <span className="text-[#5DA6AA]"> Zero aba extra.</span>
+                </h2>
+                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
+                  Receba e responda mensagens do WhatsApp Business direto no AgenteOffice. Toda a equipe vê as conversas, você nunca perde um cliente e o histórico fica junto com o CRM.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    'WhatsApp Business via API oficial Meta — sem risco de bloqueio',
+                    'Todos os agentes da equipe atendendo no mesmo número',
+                    'Histórico completo de cada conversa por cliente',
+                    'Disponível nos planos Team e Enterprise',
+                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+                </ul>
+              </div>
+              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
+                <div className="w-full max-w-sm space-y-2">
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-2 bg-[#075e54]">
+                      <div className="w-2 h-2 rounded-full bg-green-400"/>
+                      <span className="text-[10px] font-black text-white uppercase tracking-widest">WhatsApp · Agência</span>
+                    </div>
+                    {[
+                      { from: 'cliente', name: 'Rafaela M.', msg: 'Oi! Quero orçamento pra Portugal em outubro 🙏', time: '09:12' },
+                      { from: 'agente', name: 'Você', msg: 'Oi Rafaela! Quantas pessoas e qual o orçamento aproximado?', time: '09:14' },
+                      { from: 'cliente', name: 'Rafaela M.', msg: '2 pessoas, cerca de R$ 25k. Podem ser cidades diferentes!', time: '09:15' },
+                      { from: 'agente', name: 'Você', msg: 'Perfeito! Já vou montar algumas opções com Lisboa e Porto 😊', time: '09:16' },
+                    ].map((m, i) => (
+                      <div key={i} className={`flex ${m.from === 'agente' ? 'justify-end' : 'justify-start'} px-3 py-1.5`}>
+                        <div className={`max-w-[75%] px-3 py-2 rounded-2xl text-[11px] font-medium leading-relaxed ${m.from === 'agente' ? 'bg-[#dcf8c6] text-slate-700' : 'bg-white border border-slate-100 text-slate-700 shadow-sm'}`}>
+                          <div className="font-black text-[9px] mb-0.5 text-[#075e54]">{m.name}</div>
+                          {m.msg}
+                          <div className="text-[9px] text-slate-400 text-right mt-0.5">{m.time}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-center text-[10px] text-slate-400 font-medium">Atendimento integrado ao CRM • Planos Team e Enterprise</div>
+                </div>
               </div>
             </div>
           </div>
