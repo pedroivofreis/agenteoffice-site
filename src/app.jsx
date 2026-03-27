@@ -852,7 +852,7 @@ export default function App() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────── */}
-      <section className="pt-32 pb-20 lg:pt-44 lg:pb-28 px-4 bg-slate-50 overflow-hidden relative">
+      <section className="pt-32 pb-10 lg:pt-44 lg:pb-12 px-4 bg-slate-50 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-[#5DA6AA]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#114552]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
