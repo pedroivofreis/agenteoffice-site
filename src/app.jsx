@@ -891,6 +891,28 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── MÓDULOS STRIP ────────────────────────────── */}
+      <div className="bg-[#114552] py-5 px-4 overflow-hidden">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-x-2 gap-y-2">
+          {[
+            { icon: '✨', label: 'IA Mar.ia' },
+            { icon: '💬', label: 'Atendimento WhatsApp' },
+            { icon: '🗺️', label: 'Roteiros' },
+            { icon: '📊', label: 'Orçamentos' },
+            { icon: '📄', label: 'Propostas' },
+            { icon: '🧾', label: 'Vouchers' },
+            { icon: '💰', label: 'Financeiro' },
+            { icon: '📋', label: 'Contratos' },
+            { icon: '👥', label: 'CRM de Clientes' },
+            { icon: '📦', label: 'Pipeline' },
+          ].map((m, i) => (
+            <span key={i} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/10 rounded-full px-3 py-1 text-[11px] font-bold text-white/70">
+              <span>{m.icon}</span>{m.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ── FUNCIONALIDADES ──────────────────────────── */}
       <section id="funcionalidades" className="py-20 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto">
@@ -900,8 +922,8 @@ export default function App() {
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Tudo dentro de um só sistema</span>
             </div>
             <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
-              IA + WhatsApp + Financeiro.<br />
-              <span className="text-[#5DA6AA]">Feito para agências de viagem.</span>
+              IA · Roteiros · Orçamentos<br />WhatsApp · Financeiro.
+              <span className="text-[#5DA6AA]"> Tudo integrado.</span>
             </h2>
             <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
               Cada módulo resolve um problema real da sua operação — sem planilha, sem retrabalho, sem aba extra.
