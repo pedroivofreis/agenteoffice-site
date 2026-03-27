@@ -1318,49 +1318,149 @@ export default function App() {
           </div>
 
           {/* ── BLOCO 5: Atendimento WhatsApp ── */}
-          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+          <div className="rounded-[2.5rem] overflow-hidden" style={{background: 'linear-gradient(135deg, #0a2e29 0%, #0d3b34 50%, #114532 100%)'}}>
             <div className="grid lg:grid-cols-2 gap-0">
+              {/* Lado esquerdo — texto */}
               <div className="p-10 lg:p-14 flex flex-col justify-center">
-                <SectionBadge icon={<MessageSquare className="w-3.5 h-3.5"/>} label="Atendimento centralizado" color="bg-green-50 border-green-200 text-green-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  WhatsApp da agência,<br />dentro do sistema.
-                  <span className="text-[#5DA6AA]"> Zero aba extra.</span>
+                {/* Badge Meta Oficial */}
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 w-fit">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7.5c-.276 0-.5.224-.5.5v5c0 .276.224.5.5.5s.5-.224.5-.5v-5c0-.276-.224-.5-.5-.5zM12 7c-.276 0-.5.224-.5.5v9c0 .276.224.5.5.5s.5-.224.5-.5v-9c0-.276-.224-.5-.5-.5zM7.5 9.5c-.276 0-.5.224-.5.5v3c0 .276.224.5.5.5s.5-.224.5-.5v-3c0-.276-.224-.5-.5-.5z" fill="#25D366"/>
+                  </svg>
+                  <span className="text-[11px] font-black text-green-300 uppercase tracking-widest">API Oficial WhatsApp · Meta Business</span>
+                </div>
+
+                <h2 className="text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
+                  Toda a equipe atendendo<br />no mesmo WhatsApp.
+                  <span className="text-green-400"> Dentro do CRM.</span>
                 </h2>
-                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Receba e responda mensagens do WhatsApp Business direto no AgenteOffice. Toda a equipe vê as conversas, você nunca perde um cliente e o histórico fica junto com o CRM.
+                <p className="text-white/60 font-medium text-base mb-8 leading-relaxed">
+                  Conecte o número da sua agência via <strong className="text-white/90">API oficial do WhatsApp Business (Meta)</strong> e atenda todos os clientes sem sair do AgenteOffice. Sem risco de bloqueio. Sem aba extra.
                 </p>
-                <ul className="space-y-3">
+
+                <ul className="space-y-3 mb-8">
                   {[
-                    'WhatsApp Business via API oficial Meta — sem risco de bloqueio',
-                    'Todos os agentes da equipe atendendo no mesmo número',
-                    'Histórico completo de cada conversa por cliente',
-                    'Disponível nos planos Team e Enterprise',
-                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+                    { icon: '✅', text: 'Integração oficial Meta — conta verificada, sem bloqueio' },
+                    { icon: '👥', text: 'Múltiplos agentes no mesmo número ao mesmo tempo' },
+                    { icon: '📋', text: 'Histórico da conversa vinculado ao cliente no CRM' },
+                    { icon: '🔔', text: 'Notificações em tempo real para toda a equipe' },
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="text-base leading-none mt-0.5">{item.icon}</span>
+                      <span className="text-white/75 font-medium text-sm leading-relaxed">{item.text}</span>
+                    </li>
+                  ))}
                 </ul>
+
+                {/* Selos */}
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <div className="w-6 h-6 rounded-full bg-[#25D366] flex items-center justify-center text-white text-[10px] font-black">M</div>
+                    <span className="text-[11px] font-bold text-white/80">Meta Business Partner</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <ShieldCheck className="w-4 h-4 text-green-400"/>
+                    <span className="text-[11px] font-bold text-white/80">Conta verificada</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <span className="text-green-400 text-sm">●</span>
+                    <span className="text-[11px] font-bold text-white/80">Disponível Team & Enterprise</span>
+                  </div>
+                </div>
               </div>
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
-                <div className="w-full max-w-sm space-y-2">
-                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                    <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-2 bg-[#075e54]">
-                      <div className="w-2 h-2 rounded-full bg-green-400"/>
-                      <span className="text-[10px] font-black text-white uppercase tracking-widest">WhatsApp · Agência</span>
+
+              {/* Lado direito — mockup CRM + chat */}
+              <div className="p-8 lg:p-10 flex items-center justify-center">
+                <div className="w-full max-w-[360px]">
+                  {/* Janela do CRM */}
+                  <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style={{background:'#0f1923'}}>
+                    {/* Topbar CRM */}
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10" style={{background:'#1a2a35'}}>
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/70"/>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/70"/>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-400/70"/>
+                      </div>
+                      <div className="flex-1 flex items-center justify-center">
+                        <div className="bg-white/10 rounded-md px-3 py-0.5 text-[10px] text-white/50 font-medium">app.agenteoffice.com.br/atendimento</div>
+                      </div>
                     </div>
-                    {[
-                      { from: 'cliente', name: 'Rafaela M.', msg: 'Oi! Quero orçamento pra Portugal em outubro 🙏', time: '09:12' },
-                      { from: 'agente', name: 'Você', msg: 'Oi Rafaela! Quantas pessoas e qual o orçamento aproximado?', time: '09:14' },
-                      { from: 'cliente', name: 'Rafaela M.', msg: '2 pessoas, cerca de R$ 25k. Podem ser cidades diferentes!', time: '09:15' },
-                      { from: 'agente', name: 'Você', msg: 'Perfeito! Já vou montar algumas opções com Lisboa e Porto 😊', time: '09:16' },
-                    ].map((m, i) => (
-                      <div key={i} className={`flex ${m.from === 'agente' ? 'justify-end' : 'justify-start'} px-3 py-1.5`}>
-                        <div className={`max-w-[75%] px-3 py-2 rounded-2xl text-[11px] font-medium leading-relaxed ${m.from === 'agente' ? 'bg-[#dcf8c6] text-slate-700' : 'bg-white border border-slate-100 text-slate-700 shadow-sm'}`}>
-                          <div className="font-black text-[9px] mb-0.5 text-[#075e54]">{m.name}</div>
-                          {m.msg}
-                          <div className="text-[9px] text-slate-400 text-right mt-0.5">{m.time}</div>
+
+                    {/* Layout CRM */}
+                    <div className="flex" style={{height:'320px'}}>
+                      {/* Mini sidebar */}
+                      <div className="w-10 border-r border-white/10 flex flex-col items-center py-3 gap-3" style={{background:'#111c26'}}>
+                        {['🏠','✈️','💬','⚙️'].map((ic,i) => (
+                          <div key={i} className={`w-7 h-7 rounded-lg flex items-center justify-center text-[12px] ${i===2 ? 'bg-green-500/30 ring-1 ring-green-400/50' : 'opacity-30'}`}>{ic}</div>
+                        ))}
+                      </div>
+
+                      {/* Lista de conversas */}
+                      <div className="w-28 border-r border-white/10 overflow-hidden" style={{background:'#141f2b'}}>
+                        <div className="px-2 py-2 border-b border-white/10">
+                          <span className="text-[9px] font-black text-white/40 uppercase tracking-wider">Conversas</span>
+                        </div>
+                        {[
+                          { name: 'Rafaela M.', msg: 'Oi! Quero orçamento...', unread: 2, active: true },
+                          { name: 'João P.', msg: 'Quanto fica Cancún?', unread: 0, active: false },
+                          { name: 'Ana Silva', msg: 'Passaporte ok ✓', unread: 0, active: false },
+                        ].map((c,i) => (
+                          <div key={i} className={`px-2 py-2 border-b border-white/5 cursor-pointer ${c.active ? 'bg-green-500/15' : ''}`}>
+                            <div className="flex items-center justify-between mb-0.5">
+                              <span className="text-[9px] font-black text-white/80 truncate">{c.name}</span>
+                              {c.unread > 0 && <span className="bg-green-500 text-white text-[7px] font-black rounded-full w-3.5 h-3.5 flex items-center justify-center flex-shrink-0">{c.unread}</span>}
+                            </div>
+                            <span className="text-[8px] text-white/40 truncate block">{c.msg}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Chat principal */}
+                      <div className="flex-1 flex flex-col" style={{background:'#1a2a35'}}>
+                        {/* Header do chat */}
+                        <div className="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+                          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-[9px] font-black">R</div>
+                          <div>
+                            <div className="text-[10px] font-black text-white">Rafaela M.</div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-400"/>
+                              <span className="text-[8px] text-green-400">online</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Mensagens */}
+                        <div className="flex-1 px-2 py-2 space-y-2 overflow-hidden">
+                          {[
+                            { from: 'c', msg: 'Oi! Quero orçamento pra Portugal em outubro 🙏', time: '09:12' },
+                            { from: 'a', msg: 'Oi Rafaela! Quantas pessoas?', time: '09:14' },
+                            { from: 'c', msg: '2 pessoas, ~R$ 25k', time: '09:15' },
+                            { from: 'a', msg: 'Perfeito! Já monto as opções 😊', time: '09:16' },
+                          ].map((m,i) => (
+                            <div key={i} className={`flex ${m.from==='a' ? 'justify-end' : 'justify-start'}`}>
+                              <div className={`max-w-[80%] px-2 py-1.5 rounded-xl text-[9px] font-medium leading-relaxed ${m.from==='a' ? 'bg-[#dcf8c6] text-slate-800' : 'bg-white/15 text-white/85'}`}>
+                                {m.msg}
+                                <div className="text-[7px] text-right mt-0.5 opacity-50">{m.time} ✓✓</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Input */}
+                        <div className="px-2 py-2 border-t border-white/10 flex items-center gap-1.5">
+                          <div className="flex-1 bg-white/10 rounded-lg px-2 py-1 text-[9px] text-white/30">Responder Rafaela...</div>
+                          <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                          </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
                   </div>
-                  <div className="text-center text-[10px] text-slate-400 font-medium">Atendimento integrado ao CRM • Planos Team e Enterprise</div>
+
+                  {/* Label abaixo */}
+                  <div className="text-center mt-3 text-[10px] text-white/30 font-medium">
+                    WhatsApp Business integrado · API Oficial Meta
+                  </div>
                 </div>
               </div>
             </div>
