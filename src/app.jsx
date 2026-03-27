@@ -1577,42 +1577,6 @@ export default function App() {
       {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
       <PropostaShowcase />
 
-      {/* ── DEPOIMENTOS ──────────────────────────────── */}
-      <section className="py-24 bg-white px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
-              <Star className="w-3.5 h-3.5 text-[#5DA6AA]"/>
-              <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Quem já usa</span>
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight">
-              Agências que pararam<br />de usar planilha.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8 flex flex-col gap-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex gap-0.5">
-                  {Array.from({length: t.stars}).map((_, s) => (
-                    <Star key={s} className="w-4 h-4 text-amber-400 fill-amber-400"/>
-                  ))}
-                </div>
-                <p className="text-slate-600 font-medium leading-relaxed flex-1">"{t.text}"</p>
-                <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
-                  <div className="w-9 h-9 rounded-full bg-[#114552] flex items-center justify-center text-white text-[12px] font-black flex-shrink-0">
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <div className="text-[13px] font-black text-[#114552]">{t.name}</div>
-                    <div className="text-[11px] text-slate-400 font-medium">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── PREÇOS ───────────────────────────────────── */}
       <section id="precos" className="py-24 bg-slate-50 px-4">
         <div className="max-w-6xl mx-auto">
