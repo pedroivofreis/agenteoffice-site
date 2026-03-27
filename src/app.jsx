@@ -891,38 +891,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── MÉTRICAS ─────────────────────────────────── */}
-      <section className="py-14 bg-[#114552]">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { value: '< 1 min', label: 'cotação completa com comissão', sub: 'antes levava mais de 1 hora' },
-            { value: 'Zero', label: 'redigitações de consolidadora', sub: 'a IA lê, interpreta e preenche' },
-            { value: 'IA real', label: 'que lê, interpreta e preenche', sub: 'sem redigitar nenhuma linha' },
-            { value: '1 clique', label: 'proposta e voucher ao cliente', sub: 'link digital profissional' },
-          ].map((m, i) => (
-            <div key={i} className="text-center group hover:-translate-y-1 transition-transform duration-300">
-              <div className="text-3xl lg:text-4xl font-black text-[#5DA6AA] mb-2">{m.value}</div>
-              <div className="text-sm font-bold text-white mb-1">{m.label}</div>
-              <div className="text-[11px] text-white/40 font-medium uppercase tracking-wider">{m.sub}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── CONSOLIDADORAS STRIP ────────────────────── */}
-      <section className="py-10 bg-white border-b border-slate-100 px-4">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400 mb-7">
-            A IA lê confirmações de todas as consolidadoras
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
-            {['Sakura', 'Flytour', 'Orinter', 'CVC', 'Trend Operadora', 'Queensberry', 'Interpoint'].map((name, i) => (
-              <span key={i} className="text-[15px] font-black text-slate-300 hover:text-slate-500 transition-colors tracking-tight">{name}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FUNCIONALIDADES ──────────────────────────── */}
       <section id="funcionalidades" className="py-20 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto">
