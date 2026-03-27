@@ -1067,257 +1067,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* ── BLOCO 2: Proposta e Voucher ── */}
-          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-0">
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
-                <div className="w-full max-w-xs space-y-3">
-                  {/* Proposta bonita */}
-                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                    <div className="bg-gradient-to-r from-[#114552] to-[#1a6878] px-4 py-3.5 flex items-center justify-between">
-                      <img src="/logo_hor_white.png" alt="logo" className="h-5 w-auto" />
-                      <span className="text-[9px] bg-white/15 text-white font-black px-2 py-0.5 rounded-full border border-white/20">Proposta ativa</span>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-sm font-black text-[#114552] mb-0.5">🇵🇹 Portugal + Espanha — 12 dias</div>
-                      <div className="text-[10px] text-slate-400 mb-3">2 passageiros · Outubro 2026</div>
-                      <div className="space-y-1 mb-4">
-                        {['✈️ Voos GRU → LIS → MAD → GRU (TAP)', '🏨 Hotéis 4★ boutique com café incluso', '🚌 Transfers e city tours', '🛡️ Seguro viagem premium'].map((item, j) => (
-                          <div key={j} className="flex items-center gap-2 text-[10px] font-semibold text-slate-600">
-                            <div className="w-1 h-1 rounded-full bg-[#5DA6AA] shrink-0" />{item}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="h-px bg-slate-100 mb-3" />
-                      <div className="flex justify-between items-center mb-3">
-                        <span className="text-[10px] text-slate-400 font-medium">Valor total p/ casal</span>
-                        <span className="text-lg font-black text-[#114552]">R$ 24.048</span>
-                      </div>
-                      <button className="w-full bg-[#114552] text-white text-[10px] font-black py-2.5 rounded-xl hover:bg-[#0a2c35] transition-colors">
-                        ✓ Aprovar e reservar
-                      </button>
-                    </div>
-                  </div>
-                  {/* Voucher */}
-                  <div className="bg-gradient-to-br from-[#114552] to-[#1a5f6e] rounded-2xl p-4 text-white shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-8 translate-x-8" />
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="text-[9px] font-black uppercase tracking-widest text-[#5DA6AA]">✈️ Voucher de Viagem</div>
-                      <div className="text-[9px] bg-white/10 border border-white/10 px-2 py-0.5 rounded-full font-bold">#VGM-2847</div>
-                    </div>
-                    <div className="text-sm font-black mb-1">João e Maria Silva</div>
-                    <div className="text-[10px] text-white/60 mb-4">Lisboa · Sintra · Sevilha · Madrid</div>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
-                      {[
-                        { l: 'Embarque', v: '14 Out 2026' },
-                        { l: 'Retorno', v: '26 Out 2026' },
-                        { l: 'Voo ida', v: 'TAP LA807' },
-                        { l: 'Passageiros', v: '2 adultos' }
-                      ].map((f, i) => (
-                        <div key={i}>
-                          <div className="text-[8px] text-white/40 font-bold uppercase tracking-wider">{f.l}</div>
-                          <div className="text-[10px] font-bold">{f.v}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-slate-400 text-center font-medium">Custo interno e comissão nunca aparecem para o cliente</p>
-                </div>
-              </div>
-              <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
-                <SectionBadge icon={<FileText className="w-3.5 h-3.5"/>} label="Proposta + Voucher" color="bg-violet-50 border-violet-200 text-violet-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  Orçamento se torna proposta.<br />Aprovado, vira voucher.<br />
-                  <span className="text-[#5DA6AA]">Cliente encantado.</span>
-                </h2>
-                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Sua proposta sai com o logo e a identidade da sua agência. O cliente recebe um link bonito no celular — sem saber o custo, sem exposição de comissão. Aprovou? O voucher está pronto em segundos.
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    'Proposta com o layout da sua agência, profissional e limpa',
-                    'Link único por cliente, sem precisar instalar nada',
-                    'Voucher com voos, hotéis, transfers e passeios organizados',
-                    'Custo e comissão ficam visíveis só para você, nunca para o cliente',
-                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* ── BLOCO 3: Financeiro ── */}
-          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-0">
-              <div className="p-10 lg:p-14 flex flex-col justify-center">
-                <SectionBadge icon={<Wallet className="w-3.5 h-3.5"/>} label="Financeiro" color="bg-emerald-50 border-emerald-200 text-emerald-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  Sabe exatamente quanto<br />tem a receber — e quanto<br />
-                  <span className="text-[#5DA6AA]">já entrou no caixa.</span>
-                </h2>
-                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Controle de recebimentos por viagem, pagamentos a fornecedores e comissões do mês. Tudo em um painel — sem planilha, sem palpite.
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    'Recebimentos: acompanhe o que cada cliente pagou e o que falta',
-                    'Fornecedores: marque quando pagou e quando recebeu comissão',
-                    'Dashboard com entradas, saídas e saldo projetado do mês',
-                    'Alertas de vencimento para nunca perder um pagamento',
-                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
-                </ul>
-              </div>
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
-                <div className="w-full max-w-sm space-y-3">
-                  {/* Header do painel financeiro */}
-                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                    <div className="bg-[#114552] px-4 py-3 flex items-center justify-between">
-                      <span className="text-[10px] font-black text-white uppercase tracking-widest">Financeiro — Março 2026</span>
-                      <span className="text-[9px] bg-emerald-400/20 text-emerald-300 font-black px-2 py-0.5 rounded-full">● Ao vivo</span>
-                    </div>
-                    {/* Totais */}
-                    <div className="grid grid-cols-3 gap-0 border-b border-slate-50">
-                      {[
-                        { l: 'A receber', v: 'R$ 48.200', c: 'text-[#5DA6AA]' },
-                        { l: 'Recebido', v: 'R$ 31.400', c: 'text-emerald-600' },
-                        { l: 'Comissões', v: 'R$ 7.860', c: 'text-violet-600' },
-                      ].map((m, i) => (
-                        <div key={i} className={`p-3 text-center ${i < 2 ? 'border-r border-slate-50' : ''}`}>
-                          <div className="text-[8px] text-slate-400 font-bold uppercase mb-0.5">{m.l}</div>
-                          <div className={`text-xs font-black ${m.c}`}>{m.v}</div>
-                        </div>
-                      ))}
-                    </div>
-                    {/* Viagens com progresso */}
-                    <div className="p-3 space-y-3">
-                      <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Recebimentos por viagem</div>
-                      {[
-                        { name: 'Portugal + Espanha — Silva', total: 'R$ 24.048', pct: 72, recebido: 'R$ 17.315', falta: 'R$ 6.733' },
-                        { name: 'Maldivas — Família Costa', total: 'R$ 38.500', pct: 100, recebido: 'R$ 38.500', falta: null },
-                        { name: 'Paris — Casal Fernandez', total: 'R$ 19.200', pct: 40, recebido: 'R$ 7.680', falta: 'R$ 11.520' },
-                      ].map((v, i) => (
-                        <div key={i} className="group">
-                          <div className="flex justify-between items-start mb-1.5">
-                            <span className="text-[10px] font-bold text-slate-700 leading-tight flex-1 pr-2">{v.name}</span>
-                            <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${v.pct === 100 ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'}`}>
-                              {v.pct === 100 ? '✓ Quitado' : `${v.pct}%`}
-                            </span>
-                          </div>
-                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-1">
-                            <div className={`h-full rounded-full transition-all ${v.pct === 100 ? 'bg-emerald-400' : 'bg-[#5DA6AA]'}`} style={{width:`${v.pct}%`}} />
-                          </div>
-                          <div className="flex justify-between text-[9px] font-medium text-slate-400">
-                            <span>Recebido: <span className="text-emerald-600 font-bold">{v.recebido}</span></span>
-                            {v.falta && <span>Falta: <span className="text-amber-600 font-bold">{v.falta}</span></span>}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Alertas de pagamento */}
-                  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-start gap-3">
-                    <div className="w-7 h-7 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
-                      <Bell size={13} className="text-amber-600" />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-black text-amber-700 mb-0.5">Vence hoje</div>
-                      <div className="text-[10px] text-amber-600 font-medium">Pagamento Sakura — Paris/Fernandez · R$ 8.400</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── BLOCO 4: Pipeline + Alertas ── */}
-          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-0">
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
-                <div className="w-full max-w-sm space-y-3">
-                  {/* Mini Kanban */}
-                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                    <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-2">
-                      <LayoutDashboard size={13} className="text-[#5DA6AA]" />
-                      <span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Pipeline de vendas</span>
-                    </div>
-                    <div className="p-3 overflow-x-auto">
-                      <div className="flex gap-2.5 min-w-max">
-                        {[
-                          { col: 'Lead', color: 'bg-blue-50 border-blue-100', dot: 'bg-blue-400', cards: [
-                            { name: 'Família Rocha', dest: 'Cancún · Jul', val: 'R$ 22k' },
-                            { name: 'Camila S.', dest: 'Disney · Dez', val: '—' },
-                          ]},
-                          { col: 'Orçamento', color: 'bg-violet-50 border-violet-100', dot: 'bg-violet-400', cards: [
-                            { name: 'Silva, João', dest: 'Portugal · Out', val: 'R$ 24k' },
-                          ]},
-                          { col: 'Fechado', color: 'bg-emerald-50 border-emerald-100', dot: 'bg-emerald-400', cards: [
-                            { name: 'Costa, Pedro', dest: 'Maldivas · Ago', val: 'R$ 38k' },
-                            { name: 'Fernandez', dest: 'Paris · Set', val: 'R$ 19k' },
-                          ]},
-                        ].map((col, ci) => (
-                          <div key={ci} className="w-[130px] shrink-0">
-                            <div className="flex items-center gap-1.5 mb-2">
-                              <div className={`w-2 h-2 rounded-full ${col.dot}`} />
-                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider">{col.col}</span>
-                              <span className="ml-auto text-[9px] bg-slate-100 text-slate-400 font-bold px-1.5 py-0.5 rounded-full">{col.cards.length}</span>
-                            </div>
-                            <div className="space-y-1.5">
-                              {col.cards.map((c, cj) => (
-                                <div key={cj} className={`p-2.5 rounded-xl border ${col.color}`}>
-                                  <div className="text-[10px] font-black text-[#114552] leading-tight mb-0.5">{c.name}</div>
-                                  <div className="text-[9px] text-slate-400 font-medium">{c.dest}</div>
-                                  {c.val !== '—' && <div className="text-[9px] font-black text-[#5DA6AA] mt-1">{c.val}</div>}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  {/* Alertas */}
-                  <div className="bg-white rounded-2xl shadow border border-slate-100 divide-y divide-slate-50">
-                    <div className="px-4 py-2.5 flex items-center gap-2">
-                      <Bell size={12} className="text-[#5DA6AA]" />
-                      <span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Alertas do dia</span>
-                    </div>
-                    {[
-                      { icon: '✈️', label: 'Check-in disponível', sub: 'Silva · TAP LA807 amanhã', color: 'text-blue-600 bg-blue-50' },
-                      { icon: '📄', label: 'Visto pendente', sub: 'Costa · Maldivas · 18 dias', color: 'text-amber-600 bg-amber-50' },
-                      { icon: '💰', label: 'Pagamento recebido', sub: 'Fernandez · R$ 7.680', color: 'text-emerald-600 bg-emerald-50' },
-                    ].map((a, i) => (
-                      <div key={i} className="px-3 py-2.5 flex items-center gap-3">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-sm shrink-0 ${a.color}`}>{a.icon}</div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-[10px] font-black text-[#114552]">{a.label}</div>
-                          <div className="text-[9px] text-slate-400 font-medium truncate">{a.sub}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
-                <SectionBadge icon={<Kanban className="w-3.5 h-3.5"/>} label="Pipeline + Alertas" color="bg-blue-50 border-blue-200 text-blue-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
-                  Veja onde cada venda<br />está — e o que precisa<br />
-                  <span className="text-[#5DA6AA]">de atenção agora.</span>
-                </h2>
-                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Pipeline visual por etapa de venda, alertas automáticos de check-in, documentos e vencimentos. Você começa o dia sabendo exatamente o que fazer.
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    'Kanban por etapa: lead, orçamento, fechado, embarcado',
-                    'Alerta automático de check-in antes do voo',
-                    'Aviso de visto, passaporte e documentação pendente',
-                    'Histórico completo de cada cliente em um lugar só',
-                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* ── BLOCO 5: Atendimento WhatsApp ── */}
+          {/* ── BLOCO 2: Atendimento WhatsApp ── */}
           <div className="rounded-[2.5rem] overflow-hidden" style={{background: 'linear-gradient(135deg, #0a2e29 0%, #0d3b34 50%, #114532 100%)'}}>
             <div className="grid lg:grid-cols-2 gap-0">
               {/* Lado esquerdo — texto */}
@@ -1465,6 +1215,405 @@ export default function App() {
               </div>
             </div>
           </div>
+
+          {/* ── BLOCO 3: Proposta e Voucher ── */}
+          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-0">
+              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
+                <div className="w-full max-w-xs space-y-3">
+                  {/* Proposta bonita */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                    <div className="bg-gradient-to-r from-[#114552] to-[#1a6878] px-4 py-3.5 flex items-center justify-between">
+                      <img src="/logo_hor_white.png" alt="logo" className="h-5 w-auto" />
+                      <span className="text-[9px] bg-white/15 text-white font-black px-2 py-0.5 rounded-full border border-white/20">Proposta ativa</span>
+                    </div>
+                    <div className="p-4">
+                      <div className="text-sm font-black text-[#114552] mb-0.5">🇵🇹 Portugal + Espanha — 12 dias</div>
+                      <div className="text-[10px] text-slate-400 mb-3">2 passageiros · Outubro 2026</div>
+                      <div className="space-y-1 mb-4">
+                        {['✈️ Voos GRU → LIS → MAD → GRU (TAP)', '🏨 Hotéis 4★ boutique com café incluso', '🚌 Transfers e city tours', '🛡️ Seguro viagem premium'].map((item, j) => (
+                          <div key={j} className="flex items-center gap-2 text-[10px] font-semibold text-slate-600">
+                            <div className="w-1 h-1 rounded-full bg-[#5DA6AA] shrink-0" />{item}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="h-px bg-slate-100 mb-3" />
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-[10px] text-slate-400 font-medium">Valor total p/ casal</span>
+                        <span className="text-lg font-black text-[#114552]">R$ 24.048</span>
+                      </div>
+                      <button className="w-full bg-[#114552] text-white text-[10px] font-black py-2.5 rounded-xl hover:bg-[#0a2c35] transition-colors">
+                        ✓ Aprovar e reservar
+                      </button>
+                    </div>
+                  </div>
+                  {/* Voucher */}
+                  <div className="bg-gradient-to-br from-[#114552] to-[#1a5f6e] rounded-2xl p-4 text-white shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-8 translate-x-8" />
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="text-[9px] font-black uppercase tracking-widest text-[#5DA6AA]">✈️ Voucher de Viagem</div>
+                      <div className="text-[9px] bg-white/10 border border-white/10 px-2 py-0.5 rounded-full font-bold">#VGM-2847</div>
+                    </div>
+                    <div className="text-sm font-black mb-1">João e Maria Silva</div>
+                    <div className="text-[10px] text-white/60 mb-4">Lisboa · Sintra · Sevilha · Madrid</div>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+                      {[
+                        { l: 'Embarque', v: '14 Out 2026' },
+                        { l: 'Retorno', v: '26 Out 2026' },
+                        { l: 'Voo ida', v: 'TAP LA807' },
+                        { l: 'Passageiros', v: '2 adultos' }
+                      ].map((f, i) => (
+                        <div key={i}>
+                          <div className="text-[8px] text-white/40 font-bold uppercase tracking-wider">{f.l}</div>
+                          <div className="text-[10px] font-bold">{f.v}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-slate-400 text-center font-medium">Custo interno e comissão nunca aparecem para o cliente</p>
+                </div>
+              </div>
+              <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
+                <SectionBadge icon={<FileText className="w-3.5 h-3.5"/>} label="Proposta + Voucher" color="bg-violet-50 border-violet-200 text-violet-700" />
+                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                  Orçamento se torna proposta.<br />Aprovado, vira voucher.<br />
+                  <span className="text-[#5DA6AA]">Cliente encantado.</span>
+                </h2>
+                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
+                  Sua proposta sai com o logo e a identidade da sua agência. O cliente recebe um link bonito no celular — sem saber o custo, sem exposição de comissão. Aprovou? O voucher está pronto em segundos.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    'Proposta com o layout da sua agência, profissional e limpa',
+                    'Link único por cliente, sem precisar instalar nada',
+                    'Voucher com voos, hotéis, transfers e passeios organizados',
+                    'Custo e comissão ficam visíveis só para você, nunca para o cliente',
+                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ── BLOCO 4: Financeiro ── */}
+          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-0">
+              <div className="p-10 lg:p-14 flex flex-col justify-center">
+                <SectionBadge icon={<Wallet className="w-3.5 h-3.5"/>} label="Financeiro" color="bg-emerald-50 border-emerald-200 text-emerald-700" />
+                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                  Sabe exatamente quanto<br />tem a receber — e quanto<br />
+                  <span className="text-[#5DA6AA]">já entrou no caixa.</span>
+                </h2>
+                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
+                  Controle de recebimentos por viagem, pagamentos a fornecedores e comissões do mês. Tudo em um painel — sem planilha, sem palpite.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    'Recebimentos: acompanhe o que cada cliente pagou e o que falta',
+                    'Fornecedores: marque quando pagou e quando recebeu comissão',
+                    'Dashboard com entradas, saídas e saldo projetado do mês',
+                    'Alertas de vencimento para nunca perder um pagamento',
+                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+                </ul>
+              </div>
+              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
+                <div className="w-full max-w-sm space-y-3">
+                  {/* Header do painel financeiro */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                    <div className="bg-[#114552] px-4 py-3 flex items-center justify-between">
+                      <span className="text-[10px] font-black text-white uppercase tracking-widest">Financeiro — Março 2026</span>
+                      <span className="text-[9px] bg-emerald-400/20 text-emerald-300 font-black px-2 py-0.5 rounded-full">● Ao vivo</span>
+                    </div>
+                    {/* Totais */}
+                    <div className="grid grid-cols-3 gap-0 border-b border-slate-50">
+                      {[
+                        { l: 'A receber', v: 'R$ 48.200', c: 'text-[#5DA6AA]' },
+                        { l: 'Recebido', v: 'R$ 31.400', c: 'text-emerald-600' },
+                        { l: 'Comissões', v: 'R$ 7.860', c: 'text-violet-600' },
+                      ].map((m, i) => (
+                        <div key={i} className={`p-3 text-center ${i < 2 ? 'border-r border-slate-50' : ''}`}>
+                          <div className="text-[8px] text-slate-400 font-bold uppercase mb-0.5">{m.l}</div>
+                          <div className={`text-xs font-black ${m.c}`}>{m.v}</div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Viagens com progresso */}
+                    <div className="p-3 space-y-3">
+                      <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Recebimentos por viagem</div>
+                      {[
+                        { name: 'Portugal + Espanha — Silva', total: 'R$ 24.048', pct: 72, recebido: 'R$ 17.315', falta: 'R$ 6.733' },
+                        { name: 'Maldivas — Família Costa', total: 'R$ 38.500', pct: 100, recebido: 'R$ 38.500', falta: null },
+                        { name: 'Paris — Casal Fernandez', total: 'R$ 19.200', pct: 40, recebido: 'R$ 7.680', falta: 'R$ 11.520' },
+                      ].map((v, i) => (
+                        <div key={i} className="group">
+                          <div className="flex justify-between items-start mb-1.5">
+                            <span className="text-[10px] font-bold text-slate-700 leading-tight flex-1 pr-2">{v.name}</span>
+                            <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${v.pct === 100 ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'}`}>
+                              {v.pct === 100 ? '✓ Quitado' : `${v.pct}%`}
+                            </span>
+                          </div>
+                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-1">
+                            <div className={`h-full rounded-full transition-all ${v.pct === 100 ? 'bg-emerald-400' : 'bg-[#5DA6AA]'}`} style={{width:`${v.pct}%`}} />
+                          </div>
+                          <div className="flex justify-between text-[9px] font-medium text-slate-400">
+                            <span>Recebido: <span className="text-emerald-600 font-bold">{v.recebido}</span></span>
+                            {v.falta && <span>Falta: <span className="text-amber-600 font-bold">{v.falta}</span></span>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Alertas de pagamento */}
+                  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-start gap-3">
+                    <div className="w-7 h-7 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                      <Bell size={13} className="text-amber-600" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-black text-amber-700 mb-0.5">Vence hoje</div>
+                      <div className="text-[10px] text-amber-600 font-medium">Pagamento Sakura — Paris/Fernandez · R$ 8.400</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── BLOCO 5: Pipeline + Alertas ── */}
+          <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-0">
+              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
+                <div className="w-full max-w-sm space-y-3">
+                  {/* Mini Kanban */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-2">
+                      <LayoutDashboard size={13} className="text-[#5DA6AA]" />
+                      <span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Pipeline de vendas</span>
+                    </div>
+                    <div className="p-3 overflow-x-auto">
+                      <div className="flex gap-2.5 min-w-max">
+                        {[
+                          { col: 'Lead', color: 'bg-blue-50 border-blue-100', dot: 'bg-blue-400', cards: [
+                            { name: 'Família Rocha', dest: 'Cancún · Jul', val: 'R$ 22k' },
+                            { name: 'Camila S.', dest: 'Disney · Dez', val: '—' },
+                          ]},
+                          { col: 'Orçamento', color: 'bg-violet-50 border-violet-100', dot: 'bg-violet-400', cards: [
+                            { name: 'Silva, João', dest: 'Portugal · Out', val: 'R$ 24k' },
+                          ]},
+                          { col: 'Fechado', color: 'bg-emerald-50 border-emerald-100', dot: 'bg-emerald-400', cards: [
+                            { name: 'Costa, Pedro', dest: 'Maldivas · Ago', val: 'R$ 38k' },
+                            { name: 'Fernandez', dest: 'Paris · Set', val: 'R$ 19k' },
+                          ]},
+                        ].map((col, ci) => (
+                          <div key={ci} className="w-[130px] shrink-0">
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <div className={`w-2 h-2 rounded-full ${col.dot}`} />
+                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider">{col.col}</span>
+                              <span className="ml-auto text-[9px] bg-slate-100 text-slate-400 font-bold px-1.5 py-0.5 rounded-full">{col.cards.length}</span>
+                            </div>
+                            <div className="space-y-1.5">
+                              {col.cards.map((c, cj) => (
+                                <div key={cj} className={`p-2.5 rounded-xl border ${col.color}`}>
+                                  <div className="text-[10px] font-black text-[#114552] leading-tight mb-0.5">{c.name}</div>
+                                  <div className="text-[9px] text-slate-400 font-medium">{c.dest}</div>
+                                  {c.val !== '—' && <div className="text-[9px] font-black text-[#5DA6AA] mt-1">{c.val}</div>}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  {/* Alertas */}
+                  <div className="bg-white rounded-2xl shadow border border-slate-100 divide-y divide-slate-50">
+                    <div className="px-4 py-2.5 flex items-center gap-2">
+                      <Bell size={12} className="text-[#5DA6AA]" />
+                      <span className="text-[10px] font-black text-[#114552] uppercase tracking-widest">Alertas do dia</span>
+                    </div>
+                    {[
+                      { icon: '✈️', label: 'Check-in disponível', sub: 'Silva · TAP LA807 amanhã', color: 'text-blue-600 bg-blue-50' },
+                      { icon: '📄', label: 'Visto pendente', sub: 'Costa · Maldivas · 18 dias', color: 'text-amber-600 bg-amber-50' },
+                      { icon: '💰', label: 'Pagamento recebido', sub: 'Fernandez · R$ 7.680', color: 'text-emerald-600 bg-emerald-50' },
+                    ].map((a, i) => (
+                      <div key={i} className="px-3 py-2.5 flex items-center gap-3">
+                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-sm shrink-0 ${a.color}`}>{a.icon}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[10px] font-black text-[#114552]">{a.label}</div>
+                          <div className="text-[9px] text-slate-400 font-medium truncate">{a.sub}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
+                <SectionBadge icon={<Kanban className="w-3.5 h-3.5"/>} label="Pipeline + Alertas" color="bg-blue-50 border-blue-200 text-blue-700" />
+                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                  Veja onde cada venda<br />está — e o que precisa<br />
+                  <span className="text-[#5DA6AA]">de atenção agora.</span>
+                </h2>
+                <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
+                  Pipeline visual por etapa de venda, alertas automáticos de check-in, documentos e vencimentos. Você começa o dia sabendo exatamente o que fazer.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    'Kanban por etapa: lead, orçamento, fechado, embarcado',
+                    'Alerta automático de check-in antes do voo',
+                    'Aviso de visto, passaporte e documentação pendente',
+                    'Histórico completo de cada cliente em um lugar só',
+                  ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ── BLOCO 6: Atendimento WhatsApp (removido — movido para BLOCO 2) ── */}
+          {false && <div className="rounded-[2.5rem] overflow-hidden" style={{background: 'linear-gradient(135deg, #0a2e29 0%, #0d3b34 50%, #114532 100%)'}}>
+            <div className="grid lg:grid-cols-2 gap-0">
+              {/* Lado esquerdo — texto */}
+              <div className="p-10 lg:p-14 flex flex-col justify-center">
+                {/* Badge Meta Oficial */}
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 w-fit">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7.5c-.276 0-.5.224-.5.5v5c0 .276.224.5.5.5s.5-.224.5-.5v-5c0-.276-.224-.5-.5-.5zM12 7c-.276 0-.5.224-.5.5v9c0 .276.224.5.5.5s.5-.224.5-.5v-9c0-.276-.224-.5-.5-.5zM7.5 9.5c-.276 0-.5.224-.5.5v3c0 .276.224.5.5.5s.5-.224.5-.5v-3c0-.276-.224-.5-.5-.5z" fill="#25D366"/>
+                  </svg>
+                  <span className="text-[11px] font-black text-green-300 uppercase tracking-widest">API Oficial WhatsApp · Meta Business</span>
+                </div>
+
+                <h2 className="text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
+                  Toda a equipe atendendo<br />no mesmo WhatsApp.
+                  <span className="text-green-400"> Dentro do CRM.</span>
+                </h2>
+                <p className="text-white/60 font-medium text-base mb-8 leading-relaxed">
+                  Conecte o número da sua agência via <strong className="text-white/90">API oficial do WhatsApp Business (Meta)</strong> e atenda todos os clientes sem sair do AgenteOffice. Sem risco de bloqueio. Sem aba extra.
+                </p>
+
+                <ul className="space-y-3 mb-8">
+                  {[
+                    { icon: '✅', text: 'Integração oficial Meta — conta verificada, sem bloqueio' },
+                    { icon: '👥', text: 'Múltiplos agentes no mesmo número ao mesmo tempo' },
+                    { icon: '📋', text: 'Histórico da conversa vinculado ao cliente no CRM' },
+                    { icon: '🔔', text: 'Notificações em tempo real para toda a equipe' },
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="text-base leading-none mt-0.5">{item.icon}</span>
+                      <span className="text-white/75 font-medium text-sm leading-relaxed">{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Selos */}
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <div className="w-6 h-6 rounded-full bg-[#25D366] flex items-center justify-center text-white text-[10px] font-black">M</div>
+                    <span className="text-[11px] font-bold text-white/80">Meta Business Partner</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <ShieldCheck className="w-4 h-4 text-green-400"/>
+                    <span className="text-[11px] font-bold text-white/80">Conta verificada</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
+                    <span className="text-green-400 text-sm">●</span>
+                    <span className="text-[11px] font-bold text-white/80">Disponível Team & Enterprise</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lado direito — mockup CRM + chat */}
+              <div className="p-8 lg:p-10 flex items-center justify-center">
+                <div className="w-full max-w-[360px]">
+                  {/* Janela do CRM */}
+                  <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style={{background:'#0f1923'}}>
+                    {/* Topbar CRM */}
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10" style={{background:'#1a2a35'}}>
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/70"/>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/70"/>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-400/70"/>
+                      </div>
+                      <div className="flex-1 flex items-center justify-center">
+                        <div className="bg-white/10 rounded-md px-3 py-0.5 text-[10px] text-white/50 font-medium">app.agenteoffice.com.br/atendimento</div>
+                      </div>
+                    </div>
+
+                    {/* Layout CRM */}
+                    <div className="flex" style={{height:'320px'}}>
+                      {/* Mini sidebar */}
+                      <div className="w-10 border-r border-white/10 flex flex-col items-center py-3 gap-3" style={{background:'#111c26'}}>
+                        {['🏠','✈️','💬','⚙️'].map((ic,i) => (
+                          <div key={i} className={`w-7 h-7 rounded-lg flex items-center justify-center text-[12px] ${i===2 ? 'bg-green-500/30 ring-1 ring-green-400/50' : 'opacity-30'}`}>{ic}</div>
+                        ))}
+                      </div>
+
+                      {/* Lista de conversas */}
+                      <div className="w-28 border-r border-white/10 overflow-hidden" style={{background:'#141f2b'}}>
+                        <div className="px-2 py-2 border-b border-white/10">
+                          <span className="text-[9px] font-black text-white/40 uppercase tracking-wider">Conversas</span>
+                        </div>
+                        {[
+                          { name: 'Rafaela M.', msg: 'Oi! Quero orçamento...', unread: 2, active: true },
+                          { name: 'João P.', msg: 'Quanto fica Cancún?', unread: 0, active: false },
+                          { name: 'Ana Silva', msg: 'Passaporte ok ✓', unread: 0, active: false },
+                        ].map((c,i) => (
+                          <div key={i} className={`px-2 py-2 border-b border-white/5 cursor-pointer ${c.active ? 'bg-green-500/15' : ''}`}>
+                            <div className="flex items-center justify-between mb-0.5">
+                              <span className="text-[9px] font-black text-white/80 truncate">{c.name}</span>
+                              {c.unread > 0 && <span className="bg-green-500 text-white text-[7px] font-black rounded-full w-3.5 h-3.5 flex items-center justify-center flex-shrink-0">{c.unread}</span>}
+                            </div>
+                            <span className="text-[8px] text-white/40 truncate block">{c.msg}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Chat principal */}
+                      <div className="flex-1 flex flex-col" style={{background:'#1a2a35'}}>
+                        {/* Header do chat */}
+                        <div className="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+                          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-[9px] font-black">R</div>
+                          <div>
+                            <div className="text-[10px] font-black text-white">Rafaela M.</div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-400"/>
+                              <span className="text-[8px] text-green-400">online</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Mensagens */}
+                        <div className="flex-1 px-2 py-2 space-y-2 overflow-hidden">
+                          {[
+                            { from: 'c', msg: 'Oi! Quero orçamento pra Portugal em outubro 🙏', time: '09:12' },
+                            { from: 'a', msg: 'Oi Rafaela! Quantas pessoas?', time: '09:14' },
+                            { from: 'c', msg: '2 pessoas, ~R$ 25k', time: '09:15' },
+                            { from: 'a', msg: 'Perfeito! Já monto as opções 😊', time: '09:16' },
+                          ].map((m,i) => (
+                            <div key={i} className={`flex ${m.from==='a' ? 'justify-end' : 'justify-start'}`}>
+                              <div className={`max-w-[80%] px-2 py-1.5 rounded-xl text-[9px] font-medium leading-relaxed ${m.from==='a' ? 'bg-[#dcf8c6] text-slate-800' : 'bg-white/15 text-white/85'}`}>
+                                {m.msg}
+                                <div className="text-[7px] text-right mt-0.5 opacity-50">{m.time} ✓✓</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Input */}
+                        <div className="px-2 py-2 border-t border-white/10 flex items-center gap-1.5">
+                          <div className="flex-1 bg-white/10 rounded-lg px-2 py-1 text-[9px] text-white/30">Responder Rafaela...</div>
+                          <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Label abaixo */}
+                  <div className="text-center mt-3 text-[10px] text-white/30 font-medium">
+                    WhatsApp Business integrado · API Oficial Meta
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>}
 
           {/* ── MINI CARDS ── */}
           <div className="grid md:grid-cols-3 gap-6 pt-4 pb-16">
