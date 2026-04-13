@@ -1253,9 +1253,9 @@ export default function App() {
               </div>
             </div>
             <div className="mt-5 inline-flex items-center gap-2.5 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3">
-              <span className="text-lg">😏</span>
+              <span className="text-lg">🎬</span>
               <p className="text-sm font-semibold text-amber-800">
-                <strong className="font-black">Provocação:</strong> custa menos que a Netflix. E faz sua agência vender mais.
+                <strong className="font-black">CUSTA MENOS QUE O NETFLIX</strong> — e faz sua agência vender mais.
               </p>
             </div>
           </div>
