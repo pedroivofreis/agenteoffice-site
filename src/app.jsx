@@ -12,18 +12,57 @@ import {
 /* ─── PLANOS ─────────────────────────────────────── */
 const PLANS = [
   {
-    name: 'Basic', price: '129,90', desc: 'Para começar com IA de verdade.',
-    features: ['Até 2 usuários', 'Bom limite de IA mensal', '2 GB de documentos', 'Pipeline + Orçamentos', 'Propostas e vouchers digitais', 'Suporte por e-mail'],
-    cta: 'Começar agora', highlight: false,
+    name: 'Turbo', price: '49,90', desc: 'Orçamento lindo em 2 minutos.',
+    badge: null,
+    features: [
+      '1 usuário incluso',
+      'Orçamento Turbo — cole da consolidadora, pronto',
+      'Proposta linda para o cliente, com a sua marca',
+      'Voucher digital em 1 clique',
+      'Mar.ia — IA para roteiros e sugestões',
+      'Suporte por e-mail',
+    ],
+    cta: 'Começar agora — R$ 49,90', highlight: false,
   },
   {
-    name: 'Team', price: '199', desc: 'Para equipes que vendem mais.',
-    features: ['Até 5 usuários', 'Ótimo limite de IA mensal', '5 GB de documentos', 'Tudo do Basic', 'Dashboard por agente', 'Financeiro completo', 'Atendimento WhatsApp centralizado', 'Suporte WhatsApp prioritário'],
-    cta: 'Escolher Team', highlight: true,
+    name: 'Gestão', price: '149,90', desc: 'Controle total da sua operação.',
+    badge: 'Mais popular',
+    features: [
+      '2 usuários inclusos',
+      'Tudo do plano Turbo',
+      'Pipeline / Kanban de vendas',
+      'Financeiro — caixa, recebimentos, comissões',
+      'Contratos digitais',
+      'Roteiro personalizado por cliente',
+      'Suporte via WhatsApp',
+    ],
+    cta: 'Escolher Gestão — R$ 149,90', highlight: true,
+  },
+  {
+    name: 'Operador', price: '199', desc: 'Para grupos, excursões e frotas.',
+    badge: null,
+    features: [
+      '2 usuários inclusos',
+      'Tudo do plano Gestão',
+      'Atendimento WhatsApp centralizado (API Oficial)',
+      'Módulo Excursão — ônibus, cotas, lista de pax',
+      'Checklist de embarque por passageiro',
+      'Relatórios de ocupação e rentabilidade',
+      'Suporte prioritário',
+    ],
+    cta: 'Escolher Operador — R$ 199', highlight: false,
   },
   {
     name: 'Enterprise', price: 'Consultar', desc: 'Para redes e franquias.',
-    features: ['Usuários ilimitados', 'IA sem limite mensal', 'Armazenamento customizado', 'Atendimento WhatsApp centralizado', 'API + integrações', 'Gerente de conta dedicado', 'Relatórios customizados'],
+    badge: null,
+    features: [
+      'Usuários ilimitados',
+      'Múltiplas filiais no mesmo painel',
+      'IA sem limite mensal',
+      'API + integrações customizadas',
+      'Gerente de conta dedicado',
+      'Relatórios por filial e por agente',
+    ],
     cta: 'Falar com consultor', highlight: false,
   },
 ];
@@ -143,7 +182,7 @@ function DemoModal({ onClose }) {
 
 /* ─── MODAL CHECKOUT ─────────────────────────────── */
 const API_URL = 'https://web-production-32a87.up.railway.app';
-const PLAN_SLUG = { Basic: 'basic', Team: 'team', Enterprise: 'enterprise', Founder: 'founder' };
+const PLAN_SLUG = { Turbo: 'turbo', Gestão: 'gestao', Operador: 'operador', Enterprise: 'enterprise', Founder: 'founder' };
 const INPUT_CLS = 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all';
 const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5';
 
@@ -182,7 +221,7 @@ function PlanModal({ planName, onClose, openDemo }) {
     );
   }
 
-  const priceMap = { Basic: 'R$ 129,90/mês', Team: 'R$ 199/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
+  const priceMap = { Turbo: 'R$ 49,90/mês', Gestão: 'R$ 149,90/mês', Operador: 'R$ 199/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -318,6 +357,103 @@ function PlanModal({ planName, onClose, openDemo }) {
   );
 }
 
+/* ─── MODAL DE PERFIL ────────────────────────────── */
+const PROFILES = [
+  {
+    icon: '✨',
+    title: 'Sou agente solo ou micro agência',
+    subtitle: 'Quero impressionar meu cliente com tecnologia — sem complicação.',
+    borderCls: 'border-[#5DA6AA]',
+    bgCls: 'hover:bg-teal-50/40',
+    modal: {
+      heading: 'Para o agente que quer impressionar',
+      desc: 'Você atende bem, conhece o produto — só faltava a ferramenta certa para mostrar isso. Com o AgenteOffice, você chega na frente de 90% dos concorrentes com uma proposta que o cliente abre no celular e já quer confirmar.',
+      plan: 'Turbo', price: 'R$ 49,90/mês',
+      highlights: [
+        { icon: '⚡', title: 'Orçamento Turbo', desc: 'Cole o texto da Sakura, CVC, Orinter, Flytour... O orçamento sai pronto com comissão calculada. Em menos de 2 minutos.' },
+        { icon: '🎨', title: 'Proposta com a sua marca', desc: 'Seu cliente recebe um link bonito no celular — com seu logo, suas cores, sua mensagem. Nada de PDF feio por e-mail.' },
+        { icon: '🧾', title: 'Voucher digital em 1 clique', desc: 'Aprovou? O voucher com todos os detalhes fica pronto na hora. Sem retrabalho.' },
+        { icon: '✨', title: 'Mar.ia — IA para roteiros', desc: 'Sugestões de destino, roteiro dia a dia, dicas de visto. A IA trabalha enquanto você fecha a venda.' },
+      ],
+    },
+  },
+  {
+    icon: '📊',
+    title: 'Sou agência com equipe',
+    subtitle: 'Preciso organizar vendas, financeiro e gestão das viagens.',
+    borderCls: 'border-slate-200',
+    bgCls: 'hover:bg-slate-50',
+    modal: {
+      heading: 'Para a agência que quer crescer com controle',
+      desc: 'Mais de 1 agente, mais clientes, mais viagens — e a sensação de que está tudo no ar. O AgenteOffice coloca tudo em um painel só, do lead ao financeiro.',
+      plan: 'Gestão', price: 'R$ 149,90/mês',
+      highlights: [
+        { icon: '📦', title: 'Pipeline de vendas', desc: 'Kanban visual: lead, orçamento, fechado, embarcado. Você sabe onde cada cliente está sem precisar perguntar.' },
+        { icon: '💰', title: 'Financeiro real', desc: 'Quanto a receber, quanto já entrou, comissões do mês — ao vivo, sem planilha, sem chute.' },
+        { icon: '📋', title: 'Contratos digitais', desc: 'Gere e envie contratos para o cliente assinar online. Sem impressora, sem escaneador.' },
+        { icon: '🗺️', title: 'Roteiro personalizado', desc: 'Crie roteiros detalhados por cliente. Do transfer ao restaurante — tudo documentado.' },
+      ],
+    },
+  },
+  {
+    icon: '🚌',
+    title: 'Sou agência de excursões e terrestres',
+    subtitle: 'Trabalho com grupos, ônibus e saídas programadas.',
+    borderCls: 'border-slate-200',
+    bgCls: 'hover:bg-slate-50',
+    modal: {
+      heading: 'Para a operadora que move grupos',
+      desc: 'Controlar assentos em planilha, lista de passageiros no papel, ligar pra todo mundo na véspera — isso acaba com o plano Operador.',
+      plan: 'Operador', price: 'R$ 199/mês',
+      highlights: [
+        { icon: '🚌', title: 'Módulo Excursão', desc: 'Crie excursões com destino, data, ônibus e cotas. Controle de passageiros e ocupação em tempo real.' },
+        { icon: '📋', title: 'Checklist de embarque', desc: 'Lista de presença, documentação e pagamento por passageiro. Tudo conferido antes do ônibus sair.' },
+        { icon: '💬', title: 'WhatsApp centralizado', desc: 'Toda a equipe no mesmo número via API oficial do Meta. Histórico vinculado ao cliente no CRM.' },
+        { icon: '📈', title: 'Relatórios de ocupação', desc: 'Rentabilidade por excursão, custo por assento, comparativo de saídas. Decisão com número.' },
+      ],
+    },
+  },
+];
+
+function ProfileModal({ profile, onClose }) {
+  const { modal } = profile;
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="bg-[#114552] px-6 py-5 flex items-center justify-between shrink-0">
+          <div>
+            <div className="text-white font-black text-lg leading-tight">{modal.heading}</div>
+            <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">Plano {modal.plan} · {modal.price}</div>
+          </div>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors shrink-0 ml-4">
+            <X size={16} className="text-white" />
+          </button>
+        </div>
+        <div className="px-6 py-5 overflow-y-auto">
+          <p className="text-slate-500 text-sm font-medium leading-relaxed mb-5">{modal.desc}</p>
+          <div className="space-y-3 mb-6">
+            {modal.highlights.map((h, i) => (
+              <div key={i} className="flex gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xl shrink-0 mt-0.5">{h.icon}</span>
+                <div>
+                  <div className="text-sm font-black text-[#114552] mb-0.5">{h.title}</div>
+                  <div className="text-xs text-slate-500 font-medium leading-relaxed">{h.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <a href="#precos" onClick={onClose}
+            className="flex items-center justify-center gap-2 w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm hover:bg-[#0a2c35] transition-colors">
+            Ver plano {modal.plan} — {modal.price} <ArrowRight size={14}/>
+          </a>
+          <p className="text-[10px] text-slate-400 text-center font-medium mt-3">Sem contrato de fidelidade · Cancele quando quiser</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── MAR.IA AVATAR ─────────────────────────────── */
 const MariaAvatar = ({ size = 'md' }) => {
   const s = size === 'lg' ? 'w-14 h-14' : size === 'sm' ? 'w-7 h-7' : 'w-10 h-10';
@@ -329,6 +465,235 @@ const MariaAvatar = ({ size = 'md' }) => {
     </div>
   );
 };
+
+/* ─── HERO PROPOSTA PREVIEW ─────────────────────── */
+function HeroPropostaPreview() {
+  const Ticket = ({ orig, origCity, dest, destCity, dep, arr, flight }) => (
+    <div className="flex items-center gap-3 bg-gradient-to-r from-[#042F2E] to-[#0F766E] rounded-xl p-3 text-white relative overflow-hidden">
+      <div className="text-center w-12">
+        <div className="text-lg font-black">{orig}</div>
+        <div className="text-[8px] text-white/50">{origCity}</div>
+        <div className="text-[9px] font-bold mt-0.5">{dep}</div>
+      </div>
+      <div className="flex-1 flex flex-col items-center gap-0.5">
+        <div className="text-[7px] font-bold text-white/40 uppercase">Voo direto</div>
+        <div className="w-full flex items-center gap-1">
+          <div className="w-1.5 h-1.5 rounded-full border-2 border-white/40"/>
+          <div className="flex-1 h-px bg-white/25"/>
+          <span className="text-xs">✈</span>
+          <div className="flex-1 h-px bg-white/25"/>
+          <div className="w-1.5 h-1.5 rounded-full border-2 border-white/40"/>
+        </div>
+        <div className="text-[8px] text-white/40">{flight}</div>
+      </div>
+      <div className="text-center w-12">
+        <div className="text-lg font-black">{dest}</div>
+        <div className="text-[8px] text-white/50">{destCity}</div>
+        <div className="text-[9px] font-bold mt-0.5">{arr}</div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
+      {/* Browser bar */}
+      <div className="bg-[#1e1e1e] px-4 py-2.5 flex items-center gap-3">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"/>
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"/>
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"/>
+        </div>
+        <div className="flex-1 bg-[#2d2d2d] rounded-md px-3 py-1 flex items-center gap-2">
+          <svg className="w-2.5 h-2.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span className="text-[10px] font-mono text-slate-400">agenteoffice.com.br/p/88472</span>
+          <CheckCheck size={9} className="ml-auto text-emerald-400"/>
+        </div>
+      </div>
+
+      {/* Destination hero — fora do scroll */}
+      <div className="relative h-44 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&fit=crop" alt="" className="w-full h-full object-cover"/>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10"/>
+        <div className="absolute top-3 left-4 right-4 flex justify-between items-start">
+          <span className="text-[9px] font-black uppercase tracking-widest bg-white/15 text-white px-2.5 py-1 rounded-full border border-white/20 backdrop-blur-sm">✈ Proposta de Viagem</span>
+          <img src="/logo_hor_white.png" alt="logo" className="h-4 w-auto opacity-90"/>
+        </div>
+        <div className="absolute bottom-3 left-4 right-4">
+          <div className="text-white font-black text-lg mb-1.5 drop-shadow-lg">Portugal + Espanha · 12 dias</div>
+          <div className="flex gap-2 flex-wrap">
+            {['📅 Out 2026','👥 Casal Silva','2 pax'].map((t,i)=>(
+              <span key={i} className="text-white/80 text-[9px] font-medium bg-black/30 px-2 py-0.5 rounded-full backdrop-blur-sm">{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Tab bar */}
+      <div className="bg-white border-b border-slate-100 px-3 flex items-center justify-between">
+        <div className="flex">
+          {['📄 Proposta','🧾 Voucher'].map((t,i)=>(
+            <div key={i} className={`px-3 py-2 text-[9px] font-black border-b-2 ${i===0?'border-[#0F766E] text-[#0F766E]':'border-transparent text-slate-300'}`}>{t}</div>
+          ))}
+        </div>
+        <div className="flex items-center gap-1.5 py-1.5">
+          <span className="text-[8px] font-black bg-teal-50 border border-teal-200 text-[#0F766E] px-1.5 py-0.5 rounded">Op.1</span>
+          <span className="text-[8px] font-black bg-slate-50 border border-slate-200 text-slate-400 px-1.5 py-0.5 rounded">Op.2</span>
+          <button className="text-[8px] font-black text-white bg-[#114552] px-2 py-1 rounded-lg ml-1">⬇ PDF</button>
+        </div>
+      </div>
+
+      {/* Scrollable body */}
+      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto" style={{maxHeight:'480px'}}>
+
+        {/* Categorias strip */}
+        <div className="flex gap-1.5 overflow-x-auto pb-0.5">
+          {[{e:'✈️',l:'Voos',n:2},{e:'🏨',l:'Hotéis',n:2},{e:'🗺️',l:'Roteiro',n:'12d'},{e:'🚌',l:'Transfers',n:3},{e:'🛡️',l:'Seguro',n:1}].map((c,i)=>(
+            <div key={i} className="flex items-center gap-1.5 bg-white rounded-lg px-2.5 py-1.5 border border-slate-100 shrink-0">
+              <span className="text-sm">{c.e}</span>
+              <div><div className="text-[9px] font-black text-[#114552]">{c.l}</div><div className="text-[8px] text-slate-400">{c.n} {typeof c.n==='number'?c.n===1?'item':'itens':''}</div></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Voos */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>✈️</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Voos</span>
+          </div>
+          <div className="p-2.5 space-y-2">
+            <Ticket orig="GRU" origCity="São Paulo" dest="LIS" destCity="Lisboa" dep="08:45" arr="06:05+1" flight="TAP LA807"/>
+            <Ticket orig="MAD" origCity="Madrid" dest="GRU" destCity="São Paulo" dep="11:30" arr="19:55" flight="LATAM LA8026"/>
+          </div>
+        </div>
+
+        {/* Hotéis */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🏨</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Hotéis</span>
+          </div>
+          <div className="p-2.5 space-y-2">
+            {[
+              {img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&fit=crop', name:'Bairro Alto Hotel', loc:'Lisboa · 4 noites', stars:'⭐⭐⭐⭐⭐', regime:'☕ Café incluso'},
+              {img:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&fit=crop', name:'Hotel Canalejas', loc:'Madrid · 5 noites', stars:'⭐⭐⭐⭐⭐', regime:'🍽 Meia pensão'},
+            ].map((h,i)=>(
+              <div key={i} className="rounded-xl overflow-hidden border border-slate-100">
+                <div className="relative h-20">
+                  <img src={h.img} alt={h.name} className="w-full h-full object-cover"/>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
+                  <div className="absolute bottom-2 left-2.5">
+                    <div className="text-white font-black text-[10px]">{h.name} {h.stars}</div>
+                    <div className="text-white/60 text-[8px]">{h.loc} · {h.regime}</div>
+                  </div>
+                  <div className="absolute top-2 right-2 bg-black/40 px-1.5 py-0.5 rounded-full text-[8px] text-white font-bold">✓ Incluso</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Roteiro */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🗺️</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Roteiro Dia a Dia</span>
+          </div>
+          <div className="divide-y divide-slate-50">
+            {[
+              {dias:'Dias 1–4', local:'Lisboa', desc:'Torre de Belém · Alfama · Elétrico 28 · Pastéis de Belém · Fado à noite'},
+              {dias:'Dia 5', local:'Sintra', desc:'Palácio da Pena · Quinta da Regaleira · Cabo da Roca'},
+              {dias:'Dias 6–7', local:'Sevilha', desc:'Real Alcázar · Catedral · tapas no Barrio de Santa Cruz'},
+              {dias:'Dias 8–12', local:'Madrid', desc:'Museo del Prado · Parque del Retiro · Mercado San Miguel'},
+            ].map((r,i)=>(
+              <div key={i} className="px-3 py-2 flex gap-2.5">
+                <div className="shrink-0 text-center w-14">
+                  <div className="text-[8px] font-black text-[#5DA6AA]">{r.dias}</div>
+                  <div className="text-[9px] font-black text-[#114552]">{r.local}</div>
+                </div>
+                <div className="text-[9px] text-slate-500 font-medium leading-relaxed">{r.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Passeios */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🎭</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Passeios & Experiências</span>
+          </div>
+          <div className="p-2.5 space-y-2">
+            {[
+              {img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=200&fit=crop', name:'Sintra Day Trip — Palácio da Pena', det:'Lisboa · Dia inteiro · Guia pt-br', badge:'🏰 Histórico'},
+              {img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=200&fit=crop', name:'Tour Flamenco + Tapas — Sevilha', det:'Sevilha · À noite', badge:'💃 Cultural'},
+              {img:'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=200&fit=crop', name:'Museu do Prado + Retiro', det:'Madrid · Manhã · Guia bilíngue', badge:'🎨 Arte'},
+            ].map((p,i)=>(
+              <div key={i} className="flex gap-2 items-center">
+                <img src={p.img} alt={p.name} className="w-10 h-10 rounded-lg object-cover shrink-0"/>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[9px] font-black text-[#114552] leading-tight">{p.name}</div>
+                  <div className="text-[8px] text-slate-400 mt-0.5">{p.det}</div>
+                </div>
+                <span className="text-[7px] font-black bg-teal-50 text-[#0F766E] px-1.5 py-0.5 rounded-full border border-teal-100 shrink-0">{p.badge}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Transfers */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🚌</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Transfers</span>
+          </div>
+          <div className="divide-y divide-slate-50">
+            {['Aeroporto LIS → Hotel (chegada)','Lisboa → Sevilha (van privativa)','Sevilha → Madrid (van privativa)','Hotel → Aeroporto MAD (saída)'].map((t,i)=>(
+              <div key={i} className="px-3 py-1.5 flex items-center justify-between">
+                <span className="text-[9px] font-semibold text-slate-600">🚌 {t}</span>
+                <span className="text-[9px] font-black text-[#0F766E]">✓</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Seguro */}
+        <div className="bg-white rounded-xl border border-slate-100 px-3 py-2.5 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center text-base shrink-0">🛡️</div>
+          <div className="flex-1">
+            <div className="text-[9px] font-black text-slate-700">Assistência Total Premium · Affinity · 12 dias</div>
+            <div className="flex gap-1.5 mt-0.5 flex-wrap">
+              {['Médico ilimitado','Bagagem','Covid','Odonto'].map(c=>(
+                <span key={c} className="text-[7px] font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full">{c}</span>
+              ))}
+            </div>
+          </div>
+          <span className="text-[9px] font-black text-[#0F766E] shrink-0">✓ Incluso</span>
+        </div>
+
+        {/* Mensagem da agente */}
+        <div className="bg-gradient-to-r from-teal-50 to-white rounded-xl border border-teal-100 p-3 flex gap-2.5">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#5DA6AA] to-[#114552] flex items-center justify-center shrink-0 text-white font-black text-[10px]" style={{fontStyle:'italic'}}>M</div>
+          <div>
+            <div className="text-[8px] font-black text-[#114552] mb-0.5">Mensagem da sua agente</div>
+            <p className="text-[9px] text-slate-600 font-medium leading-relaxed italic">"Preparei este roteiro com muito carinho. Cada detalhe foi escolhido para que vocês aproveitem o melhor de Lisboa, Sintra, Sevilha e Madrid. Qualquer dúvida, estou aqui! 🥂"</p>
+          </div>
+        </div>
+
+        {/* Total */}
+        <div className="rounded-xl overflow-hidden" style={{background:'linear-gradient(135deg,#042F2E 0%,#0F766E 60%,#2DD4BF 100%)'}}>
+          <div className="p-3.5 flex items-start justify-between">
+            <div>
+              <div className="text-[8px] font-black uppercase tracking-widest text-white/50 mb-0.5">Investimento total</div>
+              <div className="text-3xl font-black text-white">R$ 24.048</div>
+              <div className="text-[9px] text-white/50 mt-0.5">2 viajantes · R$ 12.024/pax</div>
+            </div>
+            <button className="bg-white text-[#0F766E] font-black text-[10px] px-3.5 py-2.5 rounded-xl shadow-lg whitespace-nowrap mt-1">✓ Aprovar viagem</button>
+          </div>
+        </div>
+
+        <div className="text-center text-[9px] text-slate-400 font-medium pb-2">
+          💳 Comissão e custo são <strong>sempre confidenciais</strong> — só você vê
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ─── CHAT DEMO ──────────────────────────────────── */
 const CHAT = [
@@ -379,17 +744,19 @@ function ChatDemo() {
     <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
       <div className="bg-[#114552] px-5 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <MariaAvatar size="md" />
+          <div className="w-10 h-10 rounded-xl bg-[#5DA6AA]/30 border border-[#5DA6AA]/40 flex items-center justify-center shrink-0">
+            <Zap size={18} className="text-[#5DA6AA]" />
+          </div>
           <div>
-            <div className="text-sm font-black text-white tracking-tight">Mar.ia</div>
+            <div className="text-sm font-black text-white tracking-tight">Orçamento Turbo</div>
             <div className="flex items-center gap-1.5 text-[10px] text-[#5DA6AA] font-bold tracking-wide">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" /> Navegando pela gestão da sua agência
+              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" /> Do texto da consolidadora ao orçamento — em segundos
             </div>
           </div>
         </div>
         <div className="flex gap-2">
-          <div className="flex items-center gap-1 bg-white/10 px-2.5 py-1 rounded-full text-[10px] text-white font-bold"><Globe size={10}/> Web</div>
-          <div className="flex items-center gap-1 bg-green-500/20 px-2.5 py-1 rounded-full text-[10px] text-green-300 font-bold"><Plane size={10}/> Voos</div>
+          <div className="flex items-center gap-1 bg-white/10 px-2.5 py-1 rounded-full text-[10px] text-white font-bold"><Plane size={10}/> Voos</div>
+          <div className="flex items-center gap-1 bg-green-500/20 px-2.5 py-1 rounded-full text-[10px] text-green-300 font-bold"><FileText size={10}/> Proposta</div>
         </div>
       </div>
 
@@ -805,6 +1172,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [openProfile, setOpenProfile] = useState(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -819,6 +1187,7 @@ export default function App() {
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-teal-100 selection:text-[#114552]">
       {demoOpen && <DemoModal onClose={() => setDemoOpen(false)} />}
       {selectedPlan && <PlanModal planName={selectedPlan} onClose={() => setSelectedPlan(null)} openDemo={() => setDemoOpen(true)} />}
+      {openProfile && <ProfileModal profile={openProfile} onClose={() => setOpenProfile(null)} />}
 
       {/* ── NAV ─────────────────────────────────────── */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
@@ -858,19 +1227,19 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
           <div>
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-7">
-              <Sparkles className="w-3.5 h-3.5 text-[#5DA6AA]" />
-              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">IA que funciona de verdade · CRM para agências</span>
+              <Zap className="w-3.5 h-3.5 text-[#5DA6AA]" />
+              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Orçamento Turbo · Desde R$ 49,90/mês</span>
             </div>
             <h1 className="text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
-              Sua agência.<br />
-              <span className="text-[#5DA6AA]">Com IA que trabalha.</span>
+              Proposta linda<br />para o cliente.<br />
+              <span className="text-[#5DA6AA]">Em menos de 2 minutos.</span>
             </h1>
             <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Do lead à proposta aprovada — tudo em um lugar só, simples de verdade. Pipeline, orçamento, proposta linda pro cliente e financeiro no controle. Sem planilha, sem retrabalho, sem complicação.
+              Cole o texto da consolidadora, a IA lê tudo e monta o orçamento com comissão calculada. Aprovou — a proposta vai para o cliente com a cara da sua agência. Sem digitar nada de novo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <a href="#precos" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
-                Começar agora
+                Começar agora — R$ 49,90
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
               </a>
               <button data-demo-btn onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-base hover:bg-slate-50 transition-all">
@@ -880,13 +1249,19 @@ export default function App() {
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-2 text-sm text-slate-600 font-semibold">
                 <ShieldCheck size={16} className="text-[#5DA6AA]" />
-                <span>Sem contrato de fidelidade — queremos você feliz e livre</span>
+                <span>Sem contrato de fidelidade — cancele quando quiser</span>
               </div>
+            </div>
+            <div className="mt-5 inline-flex items-center gap-2.5 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3">
+              <span className="text-lg">😏</span>
+              <p className="text-sm font-semibold text-amber-800">
+                <strong className="font-black">Provocação:</strong> custa menos que a Netflix. E faz sua agência vender mais.
+              </p>
             </div>
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-gradient-to-tr from-[#5DA6AA]/20 to-[#114552]/10 rounded-[3rem] blur-3xl" />
-            <div className="relative"><ChatDemo /></div>
+            <div className="relative"><HeroPropostaPreview /></div>
           </div>
         </div>
       </section>
@@ -895,16 +1270,16 @@ export default function App() {
       <div className="bg-[#114552] py-5 px-4 overflow-hidden">
         <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-x-2 gap-y-2">
           {[
-            { icon: '✨', label: 'IA Mar.ia' },
-            { icon: '💬', label: 'Atendimento WhatsApp' },
-            { icon: '🗺️', label: 'Roteiros' },
-            { icon: '📊', label: 'Orçamentos' },
-            { icon: '📄', label: 'Propostas' },
-            { icon: '🧾', label: 'Vouchers' },
+            { icon: '⚡', label: 'Orçamento Turbo' },
+            { icon: '🎨', label: 'Estúdio de Vendas' },
+            { icon: '✨', label: 'Mar.ia — IA' },
+            { icon: '🗺️', label: 'Roteiro Personalizado' },
+            { icon: '🧾', label: 'Voucher Digital' },
+            { icon: '📦', label: 'Pipeline de Vendas' },
             { icon: '💰', label: 'Financeiro' },
             { icon: '📋', label: 'Contratos' },
-            { icon: '👥', label: 'CRM de Clientes' },
-            { icon: '📦', label: 'Pipeline' },
+            { icon: '🚌', label: 'Módulo Excursão' },
+            { icon: '👥', label: 'Portal do Passageiro' },
           ].map((m, i) => (
             <span key={i} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/10 rounded-full px-3 py-1 text-[11px] font-bold text-white/70">
               <span>{m.icon}</span>{m.label}
@@ -912,6 +1287,36 @@ export default function App() {
           ))}
         </div>
       </div>
+
+      {/* ── O AGENTEOFFICE É PARA VOCÊ? ──────────────── */}
+      <section className="py-20 bg-white px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
+              <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">O AgenteOffice é para você?</span>
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+              Me identifiquei.<br className="hidden lg:block"/><span className="text-[#5DA6AA]">Quero ver o que muda.</span>
+            </h2>
+            <p className="text-slate-500 font-medium text-lg max-w-xl mx-auto">
+              Clique no perfil que mais te representa — veja os diferenciais certos para você.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {PROFILES.map((p, i) => (
+              <button key={i} onClick={() => setOpenProfile(p)}
+                className={`text-left rounded-[2rem] border-2 ${p.borderCls} p-7 bg-white ${p.bgCls} transition-all group hover:shadow-lg cursor-pointer w-full`}>
+                <div className="text-3xl mb-4">{p.icon}</div>
+                <h3 className="font-black text-[#114552] text-base mb-2 leading-snug">{p.title}</h3>
+                <p className="text-sm text-slate-500 font-medium leading-relaxed mb-5">{p.subtitle}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-black text-[#5DA6AA] group-hover:gap-2.5 transition-all">
+                  Ver diferenciais <ArrowRight size={14}/>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── FUNCIONALIDADES ──────────────────────────── */}
       <section id="funcionalidades" className="py-20 bg-slate-50 px-4">
@@ -922,11 +1327,11 @@ export default function App() {
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Tudo dentro de um só sistema</span>
             </div>
             <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
-              IA · Roteiros · Orçamentos<br />WhatsApp · Financeiro.
-              <span className="text-[#5DA6AA]"> Tudo integrado.</span>
+              Do texto da consolidadora<br />à proposta no celular do cliente.
+              <span className="text-[#5DA6AA]"> Em 2 minutos.</span>
             </h2>
             <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
-              Cada módulo resolve um problema real da sua operação — sem planilha, sem retrabalho, sem aba extra.
+              O Orçamento Turbo é só o começo — tem pipeline, financeiro, contratos e módulo de excursões quando você crescer.
             </p>
           </div>
         <div className="space-y-8">
@@ -935,13 +1340,13 @@ export default function App() {
           <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="p-10 lg:p-14 flex flex-col justify-center">
-                <SectionBadge icon={<Copy className="w-3.5 h-3.5"/>} label="Zero retrabalho" color="bg-orange-50 border-orange-200 text-orange-700" />
+                <SectionBadge icon={<Zap className="w-3.5 h-3.5"/>} label="Orçamento Turbo" color="bg-orange-50 border-orange-200 text-orange-700" />
                 <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
                   Sakura, Flytour, Orinter,<br />CVC, Trend, Queensberry...<br />
                   <span className="text-[#5DA6AA]">Cole e pronto.</span>
                 </h2>
                 <p className="text-slate-500 font-medium text-base mb-7 leading-relaxed">
-                  Fechou na consolidadora? Copia o texto da confirmação e cola no chat. A IA identifica voos, hotéis, datas, passageiros e preenche o orçamento linha por linha — com a comissão calculada automaticamente.
+                  Fechou na consolidadora? Copia o texto da confirmação, cola no chat. A IA identifica voos, hotéis, datas e passageiros e monta o orçamento linha por linha — com a comissão calculada. O cliente recebe uma proposta linda em menos de 2 minutos.
                 </p>
                 <ul className="space-y-3">
                   {[
@@ -1069,7 +1474,7 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
                     <span className="text-green-400 text-sm">●</span>
-                    <span className="text-[11px] font-bold text-white/80">Disponível Team & Enterprise</span>
+                    <span className="text-[11px] font-bold text-white/80">Disponível Operador & Enterprise</span>
                   </div>
                 </div>
               </div>
@@ -1468,7 +1873,7 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-3 py-2">
                     <span className="text-green-400 text-sm">●</span>
-                    <span className="text-[11px] font-bold text-white/80">Disponível Team & Enterprise</span>
+                    <span className="text-[11px] font-bold text-white/80">Disponível Operador & Enterprise</span>
                   </div>
                 </div>
               </div>
@@ -1577,46 +1982,90 @@ export default function App() {
       {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
       <PropostaShowcase />
 
+      {/* ── ROTEIRO PERSONALIZADO ────────────────────── */}
+      <section className="py-24 bg-slate-50 px-4">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="Roteiro Personalizado" color="bg-violet-50 border-violet-200 text-violet-700"/>
+            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-5 leading-tight">
+              Você conhece o cliente.<br/>A Mar.ia monta o roteiro.<br/>
+              <span className="text-[#5DA6AA]">Você assina a viagem.</span>
+            </h2>
+            <p className="text-slate-500 font-medium text-lg mb-8 leading-relaxed">
+              Descreva o perfil do cliente — destino, datas, orçamento, estilo de viagem. A Mar.ia sugere roteiro dia a dia, opções de hotel, passeios e até dicas de restaurante. Você refina com a sua experiência e envia uma proposta que parece feita à mão.
+            </p>
+            <ul className="space-y-3 mb-8">
+              {[
+                'Descreva o cliente e receba sugestões de destino em segundos',
+                'Roteiro dia a dia detalhado — atividades, transfers e dicas',
+                'Você edita, personaliza e coloca sua marca no resultado final',
+                'Proposta vai para o cliente com a cara da sua agência',
+              ].map((t,i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
+            </ul>
+            <div className="inline-flex items-center gap-3 bg-white border border-violet-100 rounded-2xl px-5 py-3 shadow-sm">
+              <span className="text-2xl">🧳</span>
+              <p className="text-sm font-semibold text-slate-600">
+                O cliente sente que você<br/><strong className="text-[#114552] font-black">conhece a viagem de cor.</strong>
+              </p>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-6 bg-gradient-to-tr from-violet-200/30 to-[#5DA6AA]/10 rounded-[3rem] blur-3xl"/>
+            <div className="relative"><ChatDemo/></div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PREÇOS ───────────────────────────────────── */}
       <section id="precos" className="py-24 bg-slate-50 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="IA incluída em todos os planos" />
             <h2 className="text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
-            <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. IA ativa desde o primeiro dia.</p>
+            <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. Usuário extra por <strong>+R$ 29,90/mês</strong>.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-7 items-start">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             {PLANS.map((plan, i) => (
-              <div key={i} className={`relative flex flex-col p-8 rounded-[2.5rem] bg-white border-2 transition-all ${plan.highlight ? 'border-[#5DA6AA] shadow-2xl md:scale-105 z-10' : 'border-slate-100 shadow-sm'}`}>
-                {plan.highlight && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#5DA6AA] text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg whitespace-nowrap">
-                    Mais popular
+              <div key={i} className={`relative flex flex-col p-7 rounded-[2rem] bg-white border-2 transition-all ${plan.highlight ? 'border-[#5DA6AA] shadow-2xl lg:scale-105 z-10' : 'border-slate-100 shadow-sm'}`}>
+                {plan.badge && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#5DA6AA] text-white px-5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg whitespace-nowrap">
+                    {plan.badge}
                   </div>
                 )}
-                <div className="mb-8">
+                <div className="mb-7">
                   <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">{plan.name}</h3>
                   <div className="flex items-baseline gap-1 text-[#114552] mb-2">
-                    {plan.price !== 'Consultar' && <span className="text-xl font-bold">R$</span>}
-                    <span className="text-5xl font-black tracking-tight">{plan.price}</span>
-                    {plan.price !== 'Consultar' && <span className="text-slate-400 font-bold">/mês</span>}
+                    {plan.price !== 'Consultar' && <span className="text-lg font-bold">R$</span>}
+                    <span className="text-4xl font-black tracking-tight">{plan.price}</span>
+                    {plan.price !== 'Consultar' && <span className="text-slate-400 font-bold text-sm">/mês</span>}
                   </div>
-                  <p className="text-slate-400 text-sm font-medium italic">"{plan.desc}"</p>
+                  <p className="text-slate-400 text-xs font-medium italic">"{plan.desc}"</p>
                 </div>
-                <div className="h-px bg-slate-100 mb-7" />
-                <ul className="space-y-3.5 mb-8 flex-grow">
+                <div className="h-px bg-slate-100 mb-6" />
+                <ul className="space-y-3 mb-7 flex-grow">
                   {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
-                      <CheckCircle2 size={17} className={plan.highlight ? 'text-[#5DA6AA]' : 'text-slate-300'}/>{f}
+                    <li key={j} className="flex items-start gap-2.5 text-xs font-semibold text-slate-600">
+                      <CheckCircle2 size={15} className={`shrink-0 mt-0.5 ${plan.highlight ? 'text-[#5DA6AA]' : 'text-slate-300'}`}/>{f}
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => setSelectedPlan(plan.name)} className={`w-full py-4 rounded-2xl font-black text-sm transition-all active:scale-95 ${plan.highlight ? 'bg-[#114552] text-white hover:bg-[#0a2c35] shadow-xl' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}>
+                <button onClick={() => setSelectedPlan(plan.name)} className={`w-full py-3.5 rounded-xl font-black text-sm transition-all active:scale-95 ${plan.highlight ? 'bg-[#114552] text-white hover:bg-[#0a2c35] shadow-xl' : 'bg-slate-100 text-slate-800 hover:bg-slate-200'}`}>
                   {plan.cta}
                 </button>
               </div>
             ))}
           </div>
-          <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-slate-400 font-medium">
+          {/* Usuário extra */}
+          <div className="mt-8 flex justify-center">
+            <div className="inline-flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-6 py-3 shadow-sm">
+              <span className="text-lg">👤</span>
+              <div>
+                <span className="text-sm font-black text-[#114552]">Precisa de mais usuários? </span>
+                <span className="text-sm font-semibold text-slate-500">Adicione quantos quiser por <strong className="text-[#114552]">+R$ 29,90/mês</strong> cada.</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm text-slate-400 font-medium">
             {['Sem contrato de fidelidade', 'Dados exportáveis a qualquer momento', 'Suporte em português'].map((item, i) => (
               <div key={i} className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#5DA6AA]"/>{item}</div>
             ))}
@@ -1632,14 +2081,15 @@ export default function App() {
             <Zap className="w-8 h-8 text-[#5DA6AA]" />
           </div>
           <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
-            Chega de planilha.<br />Chega de redigitar.<br />A IA faz isso por você.
+            Sua agência merece<br />um sistema de verdade.<br />
+            <span className="text-[#5DA6AA]">Simples assim.</span>
           </h2>
           <p className="text-xl text-white/60 mb-10 font-medium leading-relaxed">
-            Em menos de 1 hora sua agência opera com IA que realmente funciona — lê consolidadoras, gera orçamentos, calcula comissão e entrega proposta para o cliente. Sem enrolação.
+            Comece hoje mesmo. Em minutos você está criando orçamentos, enviando propostas bonitas e vendo o financeiro da agência em tempo real. Sem contrato, sem complicação.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#precos" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#5DA6AA] text-white rounded-2xl font-black text-lg hover:bg-[#4a8f93] transition-all shadow-xl group">
-              Assinar agora <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
+              Ver planos <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
             </a>
             <button onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
               <Play size={16}/> Ver demonstração
@@ -1662,8 +2112,8 @@ export default function App() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center mt-10 gap-4 text-white/25 text-[10px] font-bold uppercase tracking-widest">
-            <p>© 2026 AgenteOffice CRM. Todos os direitos reservados.</p>
-            <p>Feito para agências que pensam grande.</p>
+            <p>© 2026 AgenteOffice. Todos os direitos reservados.</p>
+            <p>Do papel ao sistema. Da planilha à proposta. Da ideia ao embarque.</p>
           </div>
         </div>
       </footer>
