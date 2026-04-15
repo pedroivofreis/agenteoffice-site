@@ -10,6 +10,9 @@ import {
 } from 'lucide-react';
 
 /* ─── PLANOS ─────────────────────────────────────── */
+/** Temporário: checkout Asaas ainda não pronto — clique em plano abre “Agendar demonstração”. */
+const USE_PLAN_CHECKOUT_MODAL = false;
+
 const PLANS = [
   {
     name: 'Turbo', price: '49,90', desc: 'Orçamento lindo em 2 minutos.',
@@ -1185,8 +1188,30 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-teal-100 selection:text-[#114552]">
-      {demoOpen && <DemoModal onClose={() => setDemoOpen(false)} />}
-      {selectedPlan && <PlanModal planName={selectedPlan} onClose={() => setSelectedPlan(null)} openDemo={() => setDemoOpen(true)} />}
+      {USE_PLAN_CHECKOUT_MODAL ? (
+        <>
+          {demoOpen && <DemoModal onClose={() => setDemoOpen(false)} />}
+          {selectedPlan && (
+            <PlanModal
+              planName={selectedPlan}
+              onClose={() => setSelectedPlan(null)}
+              openDemo={() => {
+                setSelectedPlan(null);
+                setDemoOpen(true);
+              }}
+            />
+          )}
+        </>
+      ) : (
+        (demoOpen || selectedPlan) && (
+          <DemoModal
+            onClose={() => {
+              setDemoOpen(false);
+              setSelectedPlan(null);
+            }}
+          />
+        )
+      )}
       {openProfile && <ProfileModal profile={openProfile} onClose={() => setOpenProfile(null)} />}
 
       {/* ── NAV ─────────────────────────────────────── */}
@@ -1228,7 +1253,7 @@ export default function App() {
           <div>
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-7">
               <Zap className="w-3.5 h-3.5 text-[#5DA6AA]" />
-              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Orçamento Turbo · Desde R$ 49,90/mês</span>
+              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Orçamento Turbo · A partir de R$ 49,90/mês</span>
             </div>
             <h1 className="text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
               Proposta linda<br />para o cliente.<br />
