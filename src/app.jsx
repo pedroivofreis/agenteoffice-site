@@ -10,63 +10,54 @@ import {
 } from 'lucide-react';
 
 /* ─── PLANOS ─────────────────────────────────────── */
-/** Temporário: checkout Asaas ainda não pronto — clique em plano abre “Agendar demonstração”. */
-const USE_PLAN_CHECKOUT_MODAL = false;
+const USE_PLAN_CHECKOUT_MODAL = true;
 
 const PLANS = [
   {
-    name: 'Turbo', price: '49,90', desc: 'Orçamento lindo em 2 minutos.',
+    name: 'Experimente', price: null, priceLabel: 'Grátis',
+    desc: 'Sem cartão. Explore o sistema com 3 orçamentos completos.',
     badge: null,
     features: [
-      '1 usuário incluso',
-      'Orçamento Turbo — cole da consolidadora, pronto',
-      'Proposta linda para o cliente, com a sua marca',
-      'Voucher digital em 1 clique',
-      'Mar.ia — IA para roteiros e sugestões',
+      '3 orçamentos/viagens',
+      'Orçamento Turbo completo',
+      'Proposta com sua marca',
+      'Voucher digital',
+    ],
+    cta: 'Começar grátis agora', highlight: false, trial: true,
+  },
+  {
+    name: 'Embarque', price: '59,90', priceLabel: null,
+    desc: 'Para o agente que quer vender mais e trabalhar menos.',
+    badge: null,
+    features: [
+      '1 usuário',
+      'Orçamentos ilimitados',
+      'Orçamento Turbo',
+      'Proposta premium com sua marca',
+      'Voucher digital',
+      'Estúdio de Vendas',
+      'Financeiro — recebimentos e comissões',
+      'Agenda do Agente + alertas',
+      'Histórico completo (voos, hotéis, transfers, seguro)',
       'Suporte por e-mail',
     ],
-    cta: 'Começar agora — R$ 49,90', highlight: false,
+    cta: 'Assinar Embarque — R$ 59,90', highlight: false, trial: false,
   },
   {
-    name: 'Gestão', price: '149,90', desc: 'Controle total da sua operação.',
+    name: 'Escala', price: '149,90', priceLabel: null,
+    desc: 'Para a agência que quer crescer com controle e IA.',
     badge: 'Mais popular',
     features: [
-      '2 usuários inclusos',
-      'Tudo do plano Turbo',
-      'Pipeline / Kanban de vendas',
-      'Financeiro — caixa, recebimentos, comissões',
-      'Contratos digitais',
-      'Roteiro personalizado por cliente',
-      'Suporte via WhatsApp',
+      '3 usuários (+R$ 29,90/extra)',
+      'Tudo do Embarque',
+      'Mar.ia — IA secretária virtual',
+      'Grupos e Excursões com landing pública',
+      'Contratos digitais com aceite online',
+      'WhatsApp centralizado',
+      'Roteiros IA completos',
+      'Suporte prioritário + onboarding',
     ],
-    cta: 'Escolher Gestão — R$ 149,90', highlight: true,
-  },
-  {
-    name: 'Operador', price: '199', desc: 'Para grupos, excursões e frotas.',
-    badge: null,
-    features: [
-      '2 usuários inclusos',
-      'Tudo do plano Gestão',
-      'Atendimento WhatsApp centralizado (API Oficial)',
-      'Módulo Excursão — ônibus, cotas, lista de pax',
-      'Checklist de embarque por passageiro',
-      'Relatórios de ocupação e rentabilidade',
-      'Suporte prioritário',
-    ],
-    cta: 'Escolher Operador — R$ 199', highlight: false,
-  },
-  {
-    name: 'Enterprise', price: 'Consultar', desc: 'Para redes e franquias.',
-    badge: null,
-    features: [
-      'Usuários ilimitados',
-      'Múltiplas filiais no mesmo painel',
-      'IA sem limite mensal',
-      'API + integrações customizadas',
-      'Gerente de conta dedicado',
-      'Relatórios por filial e por agente',
-    ],
-    cta: 'Falar com consultor', highlight: false,
+    cta: 'Assinar Escala — R$ 149,90', highlight: true, trial: false,
   },
 ];
 
@@ -185,7 +176,7 @@ function DemoModal({ onClose }) {
 
 /* ─── MODAL CHECKOUT ─────────────────────────────── */
 const API_URL = 'https://web-production-32a87.up.railway.app';
-const PLAN_SLUG = { Turbo: 'turbo', Gestão: 'gestao', Operador: 'operador', Enterprise: 'enterprise', Founder: 'founder' };
+const PLAN_SLUG = { Experimente: 'trial', Embarque: 'embarque', Escala: 'escala', Founder: 'founder' };
 const INPUT_CLS = 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:border-[#5DA6AA] focus:ring-2 focus:ring-[#5DA6AA]/20 transition-all';
 const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-1.5';
 
@@ -199,32 +190,8 @@ function PlanModal({ planName, onClose, openDemo }) {
   const [error, setError] = useState('');
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  // Enterprise → abre demo em vez de checkout
-  if (planName === 'Enterprise') {
-    return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-        <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden" onClick={e => e.stopPropagation()}>
-          <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
-            <div>
-              <div className="text-white font-black text-lg">Plano Enterprise</div>
-              <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">Redes e franquias</div>
-            </div>
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><X size={16} className="text-white"/></button>
-          </div>
-          <div className="px-6 py-8 text-center">
-            <p className="text-slate-600 text-sm font-medium leading-relaxed mb-6">Para redes e franquias, fazemos uma proposta personalizada com usuários ilimitados, IA sem limite e gerente de conta dedicado.</p>
-            <button onClick={() => { onClose(); setTimeout(openDemo, 50); }}
-              className="w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm hover:bg-[#0a2c35] transition-colors flex items-center justify-center gap-2">
-              <Sparkles size={15}/> Agendar conversa gratuita
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const priceMap = { Turbo: 'R$ 49,90/mês', Gestão: 'R$ 149,90/mês', Operador: 'R$ 199/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
+  const isTrial = planName === 'Experimente';
+  const priceMap = { Experimente: 'Grátis · sem cartão', Embarque: 'R$ 59,90/mês', Escala: 'R$ 149,90/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -249,6 +216,12 @@ function PlanModal({ planName, onClose, openDemo }) {
       if (!res.ok) throw new Error(data.detail || 'Erro ao processar.');
       if (data.checkout_url) {
         window.location.href = data.checkout_url;
+      } else if (isTrial && data.access_token) {
+        const params = new URLSearchParams({
+          token: data.access_token,
+          user: JSON.stringify(data.user),
+        });
+        window.location.href = `https://app.agenteoffice.com.br/app/auto-login?${params.toString()}`;
       } else {
         setError('Não foi possível obter o link de pagamento. Tente novamente.');
       }
@@ -267,9 +240,9 @@ function PlanModal({ planName, onClose, openDemo }) {
         {/* Header */}
         <div className="bg-[#114552] px-6 py-5 flex items-center justify-between">
           <div>
-            <div className="text-white font-black text-lg">Plano {planName} — {priceMap[planName]}</div>
+            <div className="text-white font-black text-lg">{isTrial ? 'Experimente grátis' : `Plano ${planName} — ${priceMap[planName]}`}</div>
             <div className="text-[#5DA6AA] text-[11px] font-medium mt-0.5">
-              {step === 1 ? 'Dados da sua agência' : 'Crie seu acesso ao sistema'}
+              {isTrial ? (step === 1 ? 'Dados da sua agência' : 'Crie seu acesso') : (step === 1 ? 'Dados da sua agência' : 'Crie seu acesso ao sistema')}
             </div>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"><X size={16} className="text-white"/></button>
@@ -292,16 +265,18 @@ function PlanModal({ planName, onClose, openDemo }) {
                 placeholder="Ex: Destinos Travel" className={INPUT_CLS}/>
             </div>
             <div>
-              <label className={LABEL_CLS}>E-mail da agência *</label>
+              <label className={LABEL_CLS}>E-mail *</label>
               <input required type="email" value={form.agencia_email} onChange={e => set('agencia_email', e.target.value)}
                 placeholder="contato@suaagencia.com.br" className={INPUT_CLS}/>
             </div>
-            <div>
-              <label className={LABEL_CLS}>CPF ou CNPJ *</label>
-              <input required value={form.agencia_cnpj} onChange={e => set('agencia_cnpj', e.target.value)}
-                placeholder="00.000.000/0000-00 ou 000.000.000-00" className={INPUT_CLS}/>
-              <p className="text-[10px] text-slate-400 font-medium mt-1">Necessário para emissão da nota fiscal.</p>
-            </div>
+            {!isTrial && (
+              <div>
+                <label className={LABEL_CLS}>CPF ou CNPJ *</label>
+                <input required value={form.agencia_cnpj} onChange={e => set('agencia_cnpj', e.target.value)}
+                  placeholder="00.000.000/0000-00 ou 000.000.000-00" className={INPUT_CLS}/>
+                <p className="text-[10px] text-slate-400 font-medium mt-1">Necessário para emissão da nota fiscal.</p>
+              </div>
+            )}
           </>}
 
           {step === 2 && <>
@@ -344,12 +319,14 @@ function PlanModal({ planName, onClose, openDemo }) {
               {loading
                 ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>&nbsp;Processando…</>
                 : step === 1
-                  ? <>{planName === 'Team' ? 'Continuar' : 'Continuar'} <ArrowRight size={15}/></>
-                  : <><Sparkles size={15}/> Ir para pagamento</>
+                  ? <>Continuar <ArrowRight size={15}/></>
+                  : isTrial
+                    ? <><Sparkles size={15}/> Criar conta grátis — entrar agora</>
+                    : <><Sparkles size={15}/> Ir para pagamento</>
               }
             </button>
           </div>
-          {step === 2 && (
+          {step === 2 && !isTrial && (
             <p className="text-[10px] text-slate-400 text-center font-medium">
               Você será redirecionado ao Asaas para inserir os dados do cartão com segurança.
             </p>
@@ -368,15 +345,16 @@ const PROFILES = [
     subtitle: 'Quero impressionar meu cliente com tecnologia — sem complicação.',
     borderCls: 'border-[#5DA6AA]',
     bgCls: 'hover:bg-teal-50/40',
+    planSlug: 'Embarque',
     modal: {
       heading: 'Para o agente que quer impressionar',
       desc: 'Você atende bem, conhece o produto — só faltava a ferramenta certa para mostrar isso. Com o AgenteOffice, você chega na frente de 90% dos concorrentes com uma proposta que o cliente abre no celular e já quer confirmar.',
-      plan: 'Turbo', price: 'R$ 49,90/mês',
+      plan: 'Embarque', price: 'R$ 59,90/mês',
       highlights: [
         { icon: '⚡', title: 'Orçamento Turbo', desc: 'Cole o texto da Sakura, CVC, Orinter, Flytour... O orçamento sai pronto com comissão calculada. Em menos de 2 minutos.' },
         { icon: '🎨', title: 'Proposta com a sua marca', desc: 'Seu cliente recebe um link bonito no celular — com seu logo, suas cores, sua mensagem. Nada de PDF feio por e-mail.' },
         { icon: '🧾', title: 'Voucher digital em 1 clique', desc: 'Aprovou? O voucher com todos os detalhes fica pronto na hora. Sem retrabalho.' },
-        { icon: '✨', title: 'Mar.ia — IA para roteiros', desc: 'Sugestões de destino, roteiro dia a dia, dicas de visto. A IA trabalha enquanto você fecha a venda.' },
+        { icon: '💰', title: 'Financeiro — comissões e recebimentos', desc: 'Controle o que você tem a receber, o que já entrou e suas comissões. Tudo em tempo real, sem planilha.' },
       ],
     },
   },
@@ -386,15 +364,16 @@ const PROFILES = [
     subtitle: 'Preciso organizar vendas, financeiro e gestão das viagens.',
     borderCls: 'border-slate-200',
     bgCls: 'hover:bg-slate-50',
+    planSlug: 'Escala',
     modal: {
       heading: 'Para a agência que quer crescer com controle',
       desc: 'Mais de 1 agente, mais clientes, mais viagens — e a sensação de que está tudo no ar. O AgenteOffice coloca tudo em um painel só, do lead ao financeiro.',
-      plan: 'Gestão', price: 'R$ 149,90/mês',
+      plan: 'Escala', price: 'R$ 149,90/mês',
       highlights: [
         { icon: '📦', title: 'Pipeline de vendas', desc: 'Kanban visual: lead, orçamento, fechado, embarcado. Você sabe onde cada cliente está sem precisar perguntar.' },
         { icon: '💰', title: 'Financeiro real', desc: 'Quanto a receber, quanto já entrou, comissões do mês — ao vivo, sem planilha, sem chute.' },
         { icon: '📋', title: 'Contratos digitais', desc: 'Gere e envie contratos para o cliente assinar online. Sem impressora, sem escaneador.' },
-        { icon: '🗺️', title: 'Roteiro personalizado', desc: 'Crie roteiros detalhados por cliente. Do transfer ao restaurante — tudo documentado.' },
+        { icon: '✨', title: 'Mar.ia — IA secretária virtual', desc: 'Sugestões de destino, roteiro dia a dia, dicas de visto. A IA trabalha enquanto você fecha a venda.' },
       ],
     },
   },
@@ -404,13 +383,14 @@ const PROFILES = [
     subtitle: 'Trabalho com grupos, ônibus e saídas programadas.',
     borderCls: 'border-slate-200',
     bgCls: 'hover:bg-slate-50',
+    planSlug: 'Escala',
     modal: {
       heading: 'Para a operadora que move grupos',
-      desc: 'Controlar assentos em planilha, lista de passageiros no papel, ligar pra todo mundo na véspera — isso acaba com o plano Operador.',
-      plan: 'Operador', price: 'R$ 199/mês',
+      desc: 'Controlar assentos em planilha, lista de passageiros no papel, ligar pra todo mundo na véspera — isso acaba com o plano Escala.',
+      plan: 'Escala', price: 'R$ 149,90/mês',
       highlights: [
-        { icon: '🚌', title: 'Módulo Excursão', desc: 'Crie excursões com destino, data, ônibus e cotas. Controle de passageiros e ocupação em tempo real.' },
-        { icon: '📋', title: 'Checklist de embarque', desc: 'Lista de presença, documentação e pagamento por passageiro. Tudo conferido antes do ônibus sair.' },
+        { icon: '🚌', title: 'Grupos e Excursões', desc: 'Crie excursões com destino, data, ônibus e cotas. Controle de passageiros e ocupação em tempo real.' },
+        { icon: '📋', title: 'Contratos digitais', desc: 'Gere e envie contratos para o passageiro assinar online. Tudo documentado antes do embarque.' },
         { icon: '💬', title: 'WhatsApp centralizado', desc: 'Toda a equipe no mesmo número via API oficial do Meta. Histórico vinculado ao cliente no CRM.' },
         { icon: '📈', title: 'Relatórios de ocupação', desc: 'Rentabilidade por excursão, custo por assento, comparativo de saídas. Decisão com número.' },
       ],
@@ -418,7 +398,7 @@ const PROFILES = [
   },
 ];
 
-function ProfileModal({ profile, onClose }) {
+function ProfileModal({ profile, onClose, onSelectPlan }) {
   const { modal } = profile;
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
@@ -446,10 +426,10 @@ function ProfileModal({ profile, onClose }) {
               </div>
             ))}
           </div>
-          <a href="#precos" onClick={onClose}
+          <button onClick={() => { onClose(); onSelectPlan(profile.planSlug); }}
             className="flex items-center justify-center gap-2 w-full bg-[#114552] text-white font-black py-4 rounded-xl text-sm hover:bg-[#0a2c35] transition-colors">
-            Ver plano {modal.plan} — {modal.price} <ArrowRight size={14}/>
-          </a>
+            Assinar plano {modal.plan} — {modal.price} <ArrowRight size={14}/>
+          </button>
           <p className="text-[10px] text-slate-400 text-center font-medium mt-3">Sem contrato de fidelidade · Cancele quando quiser</p>
         </div>
       </div>
@@ -694,6 +674,197 @@ function HeroPropostaPreview() {
           💳 Comissão e custo são <strong>sempre confidenciais</strong> — só você vê
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ─── VOUCHER PREVIEW ────────────────────────────── */
+function HeroVoucherPreview() {
+  return (
+    <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
+      {/* Browser bar */}
+      <div className="bg-[#1e1e1e] px-4 py-2.5 flex items-center gap-3">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"/>
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"/>
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"/>
+        </div>
+        <div className="flex-1 bg-[#2d2d2d] rounded-md px-3 py-1 flex items-center gap-2">
+          <svg className="w-2.5 h-2.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span className="text-[10px] font-mono text-slate-400">agenteoffice.com.br/p/88472</span>
+          <CheckCheck size={9} className="ml-auto text-emerald-400"/>
+        </div>
+      </div>
+
+      {/* Destination hero */}
+      <div className="relative h-44 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&fit=crop" alt="" className="w-full h-full object-cover"/>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10"/>
+        <div className="absolute top-3 left-4 right-4 flex justify-between items-start">
+          <span className="text-[9px] font-black uppercase tracking-widest bg-white/15 text-white px-2.5 py-1 rounded-full border border-white/20 backdrop-blur-sm">🧾 Voucher Digital</span>
+          <img src="/logo_hor_white.png" alt="logo" className="h-4 w-auto opacity-90"/>
+        </div>
+        <div className="absolute bottom-3 left-4 right-4">
+          <div className="text-white font-black text-lg mb-1.5 drop-shadow-lg">Portugal + Espanha · 12 dias</div>
+          <div className="flex gap-2 flex-wrap">
+            {['📅 Out 2026','👥 Casal Silva','2 pax'].map((t,i)=>(
+              <span key={i} className="text-white/80 text-[9px] font-medium bg-black/30 px-2 py-0.5 rounded-full backdrop-blur-sm">{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Tab bar — Voucher selecionado */}
+      <div className="bg-white border-b border-slate-100 px-3 flex items-center justify-between">
+        <div className="flex">
+          {['📄 Proposta','🧾 Voucher'].map((t,i)=>(
+            <div key={i} className={`px-3 py-2 text-[9px] font-black border-b-2 ${i===1?'border-[#0F766E] text-[#0F766E]':'border-transparent text-slate-300'}`}>{t}</div>
+          ))}
+        </div>
+        <div className="flex items-center gap-1.5 py-1.5">
+          <span className="text-[8px] font-black bg-teal-50 border border-teal-200 text-[#0F766E] px-1.5 py-0.5 rounded">Op.1</span>
+          <button className="text-[8px] font-black text-white bg-[#114552] px-2 py-1 rounded-lg ml-1">⬇ PDF</button>
+        </div>
+      </div>
+
+      {/* Voucher body */}
+      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto" style={{maxHeight:'480px'}}>
+
+        {/* Status confirmado */}
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-3 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-black shrink-0">✓</div>
+          <div>
+            <div className="text-white font-black text-[10px]">RESERVA CONFIRMADA</div>
+            <div className="text-white/70 text-[8px]">Localizador: AO-88472 · Emitido em 18/10/2025</div>
+          </div>
+          <div className="ml-auto text-right">
+            <div className="text-white/50 text-[7px] uppercase tracking-wider">Total pago</div>
+            <div className="text-white font-black text-sm">R$ 24.048</div>
+          </div>
+        </div>
+
+        {/* Voos confirmados */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>✈️</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Voos Confirmados</span>
+          </div>
+          <div className="divide-y divide-slate-50">
+            {[
+              {loc:'TAP8807', rota:'GRU → LIS', data:'15 Out 2026', hora:'08:45 → 06:05+1', classe:'Econômica', status:'Confirmado'},
+              {loc:'LA8026', rota:'MAD → GRU', data:'27 Out 2026', hora:'11:30 → 19:55', classe:'Econômica', status:'Confirmado'},
+            ].map((v,i)=>(
+              <div key={i} className="px-3 py-2.5 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#042F2E] flex items-center justify-center text-white text-xs shrink-0">✈</div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[9px] font-black text-[#114552]">{v.rota} · {v.data}</div>
+                  <div className="text-[8px] text-slate-400">{v.hora} · {v.classe}</div>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-[7px] font-black bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200">{v.status}</div>
+                  <div className="text-[7px] text-slate-400 mt-0.5">{v.loc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Roteiro com imagens */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🗺️</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Roteiro — Dia a Dia</span>
+          </div>
+          <div className="space-y-0 divide-y divide-slate-50">
+            {[
+              {dias:'Dias 1–4', local:'Lisboa', img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=400&fit=crop', desc:'Torre de Belém · Alfama · Elétrico 28 · Pastéis de Belém · Fado à noite'},
+              {dias:'Dia 5', local:'Sintra', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&fit=crop', desc:'Palácio da Pena · Quinta da Regaleira · Cabo da Roca'},
+              {dias:'Dias 6–7', local:'Sevilha', img:'https://images.unsplash.com/photo-1559685573-3f6a2bc0c1f4?w=400&fit=crop', desc:'Real Alcázar · Catedral · tapas no Barrio de Santa Cruz'},
+              {dias:'Dias 8–12', local:'Madrid', img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&fit=crop', desc:'Museo del Prado · Parque del Retiro · Mercado San Miguel'},
+            ].map((r,i)=>(
+              <div key={i} className="flex gap-0 overflow-hidden">
+                <div className="relative w-16 h-16 shrink-0">
+                  <img src={r.img} alt={r.local} className="w-full h-full object-cover"/>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"/>
+                </div>
+                <div className="flex-1 px-2.5 py-2 flex flex-col justify-center">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[7px] font-black text-[#5DA6AA] uppercase">{r.dias}</span>
+                    <span className="text-[8px] font-black text-[#114552]">· {r.local}</span>
+                  </div>
+                  <p className="text-[8px] text-slate-500 font-medium leading-snug">{r.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Hotéis */}
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="px-3 py-2 border-b border-slate-50 flex items-center gap-1.5">
+            <span>🏨</span><span className="text-[9px] font-black text-[#114552] uppercase tracking-widest">Hospedagens</span>
+          </div>
+          <div className="divide-y divide-slate-50">
+            {[
+              {img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&fit=crop', name:'Bairro Alto Hotel', loc:'Lisboa · check-in 15 Out · 4 noites', loc2:'checkout: 19 Out', voucher:'BAH-2026-7743'},
+              {img:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&fit=crop', name:'Hotel Canalejas', loc:'Madrid · check-in 22 Out · 5 noites', loc2:'checkout: 27 Out', voucher:'HC-2026-4412'},
+            ].map((h,i)=>(
+              <div key={i} className="flex gap-2.5 items-center px-3 py-2.5">
+                <img src={h.img} alt={h.name} className="w-12 h-12 rounded-xl object-cover shrink-0"/>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[9px] font-black text-[#114552] leading-tight">{h.name}</div>
+                  <div className="text-[8px] text-slate-400 mt-0.5">{h.loc}</div>
+                  <div className="text-[7px] text-slate-300 mt-0.5">Voucher: {h.voucher}</div>
+                </div>
+                <span className="text-[7px] font-black bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200 shrink-0">✓ OK</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Contato agente */}
+        <div className="bg-gradient-to-r from-teal-50 to-white rounded-xl border border-teal-100 p-3 flex gap-2.5 items-center">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#5DA6AA] to-[#114552] flex items-center justify-center shrink-0 text-white font-black text-[10px]" style={{fontStyle:'italic'}}>M</div>
+          <div className="flex-1">
+            <div className="text-[8px] font-black text-[#114552]">Sua agente Maria · em caso de emergência</div>
+            <div className="text-[8px] text-slate-400">📱 (11) 99999-0000 · maria@agencia.com.br</div>
+          </div>
+          <button className="text-[8px] font-black bg-[#25D366] text-white px-2 py-1 rounded-lg shrink-0">WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── HERO SLIDER ────────────────────────────────── */
+function HeroSlider() {
+  const [active, setActive] = React.useState(0);
+  const slides = [
+    { label: 'Proposta', component: <HeroPropostaPreview /> },
+    { label: 'Voucher', component: <HeroVoucherPreview /> },
+  ];
+
+  React.useEffect(() => {
+    const id = setInterval(() => setActive(a => (a + 1) % slides.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="relative">
+      <div className="relative overflow-hidden rounded-[2rem]">
+        {slides.map((s, i) => (
+          <div key={i} className={`transition-all duration-700 ${i === active ? 'opacity-100 translate-y-0' : 'opacity-0 absolute inset-0 translate-y-4 pointer-events-none'}`}>
+            {s.component}
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-2 mt-4">
+        {slides.map((s, i) => (
+          <button key={i} onClick={() => setActive(i)}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black transition-all ${i === active ? 'bg-[#114552] text-white shadow' : 'bg-white/70 text-slate-400 border border-slate-200 hover:bg-white'}`}>
+            {i === 0 ? '📄' : '🧾'} {s.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-center text-[9px] text-slate-300 font-medium mt-2">* meramente ilustrativo</p>
     </div>
   );
 }
@@ -1161,6 +1332,244 @@ function PropostaShowcase() {
   );
 }
 
+/* ─── GESTÃO SHOWCASE ───────────────────────────── */
+function GestaoShowcase() {
+  const [active, setActive] = React.useState(0);
+
+  React.useEffect(() => {
+    const id = setInterval(() => setActive(a => (a + 1) % 2), 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  const VIAGENS = [
+    { dest: 'Portugal + Espanha', datas: '15–27 Out 2026', pax: '2 pax', val: 'R$ 24.048', status: 'Proposta enviada', statusColor: 'bg-violet-100 text-violet-700', img: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&fit=crop' },
+    { dest: 'Maldivas', datas: '03–12 Ago 2026', pax: '2 pax', val: 'R$ 38.500', status: 'Fechado ✓', statusColor: 'bg-emerald-100 text-emerald-700', img: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600&fit=crop' },
+    { dest: 'Disney Orlando', datas: '20 Dez–02 Jan', pax: '4 pax', val: 'R$ 52.200', status: 'Em breve ✈', statusColor: 'bg-blue-100 text-blue-700', img: 'https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=600&fit=crop' },
+    { dest: 'Cancún', datas: '10–20 Jul 2026', pax: '2 pax', val: 'R$ 18.400', status: 'Lead', statusColor: 'bg-slate-100 text-slate-500', img: 'https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&fit=crop' },
+    { dest: 'Paris + Amsterdam', datas: '05–18 Set 2026', pax: '2 pax', val: 'R$ 19.200', status: 'Fechado ✓', statusColor: 'bg-emerald-100 text-emerald-700', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&fit=crop' },
+    { dest: 'Safari Tanzânia', datas: 'Nov 2026', pax: '4 pax', val: 'R$ 94.000', status: 'Orçamento', statusColor: 'bg-amber-100 text-amber-700', img: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&fit=crop' },
+  ];
+
+  const KANBAN = [
+    { col: 'Lead', dot: 'bg-slate-400', header: 'bg-slate-50 border-slate-200', total: 'R$ 40k', cards: [
+      { name: 'Família Rocha', dest: 'Cancún · Jul', val: 'R$ 18k', avatar: 'FR' },
+      { name: 'Camila Souza', dest: 'Disney · Dez', val: '—', avatar: 'CS' },
+      { name: 'Grupo Alfa', dest: 'Nordeste · Out', val: 'R$ 22k', avatar: 'GA' },
+    ]},
+    { col: 'Proposta', dot: 'bg-violet-400', header: 'bg-violet-50 border-violet-200', total: 'R$ 136k', cards: [
+      { name: 'Silva, João', dest: 'Portugal · Out', val: 'R$ 24k', avatar: 'SJ' },
+      { name: 'Nakamura', dest: 'Tóquio · Mar', val: 'R$ 48k', avatar: 'NK' },
+      { name: 'Casal Ferrari', dest: 'Itália · Abr', val: 'R$ 34k', avatar: 'CF' },
+      { name: 'Lima, Ana', dest: 'Roma · Mai', val: 'R$ 30k', avatar: 'LA' },
+    ]},
+    { col: 'Aprovado', dot: 'bg-amber-400', header: 'bg-amber-50 border-amber-200', total: 'R$ 131k', cards: [
+      { name: 'Costa, Pedro', dest: 'Maldivas · Ago', val: 'R$ 38k', avatar: 'CP' },
+      { name: 'Alves Fam.', dest: 'Dubai · Nov', val: 'R$ 61k', avatar: 'AF' },
+      { name: 'Grupo Viena', dest: 'Europa · Set', val: 'R$ 32k', avatar: 'GV' },
+    ]},
+    { col: 'Fechado', dot: 'bg-emerald-400', header: 'bg-emerald-50 border-emerald-200', total: 'R$ 133k', cards: [
+      { name: 'Fernandez', dest: 'Paris · Set', val: 'R$ 19k', avatar: 'FZ' },
+      { name: 'Pereira, R.', dest: 'NYC · Jan', val: 'R$ 52k', avatar: 'PR' },
+      { name: 'Tan, Michelle', dest: 'Bali · Fev', val: 'R$ 31k', avatar: 'TM' },
+      { name: 'Santos, B.', dest: 'Disney · Dez', val: 'R$ 31k', avatar: 'SB' },
+    ]},
+    { col: 'Embarcado', dot: 'bg-teal-400', header: 'bg-teal-50 border-teal-200', total: 'R$ 94k', cards: [
+      { name: 'Gomes, C.', dest: 'Tanzânia ✈', val: 'R$ 94k', avatar: 'GC' },
+    ]},
+  ];
+
+  const BrowserChrome = ({ activeTab }) => (
+    <div className="bg-[#1e1e1e] px-4 py-2.5 flex items-center gap-3">
+      <div className="flex gap-1.5">
+        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"/>
+        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"/>
+        <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"/>
+      </div>
+      <div className="flex-1 bg-[#2d2d2d] rounded-md px-3 py-1 flex items-center gap-2">
+        <svg className="w-2.5 h-2.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span className="text-[10px] font-mono text-slate-400">app.agenteoffice.com.br/{activeTab}</span>
+      </div>
+    </div>
+  );
+
+  const AppNav = ({ active: nav }) => (
+    <div className="bg-white border-b border-slate-100 px-4 flex items-center gap-0">
+      {[['🏠','Dashboard'],['🧳','Minhas Viagens'],['📦','Pipeline'],['💰','Financeiro']].map(([ico, lbl], i) => {
+        const slug = i===1 ? 'viagens' : i===2 ? 'pipeline' : i===0 ? 'dashboard' : 'financeiro';
+        const isActive = slug === nav;
+        return (
+          <div key={i} className={`px-3 py-2.5 text-[9px] font-black border-b-2 flex items-center gap-1 ${isActive ? 'border-[#0F766E] text-[#0F766E]' : 'border-transparent text-slate-300'}`}>
+            <span>{ico}</span><span>{lbl}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  const ViagensMock = () => (
+    <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
+      <BrowserChrome activeTab="viagens" />
+      <AppNav active="viagens" />
+      <div className="bg-slate-50 p-4 space-y-4" style={{maxHeight:'520px', overflowY:'auto'}}>
+        {/* Stats */}
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            { l: 'Viagens ativas', v: '12', c: 'text-[#114552]' },
+            { l: 'Este mês', v: 'R$ 284k', c: 'text-emerald-600' },
+            { l: 'Próximas partidas', v: '3', c: 'text-blue-600' },
+            { l: 'Pendentes', v: '2', c: 'text-amber-600' },
+          ].map((s,i)=>(
+            <div key={i} className="bg-white rounded-xl border border-slate-100 p-2.5 text-center">
+              <div className="text-[8px] text-slate-400 font-bold uppercase mb-0.5">{s.l}</div>
+              <div className={`text-sm font-black ${s.c}`}>{s.v}</div>
+            </div>
+          ))}
+        </div>
+        {/* Search + filtro */}
+        <div className="flex items-center gap-2">
+          <div className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 flex items-center gap-2">
+            <span className="text-slate-300 text-xs">🔍</span>
+            <span className="text-[9px] text-slate-300 font-medium">Buscar viagem, cliente...</span>
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-[9px] font-bold text-slate-400">Filtros</div>
+          <div className="bg-[#114552] rounded-xl px-3 py-2 text-[9px] font-black text-white">+ Nova</div>
+        </div>
+        {/* Cards grid */}
+        <div className="grid grid-cols-3 gap-2.5">
+          {VIAGENS.map((v,i)=>(
+            <div key={i} className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="relative h-20">
+                <img src={v.img} alt={v.dest} className="w-full h-full object-cover"/>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
+                <div className="absolute top-1.5 right-1.5">
+                  <span className={`text-[7px] font-black px-1.5 py-0.5 rounded-full ${v.statusColor}`}>{v.status}</span>
+                </div>
+                <div className="absolute bottom-1.5 left-2">
+                  <div className="text-white font-black text-[9px] leading-tight">{v.dest}</div>
+                </div>
+              </div>
+              <div className="p-2">
+                <div className="text-[8px] text-slate-400 font-medium">{v.datas} · {v.pax}</div>
+                <div className="text-[10px] font-black text-[#5DA6AA] mt-0.5">{v.val}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const PipelineMock = () => (
+    <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
+      <BrowserChrome activeTab="pipeline" />
+      <AppNav active="pipeline" />
+      <div className="bg-slate-50" style={{maxHeight:'520px', overflowY:'auto'}}>
+        {/* Pipeline header */}
+        <div className="bg-white border-b border-slate-100 px-4 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-black text-[#114552]">Pipeline de Vendas</span>
+            <span className="text-[8px] bg-teal-50 border border-teal-200 text-[#0F766E] px-2 py-0.5 rounded-full font-black">15 clientes</span>
+          </div>
+          <div className="text-right">
+            <div className="text-[8px] text-slate-400 font-medium">Total em negociação</div>
+            <div className="text-[11px] font-black text-[#114552]">R$ 534k</div>
+          </div>
+        </div>
+        {/* Kanban */}
+        <div className="p-3 overflow-x-auto">
+          <div className="flex gap-2.5 min-w-max pb-1">
+            {KANBAN.map((col, ci)=>(
+              <div key={ci} className="w-[130px] shrink-0">
+                <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border mb-2 ${col.header}`}>
+                  <div className={`w-2 h-2 rounded-full ${col.dot}`}/>
+                  <span className="text-[8px] font-black text-slate-600 uppercase tracking-wide flex-1">{col.col}</span>
+                  <span className="text-[8px] font-black text-slate-500">{col.cards.length}</span>
+                </div>
+                <div className="text-[8px] font-bold text-slate-400 mb-2 px-1">{col.total}</div>
+                <div className="space-y-2">
+                  {col.cards.map((c,cj)=>(
+                    <div key={cj} className="bg-white rounded-xl border border-slate-100 p-2.5 shadow-sm hover:shadow transition-shadow">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#5DA6AA] to-[#114552] flex items-center justify-center shrink-0">
+                          <span className="text-[6px] font-black text-white">{c.avatar}</span>
+                        </div>
+                        <div className="text-[9px] font-black text-[#114552] leading-tight truncate">{c.name}</div>
+                      </div>
+                      <div className="text-[8px] text-slate-400 font-medium mb-1">{c.dest}</div>
+                      {c.val !== '—' && <div className="text-[9px] font-black text-[#5DA6AA]">{c.val}</div>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const slides = [
+    { label: 'Minhas Viagens', icon: '🧳', component: <ViagensMock /> },
+    { label: 'Pipeline', icon: '📦', component: <PipelineMock /> },
+  ];
+
+  return (
+    <section className="py-24 bg-white px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
+            <LayoutDashboard className="w-3.5 h-3.5 text-[#5DA6AA]"/>
+            <span className="text-xs font-black text-[#114552] uppercase tracking-widest">Gestão completa</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            Tudo que você precisa ver,<br/><span className="text-[#5DA6AA]">numa tela só.</span>
+          </h2>
+          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
+            Minhas Viagens com cards lindos por destino. Pipeline Kanban completo para nunca perder um lead. Tudo conectado, tudo ao vivo.
+          </p>
+        </div>
+
+        {/* Slider */}
+        <div className="relative max-w-5xl mx-auto">
+          <div className="absolute -inset-8 bg-gradient-to-tr from-[#5DA6AA]/15 to-[#114552]/8 rounded-[3rem] blur-3xl"/>
+          <div className="relative overflow-hidden rounded-[2rem]">
+            {slides.map((s,i)=>(
+              <div key={i} className={`transition-all duration-700 ${i===active ? 'opacity-100 translate-y-0' : 'opacity-0 absolute inset-0 translate-y-4 pointer-events-none'}`}>
+                {s.component}
+              </div>
+            ))}
+          </div>
+          {/* Controls */}
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {slides.map((s,i)=>(
+              <button key={i} onClick={()=>setActive(i)}
+                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-black transition-all ${i===active ? 'bg-[#114552] text-white shadow' : 'bg-white text-slate-400 border border-slate-200 hover:bg-slate-50'}`}>
+                {s.icon} {s.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-center text-[9px] text-slate-300 font-medium mt-2">* meramente ilustrativo</p>
+        </div>
+
+        {/* Features grid */}
+        <div className="grid md:grid-cols-3 gap-6 mt-16">
+          {[
+            { icon: '🧳', title: 'Minhas Viagens', desc: 'Cards por destino com foto, status, datas e valor. Visão de todas as viagens ativas de um jeito bonito e prático.' },
+            { icon: '📦', title: 'Pipeline Kanban', desc: 'Lead → Proposta → Aprovado → Fechado → Embarcado. Arraste o cliente de coluna e nunca deixe um negócio cair.' },
+            { icon: '🔔', title: 'Alertas automáticos', desc: 'Check-in disponível, visto pendente, pagamento chegando — você começa o dia sabendo exatamente o que fazer.' },
+          ].map((f,i)=>(
+            <div key={i} className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="text-3xl mb-3">{f.icon}</div>
+              <div className="font-black text-[#114552] text-base mb-2">{f.title}</div>
+              <p className="text-sm text-slate-500 font-medium leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── HELPERS ────────────────────────────────────── */
 function NavLeft() {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path d="M15 18l-6-6 6-6"/></svg>;
@@ -1212,7 +1621,7 @@ export default function App() {
           />
         )
       )}
-      {openProfile && <ProfileModal profile={openProfile} onClose={() => setOpenProfile(null)} />}
+      {openProfile && <ProfileModal profile={openProfile} onClose={() => setOpenProfile(null)} onSelectPlan={setSelectedPlan} />}
 
       {/* ── NAV ─────────────────────────────────────── */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
@@ -1226,9 +1635,9 @@ export default function App() {
             <a href="https://app.agenteoffice.com.br" className="flex items-center gap-1.5 text-sm font-bold text-[#114552] hover:text-[#5DA6AA] transition-colors">
               <LogIn size={15} /> Já sou cliente
             </a>
-            <a href="#precos" className="bg-[#114552] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#0a2c35] transition-all shadow-md active:scale-95">
-              Assinar agora
-            </a>
+            <button onClick={() => setSelectedPlan('Experimente')} className="bg-[#114552] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#0a2c35] transition-all shadow-md active:scale-95">
+              Experimente grátis
+            </button>
           </div>
           <button className="md:hidden p-2 text-[#114552]" onClick={() => setMenuOpen(v => !v)}>
             {menuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -1240,7 +1649,7 @@ export default function App() {
             <NavLink href="#jornada">Jornada</NavLink>
             <NavLink href="#precos">Preços</NavLink>
             <a href="https://app.agenteoffice.com.br" className="text-sm font-bold text-[#114552]">Já sou cliente</a>
-            <a href="#precos" className="bg-[#114552] text-white text-center py-3 rounded-xl text-sm font-bold">Assinar agora</a>
+            <button onClick={() => { setMenuOpen(false); setSelectedPlan('Experimente'); }} className="bg-[#114552] text-white text-center py-3 rounded-xl text-sm font-bold w-full">Experimente grátis</button>
           </div>
         )}
       </nav>
@@ -1263,10 +1672,10 @@ export default function App() {
               Cole o texto da consolidadora, a IA lê tudo e monta o orçamento com comissão calculada. Aprovou — a proposta vai para o cliente com a cara da sua agência. Sem digitar nada de novo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <a href="#precos" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
-                Começar agora — R$ 49,90
+              <button onClick={() => setSelectedPlan('Experimente')} className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
+                Experimente de graça — sem cartão
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-              </a>
+              </button>
               <button data-demo-btn onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-base hover:bg-slate-50 transition-all">
                 <Play size={15} className="text-[#5DA6AA]" /> Ver demonstração
               </button>
@@ -1286,7 +1695,7 @@ export default function App() {
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-gradient-to-tr from-[#5DA6AA]/20 to-[#114552]/10 rounded-[3rem] blur-3xl" />
-            <div className="relative"><HeroPropostaPreview /></div>
+            <div className="relative"><HeroSlider /></div>
           </div>
         </div>
       </section>
@@ -2073,6 +2482,9 @@ export default function App() {
       {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
       <PropostaShowcase />
 
+      {/* ── GESTÃO SHOWCASE ──────────────────────────── */}
+      <GestaoShowcase />
+
       {/* ── ROTEIRO PERSONALIZADO ────────────────────── */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
@@ -2115,7 +2527,7 @@ export default function App() {
             <h2 className="text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
             <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. Usuário extra por <strong>+R$ 29,90/mês</strong>.</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+          <div className="grid md:grid-cols-3 gap-6 items-start">
             {PLANS.map((plan, i) => (
               <div key={i} className={`relative flex flex-col p-7 rounded-[2rem] bg-white border-2 transition-all ${plan.highlight ? 'border-[#5DA6AA] shadow-2xl lg:scale-105 z-10' : 'border-slate-100 shadow-sm'}`}>
                 {plan.badge && (
@@ -2126,9 +2538,9 @@ export default function App() {
                 <div className="mb-7">
                   <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">{plan.name}</h3>
                   <div className="flex items-baseline gap-1 text-[#114552] mb-2">
-                    {plan.price !== 'Consultar' && <span className="text-lg font-bold">R$</span>}
-                    <span className="text-4xl font-black tracking-tight">{plan.price}</span>
-                    {plan.price !== 'Consultar' && <span className="text-slate-400 font-bold text-sm">/mês</span>}
+                    {plan.price !== null && <span className="text-lg font-bold">R$</span>}
+                    <span className="text-4xl font-black tracking-tight">{plan.price ?? plan.priceLabel}</span>
+                    {plan.price !== null && <span className="text-slate-400 font-bold text-sm">/mês</span>}
                   </div>
                   <p className="text-slate-400 text-xs font-medium italic">"{plan.desc}"</p>
                 </div>
@@ -2179,9 +2591,9 @@ export default function App() {
             Comece hoje mesmo. Em minutos você está criando orçamentos, enviando propostas bonitas e vendo o financeiro da agência em tempo real. Sem contrato, sem complicação.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#precos" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#5DA6AA] text-white rounded-2xl font-black text-lg hover:bg-[#4a8f93] transition-all shadow-xl group">
-              Ver planos <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
-            </a>
+            <button onClick={() => setSelectedPlan('Experimente')} className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#5DA6AA] text-white rounded-2xl font-black text-lg hover:bg-[#4a8f93] transition-all shadow-xl group">
+              Experimente de graça <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
+            </button>
             <button onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
               <Play size={16}/> Ver demonstração
             </button>
