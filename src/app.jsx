@@ -794,7 +794,7 @@ function HeroVoucherPreview() {
             {[
               {dias:'Dias 1–4', local:'Lisboa', img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=400&fit=crop', desc:'Torre de Belém · Alfama · Elétrico 28 · Pastéis de Belém · Fado à noite'},
               {dias:'Dia 5', local:'Sintra', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&fit=crop', desc:'Palácio da Pena · Quinta da Regaleira · Cabo da Roca'},
-              {dias:'Dias 6–7', local:'Sevilha', img:'https://images.unsplash.com/photo-1559685573-3f6a2bc0c1f4?w=400&fit=crop', desc:'Real Alcázar · Catedral · tapas no Barrio de Santa Cruz'},
+              {dias:'Dias 6–7', local:'Sevilha', img:'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=400&fit=crop', desc:'Real Alcázar · Catedral · tapas no Barrio de Santa Cruz'},
               {dias:'Dias 8–12', local:'Madrid', img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&fit=crop', desc:'Museo del Prado · Parque del Retiro · Mercado San Miguel'},
             ].map((r,i)=>(
               <div key={i} className="flex gap-0 overflow-hidden">
@@ -1476,50 +1476,93 @@ function GestaoShowcase() {
     </div>
   );
 
+  const MV_COLS = [
+    { col: 'Novas viagens', count: 3, dot: 'bg-slate-400', cards: [
+      { title: 'Europa - Lua de Mel', dest: 'Paris · Zurique · Londres · Roma', client: 'Raissa Albertini', pax: 4, date: '25/01', num: '#2926', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300&fit=crop' },
+      { title: 'Berlim - Família Souza', dest: 'Berlim', client: 'Eunice Souza', pax: 2, date: '11/08', num: '#2925', img: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=300&fit=crop' },
+      { title: 'João Pessoa', dest: 'João Pessoa · Natal', client: 'Valdirene Faria', pax: 2, date: '07/07', num: '#2924', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&fit=crop' },
+    ]},
+    { col: 'Em orçamento', count: 1, dot: 'bg-blue-400', cards: [
+      { title: 'Paris - Jan/2027', dest: 'Paris', client: 'Raissa Albertini', pax: 1, date: '27/01', num: '#2915', img: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=300&fit=crop' },
+    ]},
+    { col: 'Em decisão', count: 3, dot: 'bg-amber-400', cards: [
+      { title: 'Europa 12 dias', dest: 'Paris · Zurique · Londres · Roma', client: 'Carlos Albertini', pax: 4, date: '25/01', num: '#2893', img: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=300&fit=crop' },
+      { title: 'Leste Europeu', dest: 'Praga · Viena · Budapeste', client: 'Rafael Mendes', pax: 2, date: '04/08', num: '#2835', img: 'https://images.unsplash.com/photo-1541849546-216549ae216d?w=300&fit=crop' },
+      { title: 'Nordeste - Jul/2026', dest: 'João Pessoa · Maceió', client: 'João Faria', pax: 1, date: '08/07', num: '#2911', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=300&fit=crop' },
+    ]},
+    { col: 'Em pagamento', count: 2, dot: 'bg-violet-400', cards: [
+      { title: 'Recife - Jun/2026', dest: 'Recife · Campina Grande · Carneiros', client: 'Pedro Fernandes', pax: 2, date: '06/06', num: '#2902', img: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=300&fit=crop' },
+      { title: 'Transfer corporativo', dest: 'São Paulo · Campinas', client: 'Alexandre Nunes', pax: 8, date: '01/07', num: '#2904', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300&fit=crop' },
+    ]},
+    { col: 'Viagem confirmada', count: 5, dot: 'bg-emerald-500', cards: [
+      { title: 'Toronto - Mai/Jun 2026', dest: 'Nova Iorque · Toronto', client: 'Leonardo Pinheiro', pax: 1, date: '29/05', num: '#2896', img: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=300&fit=crop' },
+      { title: 'Itália - Lua de Mel', dest: 'Costa Amalfitana · Roma', client: 'Gabriela Medeiros', pax: 2, date: '15/06', num: '#2868', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=300&fit=crop' },
+    ]},
+  ];
+
   const PipelineMock = () => (
     <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
-      <BrowserChrome activeTab="pipeline" />
-      <AppNav active="pipeline" />
-      <div className="bg-slate-50" style={{maxHeight:'520px', overflowY:'auto'}}>
-        {/* Pipeline header */}
-        <div className="bg-white border-b border-slate-100 px-4 py-2.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black text-[#114552]">Pipeline de Vendas</span>
-            <span className="text-[8px] bg-teal-50 border border-teal-200 text-[#0F766E] px-2 py-0.5 rounded-full font-black">15 clientes</span>
+      <BrowserChrome activeTab="viagens" />
+      {/* Page header */}
+      <div className="bg-white px-5 pt-3.5 pb-2.5 border-b border-slate-100">
+        <div className="text-sm font-black text-slate-800">Minhas Viagens</div>
+        <div className="text-[9px] text-slate-400 mt-0.5">Gerencie seus roteiros, clientes e status de operação.</div>
+      </div>
+      {/* Tabs */}
+      <div className="bg-white border-b border-slate-100 px-3 flex overflow-x-auto">
+        {[['Todas',null],['Novas viagens',3],['Em orçamento',1],['Em decisão',3],['Em pagamento',2],['Viagem confirmada',5],['Realizado',46]].map(([tab,cnt],i) => (
+          <div key={i} className={`px-2.5 py-2 text-[8px] font-bold border-b-2 shrink-0 flex items-center gap-1 ${i===0?'border-[#0F766E] text-[#0F766E]':'border-transparent text-slate-400'}`}>
+            {tab}{cnt!=null && <span className="bg-slate-100 text-slate-500 text-[7px] font-black px-1 rounded-full">{cnt}</span>}
           </div>
-          <div className="text-right">
-            <div className="text-[8px] text-slate-400 font-medium">Total em negociação</div>
-            <div className="text-[11px] font-black text-[#114552]">R$ 534k</div>
-          </div>
+        ))}
+      </div>
+      {/* Search */}
+      <div className="px-4 py-2 border-b border-slate-50 bg-white">
+        <div className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1.5">
+          <span className="text-slate-300 text-[10px]">🔍</span>
+          <span className="text-[8px] text-slate-300 font-medium">Buscar por nome, cliente, destino ou #número...</span>
         </div>
-        {/* Kanban */}
-        <div className="p-3 overflow-x-auto">
-          <div className="flex gap-2.5 min-w-max pb-1">
-            {KANBAN.map((col, ci)=>(
-              <div key={ci} className="w-[130px] shrink-0">
-                <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border mb-2 ${col.header}`}>
-                  <div className={`w-2 h-2 rounded-full ${col.dot}`}/>
-                  <span className="text-[8px] font-black text-slate-600 uppercase tracking-wide flex-1">{col.col}</span>
-                  <span className="text-[8px] font-black text-slate-500">{col.cards.length}</span>
-                </div>
-                <div className="text-[8px] font-bold text-slate-400 mb-2 px-1">{col.total}</div>
-                <div className="space-y-2">
-                  {col.cards.map((c,cj)=>(
-                    <div key={cj} className="bg-white rounded-xl border border-slate-100 p-2.5 shadow-sm hover:shadow transition-shadow">
-                      <div className="flex items-center gap-1.5 mb-1.5">
-                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#5DA6AA] to-[#114552] flex items-center justify-center shrink-0">
-                          <span className="text-[6px] font-black text-white">{c.avatar}</span>
-                        </div>
-                        <div className="text-[9px] font-black text-[#114552] leading-tight truncate">{c.name}</div>
-                      </div>
-                      <div className="text-[8px] text-slate-400 font-medium mb-1">{c.dest}</div>
-                      {c.val !== '—' && <div className="text-[9px] font-black text-[#5DA6AA]">{c.val}</div>}
-                    </div>
-                  ))}
-                </div>
+      </div>
+      {/* Kanban */}
+      <div className="bg-slate-50 overflow-x-auto" style={{maxHeight:'400px',overflowY:'hidden'}}>
+        <div className="flex gap-2.5 p-3 min-w-max">
+          {MV_COLS.map((col,ci) => (
+            <div key={ci} className="w-[180px] shrink-0">
+              <div className="flex items-center gap-1.5 px-1 py-1.5 mb-2">
+                <div className={`w-2 h-2 rounded-full ${col.dot}`}/>
+                <span className="text-[8px] font-black text-slate-700 flex-1">{col.col}</span>
+                <span className="text-[7px] font-black bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded-full">{col.count}</span>
               </div>
-            ))}
-          </div>
+              <div className="space-y-2">
+                {col.cards.map((c,cj) => (
+                  <div key={cj} className="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm">
+                    {c.img ? (
+                      <div className="h-14 overflow-hidden relative">
+                        <img src={c.img} alt={c.title} className="w-full h-full object-cover"/>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"/>
+                        <div className="absolute top-1 right-1 text-[6px] font-black bg-black/50 text-white px-1.5 py-0.5 rounded-full">{c.num}</div>
+                      </div>
+                    ) : (
+                      <div className="h-10 bg-slate-100 flex items-center justify-center relative">
+                        <span className="text-[6px] font-bold text-slate-300 uppercase tracking-widest">Viagem sem capa</span>
+                        <div className="absolute top-1 right-1 text-[6px] font-black bg-slate-200 text-slate-400 px-1.5 py-0.5 rounded-full">{c.num}</div>
+                      </div>
+                    )}
+                    <div className="p-2">
+                      <div className="text-[8px] font-black text-slate-800 leading-tight truncate mb-0.5">{c.title}</div>
+                      <div className="text-[7px] text-[#5DA6AA] font-semibold truncate mb-1.5">✈ {c.dest}</div>
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[7px] text-slate-400 truncate">{c.client}</span>
+                        <span className="text-[7px] font-bold text-slate-500 shrink-0">{c.pax} pax</span>
+                      </div>
+                      <div className="text-[7px] text-slate-300 mt-0.5">📅 {c.date}</div>
+                    </div>
+                  </div>
+                ))}
+                <div className="text-[8px] text-[#5DA6AA] font-bold text-center py-1 rounded-lg hover:bg-teal-50 cursor-pointer transition-colors">+ Adicionar viagem</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1527,7 +1570,7 @@ function GestaoShowcase() {
 
   const slides = [
     { label: 'Minhas Viagens', icon: '🧳', component: <ViagensMock /> },
-    { label: 'Pipeline', icon: '📦', component: <PipelineMock /> },
+    { label: 'Kanban', icon: '📦', component: <PipelineMock /> },
   ];
 
   return (
@@ -1542,7 +1585,7 @@ function GestaoShowcase() {
             Tudo que você precisa ver,<br/><span className="text-[#5DA6AA]">numa tela só.</span>
           </h2>
           <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
-            Minhas Viagens com cards lindos por destino. Pipeline Kanban completo para nunca perder um lead. Tudo conectado, tudo ao vivo.
+            Cards por destino com foto e status. Kanban completo de vendas para nunca perder um lead. Tudo conectado, tudo ao vivo.
           </p>
         </div>
 
@@ -1572,7 +1615,7 @@ function GestaoShowcase() {
         <div className="grid md:grid-cols-3 gap-6 mt-16">
           {[
             { icon: '🧳', title: 'Minhas Viagens', desc: 'Cards por destino com foto, status, datas e valor. Visão de todas as viagens ativas de um jeito bonito e prático.' },
-            { icon: '📦', title: 'Pipeline Kanban', desc: 'Lead → Proposta → Aprovado → Fechado → Embarcado. Arraste o cliente de coluna e nunca deixe um negócio cair.' },
+            { icon: '📦', title: 'Kanban de Vendas', desc: 'Novas viagens → Em orçamento → Em decisão → Confirmado → Realizado. Nunca perca um lead de vista.' },
             { icon: '🔔', title: 'Alertas automáticos', desc: 'Check-in disponível, visto pendente, pagamento chegando — você começa o dia sabendo exatamente o que fazer.' },
           ].map((f,i)=>(
             <div key={i} className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
@@ -1653,8 +1696,8 @@ export default function App() {
             <a href="https://app.agenteoffice.com.br" className="flex items-center gap-1.5 text-sm font-bold text-[#114552] hover:text-[#5DA6AA] transition-colors">
               <LogIn size={15} /> Já sou cliente
             </a>
-            <button onClick={() => setSelectedPlan('Experimente')} className="bg-[#114552] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#0a2c35] transition-all shadow-md active:scale-95">
-              Experimente grátis
+            <button onClick={() => setSelectedPlan('Experimente')} className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-emerald-600 transition-all shadow-md active:scale-95">
+              🎁 Experimente grátis
             </button>
           </div>
           <button className="md:hidden p-2 text-[#114552]" onClick={() => setMenuOpen(v => !v)}>
@@ -1667,7 +1710,7 @@ export default function App() {
             <NavLink href="#jornada">Jornada</NavLink>
             <NavLink href="#precos">Preços</NavLink>
             <a href="https://app.agenteoffice.com.br" className="text-sm font-bold text-[#114552]">Já sou cliente</a>
-            <button onClick={() => { setMenuOpen(false); setSelectedPlan('Experimente'); }} className="bg-[#114552] text-white text-center py-3 rounded-xl text-sm font-bold w-full">Experimente grátis</button>
+            <button onClick={() => { setMenuOpen(false); setSelectedPlan('Experimente'); }} className="bg-emerald-500 text-white text-center py-3.5 rounded-xl text-sm font-black w-full shadow-lg">🎁 Experimente grátis — sem cartão</button>
           </div>
         )}
       </nav>
@@ -1678,37 +1721,38 @@ export default function App() {
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#114552]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
           <div>
-            <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-7">
-              <Zap className="w-3.5 h-3.5 text-[#5DA6AA]" />
-              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Teste grátis — sem cartão de crédito</span>
+            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-emerald-700 text-[10px] font-black uppercase tracking-widest">Teste grátis agora — sem cartão de crédito</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
-              Proposta linda<br />para o cliente.<br />
-              <span className="text-[#5DA6AA]">Em menos de 2 minutos.</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.05] mb-5 tracking-tight">
+              Rápido de fazer.<br />
+              Lindo pro cliente.<br />
+              <span className="text-[#5DA6AA]">Feito pra vender mais.</span>
             </h1>
-            <p className="text-base sm:text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Cole o texto da consolidadora, a IA lê tudo e monta o orçamento com comissão calculada. Aprovou — a proposta vai para o cliente com a cara da sua agência. Sem digitar nada de novo.
+            <p className="text-base sm:text-lg text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
+              Orçamentos profissionais em minutos, propostas com a cara da sua agência, pipeline de vendas e financeiro — tudo em um sistema simples, sem planilha, sem complicação.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <button onClick={() => setSelectedPlan('Experimente')} className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#114552] text-white rounded-2xl font-bold text-base hover:bg-[#0a2c35] transition-all shadow-xl group">
-                Experimente de graça — sem cartão
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-              </button>
-              <button data-demo-btn onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-base hover:bg-slate-50 transition-all">
-                <Play size={15} className="text-[#5DA6AA]" /> Ver demonstração
-              </button>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <div className="flex items-center gap-2 text-sm text-slate-600 font-semibold">
-                <ShieldCheck size={16} className="text-[#5DA6AA]" />
-                <span>Sem contrato de fidelidade — cancele quando quiser</span>
+            <div className="flex flex-col gap-4 mb-6">
+              <div>
+                <div className="relative w-full sm:w-auto inline-flex">
+                  <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping" />
+                  <button onClick={() => setSelectedPlan('Experimente')}
+                    className="relative inline-flex items-center justify-center gap-3 px-10 sm:px-12 py-5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-lg sm:text-xl active:scale-95 transition-all shadow-2xl shadow-emerald-500/30 group w-full sm:w-auto">
+                    🎁 Experimente de graça — é grátis!
+                    <ArrowRight className="group-hover:translate-x-1.5 transition-transform" size={22} />
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3">
+                  {['✓ Sem cartão de crédito','✓ Sem contrato','✓ Cancele quando quiser'].map((t,i) => (
+                    <span key={i} className="text-sm font-semibold text-slate-400">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="mt-5 inline-flex items-center gap-2.5 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3">
-              <span className="text-lg">🎬</span>
-              <p className="text-sm font-semibold text-amber-800">
-                <strong className="font-black">CUSTA MENOS QUE O NETFLIX</strong> — e faz sua agência vender mais.
-              </p>
+              <button data-demo-btn onClick={() => setDemoOpen(true)}
+                className="inline-flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#5DA6AA] transition-colors w-fit">
+                <Play size={13} className="text-[#5DA6AA]" /> Ver demonstração em vídeo
+              </button>
             </div>
           </div>
           <div className="relative hidden lg:block">
@@ -2497,11 +2541,36 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── CTA MID-PAGE ─────────────────────────────── */}
+      <div className="bg-gradient-to-r from-[#5DA6AA] to-[#3a8d91] py-10 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div>
+            <p className="text-white font-black text-2xl sm:text-3xl leading-tight">Quer ver como funciona na prática?</p>
+            <p className="text-white/75 font-medium text-base mt-1.5">Crie sua conta grátis agora — sem cartão de crédito, sem burocracia.</p>
+          </div>
+          <button onClick={() => setSelectedPlan('Experimente')}
+            className="inline-flex items-center gap-2 bg-white text-emerald-600 px-8 py-4 rounded-2xl font-black text-base hover:bg-emerald-50 active:scale-95 transition-all shadow-xl shrink-0">
+            🎁 Começar de graça <ArrowRight size={18}/>
+          </button>
+        </div>
+      </div>
+
       {/* ── PROPOSTA SHOWCASE ────────────────────────── */}
       <PropostaShowcase />
 
       {/* ── GESTÃO SHOWCASE ──────────────────────────── */}
       <GestaoShowcase />
+
+      {/* ── CTA APÓS GESTÃO ──────────────────────────── */}
+      <div className="bg-[#114552] py-8 px-4">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+          <p className="text-white font-black text-xl sm:text-2xl">Já viu o suficiente? Comece de graça agora.</p>
+          <button onClick={() => setSelectedPlan('Experimente')}
+            className="inline-flex items-center gap-2 bg-emerald-500 text-white px-8 py-3.5 rounded-2xl font-black text-base hover:bg-emerald-600 active:scale-95 transition-all shadow-lg shrink-0">
+            🎁 Criar conta grátis <ArrowRight size={16}/>
+          </button>
+        </div>
+      </div>
 
       {/* ── ROTEIRO PERSONALIZADO ────────────────────── */}
       <section className="py-14 md:py-24 bg-slate-50 px-4">
@@ -2544,6 +2613,12 @@ export default function App() {
             <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="IA incluída em todos os planos" />
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
             <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. Usuário extra por <strong>+R$ 29,90/mês</strong>.</p>
+            <div className="inline-flex items-center gap-2.5 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3 mt-5">
+              <span className="text-lg">🎬</span>
+              <p className="text-sm font-semibold text-amber-800">
+                <strong className="font-black">CUSTA MENOS QUE O NETFLIX</strong> — e faz sua agência vender mais.
+              </p>
+            </div>
           </div>
           <div className="grid md:grid-cols-3 gap-6 items-start">
             {PLANS.map((plan, i) => (
@@ -2609,8 +2684,8 @@ export default function App() {
             Comece hoje mesmo. Em minutos você está criando orçamentos, enviando propostas bonitas e vendo o financeiro da agência em tempo real. Sem contrato, sem complicação.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={() => setSelectedPlan('Experimente')} className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#5DA6AA] text-white rounded-2xl font-black text-lg hover:bg-[#4a8f93] transition-all shadow-xl group">
-              Experimente de graça <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
+            <button onClick={() => setSelectedPlan('Experimente')} className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-emerald-500 text-white rounded-2xl font-black text-lg hover:bg-emerald-600 active:scale-95 transition-all shadow-xl shadow-emerald-500/30 group">
+              🎁 Experimente de graça — é grátis! <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20}/>
             </button>
             <button onClick={() => setDemoOpen(true)} className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
               <Play size={16}/> Ver demonstração
@@ -2619,8 +2694,16 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── BOTÃO FLUTUANTE MOBILE ───────────────────── */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden p-3 bg-white/95 backdrop-blur border-t border-slate-100 shadow-2xl">
+        <button onClick={() => setSelectedPlan('Experimente')}
+          className="w-full bg-emerald-500 text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+          🎁 Experimente de graça — sem cartão
+        </button>
+      </div>
+
       {/* ── FOOTER ───────────────────────────────────── */}
-      <footer className="bg-[#0a2c35] py-14 px-4">
+      <footer className="bg-[#0a2c35] py-14 px-4 mb-[72px] md:mb-0">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-10 border-b border-white/10 pb-12">
             <img src="/logo_hor_white.png" alt="AgenteOffice" className="h-9 w-auto" />
