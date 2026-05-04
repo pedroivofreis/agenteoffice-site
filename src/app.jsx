@@ -1600,9 +1600,10 @@ export default function App() {
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', fn);
-    // Abre modal de fundador via ?plano=founder
+    // Abre modal via ?plano=trial|embarque|escala|founder
+    const slugToName = { trial: 'Experimente', embarque: 'Embarque', escala: 'Escala', founder: 'Founder' };
     const p = new URLSearchParams(window.location.search).get('plano');
-    if (p === 'founder') setSelectedPlan('Founder');
+    if (p && slugToName[p]) setSelectedPlan(slugToName[p]);
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
