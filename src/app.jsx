@@ -1813,7 +1813,7 @@ export default function App() {
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">O AgenteOffice é para você?</span>
             </div>
-            <h2 className="text-3xl md:text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
               Me identifiquei.<br className="hidden lg:block"/><span className="text-[#5DA6AA]">Quero ver o que muda.</span>
             </h2>
             <p className="text-slate-500 font-medium text-lg max-w-xl mx-auto">
@@ -1844,7 +1844,7 @@ export default function App() {
               <Zap className="w-3.5 h-3.5 text-[#5DA6AA]"/>
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Tudo dentro de um só sistema</span>
             </div>
-            <h2 className="text-3xl md:text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
               Do texto da consolidadora<br />à proposta no celular do cliente.
               <span className="text-[#5DA6AA]"> Em 2 minutos.</span>
             </h2>
