@@ -1668,6 +1668,18 @@ export default function App() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  const heroBottomSecondary = (
+    <>
+      <p className="text-base sm:text-lg text-slate-500 mb-4 sm:mb-5 lg:mb-4 leading-relaxed font-medium max-w-lg">
+        Orçamentos profissionais em minutos, propostas com a cara da sua agência, pipeline de vendas e financeiro — tudo em um sistema simples, sem planilha, sem complicação.
+      </p>
+      <button data-demo-btn onClick={() => setDemoOpen(true)}
+        className="inline-flex items-center gap-2 text-slate-500 font-semibold text-sm hover:text-[#5DA6AA] transition-colors w-fit mb-0">
+        <Play size={13} className="text-[#5DA6AA]" /> Ver demonstração em vídeo
+      </button>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-teal-100 selection:text-[#114552]">
       {USE_PLAN_CHECKOUT_MODAL ? (
@@ -1731,9 +1743,10 @@ export default function App() {
       <section className="pt-28 pb-10 sm:pt-32 lg:pt-44 lg:pb-12 px-4 bg-slate-50 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-[#5DA6AA]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#114552]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-        {/* Grid: col1 título+CTAs+mockup / col2 review / col1 row2 copy+vídeo — no mobile: título → mockup → review → copy */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-16 lg:gap-y-0 lg:items-center relative">
-          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+        {/* Mobile: intro → mock → copy. Desktop: texto | mock — depoimento só na barra abaixo */}
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-stretch lg:gap-10 xl:gap-14 relative">
+          <div className="order-1 flex flex-col lg:flex-1 lg:min-w-0 lg:h-full lg:min-h-0 gap-6 lg:gap-0 lg:justify-between">
+            <div className="min-w-0 shrink-0">
             <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200/90 px-4 py-1.5 rounded-full mb-6">
               <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
               <span className="text-orange-900 text-[10px] font-black uppercase tracking-widest">Teste grátis agora — sem cartão de crédito</span>
@@ -1749,7 +1762,7 @@ export default function App() {
               {' '}e foque no que importa: fechar o próximo roteiro.
             </p>
 
-            {/* CTA principal: experimentação grátis (destaque) · WhatsApp em segundo plano — depois vem o review da Clau */}
+            {/* CTA principal: experimentação grátis (destaque) · WhatsApp em segundo plano */}
             <div className="mt-2 max-w-xl space-y-4">
               <div className="relative w-full sm:w-fit">
                 <span className="absolute inset-0 rounded-2xl bg-amber-300/50 blur-sm animate-pulse" aria-hidden="true" />
@@ -1782,77 +1795,80 @@ export default function App() {
                 Falar com um especialista no WhatsApp
               </a>
             </div>
-
-            {/* Mockup Proposta/Voucher (troca com review: fica na coluna do texto, após CTAs) */}
-            <div className="relative w-full min-w-0 flex flex-col items-stretch sm:items-center gap-3 lg:items-center mt-8 lg:mt-10">
-              <div className="absolute -inset-3 sm:-inset-5 bg-gradient-to-tr from-[#5DA6AA]/14 to-[#114552]/08 rounded-[1.75rem] sm:rounded-[2rem] blur-2xl pointer-events-none lg:hidden" aria-hidden="true" />
-              <div className="relative z-[1] w-full max-w-[23.5rem] sm:max-w-[25rem] md:max-w-[27rem] mx-auto lg:mx-0 lg:max-w-full">
-                <HeroSlider />
-              </div>
-              <p className="relative z-[1] w-full max-w-[23.5rem] mx-auto lg:mx-0 text-center lg:text-left text-[11px] font-bold text-[#5DA6AA] leading-snug px-1">
-                Proposta e voucher — como seu cliente vê
-              </p>
+            </div>
+            <div className="hidden lg:block min-w-0 max-w-lg shrink-0 lg:border-t lg:border-slate-200/70 lg:pt-8">
+              {heroBottomSecondary}
             </div>
           </div>
 
-          {/* Review Clau a Viajante (troca com mockup: coluna direita, antes ocupava o slider) */}
-          <div className="relative w-full min-w-0 flex flex-col justify-center lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
-            <div className="absolute -inset-3 sm:-inset-5 lg:-inset-6 bg-gradient-to-tr from-[#5DA6AA]/10 to-[#114552]/06 rounded-[1.75rem] sm:rounded-[2rem] lg:rounded-[3rem] blur-2xl lg:blur-3xl pointer-events-none" aria-hidden="true" />
-            <figure className="relative z-[1] rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 via-white to-teal-50/40 p-4 sm:p-5 shadow-[0_10px_40px_rgba(17,69,82,0.07)] w-full max-w-xl mx-auto lg:max-w-none ring-1 ring-amber-100/60">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4 mb-3">
-                <img
-                  src="/clau-a-viajante-logo.png"
-                  alt="Logo de Clau a Viajante"
-                  width={150}
-                  height={150}
-                  className="w-[72px] h-[72px] sm:w-[88px] sm:h-[88px] rounded-full object-cover shrink-0 ring-2 ring-white shadow-md"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="flex flex-1 flex-col gap-2 min-w-0">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <div className="flex items-center gap-0.5 text-amber-500" aria-hidden="true">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <Star key={i} size={18} className="fill-amber-400 text-amber-500 shrink-0" />
-                      ))}
-                    </div>
-                  </div>
-                  <blockquote className="text-[15px] sm:text-[16px] text-[#114552] leading-relaxed font-medium m-0">
-                    Troquei de sistema e não me arrependo, meus clientes ficaram encantados com os orçamentos lindos, os vouchers com anexos e ganhei muito tempo na gestão das viagens com a inteligência do Agente Office.
-                  </blockquote>
-                </div>
-              </div>
-              <figcaption className="mt-1 flex flex-col gap-1 pt-2 border-t border-amber-100/80">
-                <span className="text-[15px] font-black text-[#0F766E] tracking-tight">Clau a Viajante</span>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Agência de viagens</span>
-                <a
-                  href="https://www.instagram.com/clauaviajante/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Instagram — Clau a Viajante"
-                  className="text-[12px] font-bold text-[#0F766E] hover:text-[#115e59] underline-offset-2 hover:underline w-fit"
-                >
-                  @clauaviajante
-                </a>
-              </figcaption>
-            </figure>
+          {/* Mockup Proposta/Voucher — depoimento só na barra de recomendação abaixo */}
+          <div className="order-2 mt-8 lg:mt-0 w-full lg:w-[min(100%,28rem)] xl:w-[min(100%,30rem)] lg:shrink-0 mx-auto lg:mx-0 lg:self-start">
+          <div className="relative w-full min-w-0 flex flex-col items-stretch sm:items-center gap-3 lg:items-stretch">
+            <div className="absolute -inset-3 sm:-inset-5 lg:-inset-4 bg-gradient-to-tr from-[#5DA6AA]/14 to-[#114552]/08 rounded-[1.75rem] sm:rounded-[2rem] lg:rounded-[2rem] blur-2xl pointer-events-none" aria-hidden="true" />
+            <div className="relative z-[1] w-full max-w-[23.5rem] sm:max-w-[25rem] md:max-w-[27rem] mx-auto lg:mx-auto lg:max-w-[min(100%,28rem)]">
+              <HeroSlider />
+            </div>
+            <p className="relative z-[1] w-full max-w-[23.5rem] lg:max-w-[min(100%,28rem)] mx-auto text-center lg:text-center text-[11px] font-bold text-[#5DA6AA] leading-snug px-1">
+              Proposta e voucher — como seu cliente vê
+            </p>
+          </div>
           </div>
 
-          <div className="min-w-0 lg:col-start-1 lg:row-start-2">
-            <p className="text-base sm:text-lg text-slate-500 mb-6 leading-relaxed font-medium max-w-lg">
-              Orçamentos profissionais em minutos, propostas com a cara da sua agência, pipeline de vendas e financeiro — tudo em um sistema simples, sem planilha, sem complicação.
-            </p>
-            <button data-demo-btn onClick={() => setDemoOpen(true)}
-              className="inline-flex items-center gap-2 text-slate-500 font-semibold text-sm hover:text-[#5DA6AA] transition-colors w-fit mb-2">
-              <Play size={13} className="text-[#5DA6AA]" /> Ver demonstração em vídeo
-            </button>
+          <div className="order-3 lg:hidden min-w-0">
+            {heroBottomSecondary}
           </div>
         </div>
       </section>
 
+      {/* ── BARRA DE RECOMENDAÇÃO (preenche transição hero → módulos no desktop) ── */}
+      <div className="border-t border-amber-200/50 bg-gradient-to-b from-slate-50 via-white to-slate-50 py-7 sm:py-9 px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 lg:gap-10">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            <img
+              src="/clau-a-viajante-logo.png"
+              alt="Clau a Viajante"
+              width={56}
+              height={56}
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover ring-2 ring-white shadow-md"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#5DA6AA] mb-0.5">Recomendação</p>
+              <p className="text-base sm:text-lg font-black text-[#114552] tracking-tight">Clau a Viajante</p>
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Agência de viagens</p>
+            </div>
+          </div>
+          <div className="flex-1 min-w-0 lg:max-w-3xl lg:mx-auto text-center lg:px-6">
+            <div className="flex justify-center gap-0.5 text-amber-500 mb-2" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} size={16} className="fill-amber-400 text-amber-500 shrink-0" />
+              ))}
+            </div>
+            <p className="text-[14px] sm:text-[15px] text-slate-600 font-medium leading-relaxed">
+              <span className="text-[#114552] font-black">&ldquo;</span>
+              Troquei de sistema e não me arrependo: clientes encantados com os orçamentos e vouchers com anexos — e ganhei muito tempo na gestão com o Agente Office.
+              <span className="text-[#114552] font-black">&rdquo;</span>
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-center lg:items-end justify-center gap-2 shrink-0 lg:min-w-[9rem]">
+            <a
+              href="https://www.instagram.com/clauaviajante/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#114552] px-4 py-2 text-[12px] font-black text-white shadow-md hover:bg-[#0d3b36] transition-colors"
+            >
+              Seguir @clauaviajante
+            </a>
+            <span className="text-[11px] text-slate-400 font-medium hidden sm:inline lg:hidden">·</span>
+            <span className="text-[11px] text-slate-500 font-semibold text-center lg:text-right">Indicação de parceira</span>
+          </div>
+        </div>
+      </div>
+
       {/* ── MÓDULOS STRIP ────────────────────────────── */}
       <div className="bg-[#114552] py-5 px-4 overflow-hidden">
-        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-x-2 gap-y-2">
+        <div className="max-w-6xl mx-auto w-full flex flex-wrap justify-center gap-x-2 gap-y-2">
           {[
             { icon: '⚡', label: 'Orçamento Turbo' },
             { icon: '🎨', label: 'Estúdio de Vendas' },
