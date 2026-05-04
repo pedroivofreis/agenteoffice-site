@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, Menu, X, CheckCircle2, Zap,
   BarChart3, FileText, ShieldCheck, Sparkles, LogIn, Star,
-  Play, Copy, Send, Plane, Bell, Wallet, Users, MessageSquare,
+  Play, Copy, Send, Plane, Bell, Wallet, Users,
   MapPin, Calendar, Clock, TrendingUp, Kanban, Globe,
   ChevronRight, DollarSign, Receipt, Hotel, AlertCircle,
   CheckCheck, LayoutDashboard, Compass, Monitor, Tablet,
   Smartphone, Minimize2, ChevronDown
 } from 'lucide-react';
+
+/* ─── WHATSAPP ATENDIMENTO (hero / especialista) ─── */
+const WHATSAPP_ESPECIALISTA_HREF = 'https://wa.me/5512936182479';
 
 /* ─── PLANOS ─────────────────────────────────────── */
 const USE_PLAN_CHECKOUT_MODAL = true;
@@ -542,8 +545,8 @@ function HeroPropostaPreview() {
         </div>
       </div>
 
-      {/* Scrollable body */}
-      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto" style={{maxHeight:'480px'}}>
+      {/* Scrollable body — max-height menor no mobile para o mock não virar “torre” */}
+      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto max-h-[210px] sm:max-h-[340px] md:max-h-[420px] lg:max-h-[480px]">
 
         {/* Categorias strip */}
         <div className="flex gap-1.5 overflow-x-auto pb-0.5">
@@ -745,7 +748,7 @@ function HeroVoucherPreview() {
       </div>
 
       {/* Voucher body */}
-      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto" style={{maxHeight:'480px'}}>
+      <div className="bg-slate-50 p-3 space-y-2.5 overflow-y-auto max-h-[210px] sm:max-h-[340px] md:max-h-[420px] lg:max-h-[480px]">
 
         {/* Status confirmado */}
         <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-3 flex items-center gap-3">
@@ -865,10 +868,19 @@ function HeroSlider() {
   }, []);
 
   return (
-    <div className="relative">
-      <div className="relative overflow-hidden rounded-[2rem]">
+    <div className="relative w-full">
+      {/* Altura vem só do slide ativo — slides inativos em absolute não participam do fluxo */}
+      <div className="relative w-full overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-200/80 lg:rounded-[2rem] lg:shadow-2xl lg:ring-0">
         {slides.map((s, i) => (
-          <div key={i} className={`transition-all duration-700 ${i === active ? 'opacity-100 translate-y-0' : 'opacity-0 absolute inset-0 translate-y-4 pointer-events-none'}`}>
+          <div
+            key={i}
+            className={`transition-all duration-700 ${
+              i === active
+                ? 'relative z-[1] opacity-100 translate-y-0'
+                : 'pointer-events-none absolute inset-0 z-0 opacity-0 translate-y-3'
+            }`}
+            aria-hidden={i !== active}
+          >
             {s.component}
           </div>
         ))}
@@ -1696,8 +1708,8 @@ export default function App() {
             <a href="https://app.agenteoffice.com.br" className="flex items-center gap-1.5 text-sm font-bold text-[#114552] hover:text-[#5DA6AA] transition-colors">
               <LogIn size={15} /> Já sou cliente
             </a>
-            <button onClick={() => setSelectedPlan('Experimente')} className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-emerald-600 transition-all shadow-md active:scale-95">
-              🎁 Experimente grátis
+            <button onClick={() => setSelectedPlan('Experimente')} className="bg-gradient-to-b from-amber-400 to-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:from-amber-300 hover:to-orange-500 transition-all shadow-lg shadow-orange-600/40 ring-2 ring-white/90 active:scale-95">
+              🎁 Teste grátis
             </button>
           </div>
           <button className="md:hidden p-2 text-[#114552]" onClick={() => setMenuOpen(v => !v)}>
@@ -1710,7 +1722,7 @@ export default function App() {
             <NavLink href="#jornada">Jornada</NavLink>
             <NavLink href="#precos">Preços</NavLink>
             <a href="https://app.agenteoffice.com.br" className="text-sm font-bold text-[#114552]">Já sou cliente</a>
-            <button onClick={() => { setMenuOpen(false); setSelectedPlan('Experimente'); }} className="bg-emerald-500 text-white text-center py-3.5 rounded-xl text-sm font-black w-full shadow-lg">🎁 Experimente grátis — sem cartão</button>
+            <button onClick={() => { setMenuOpen(false); setSelectedPlan('Experimente'); }} className="bg-gradient-to-b from-amber-400 to-orange-600 text-white text-center py-3.5 rounded-xl text-sm font-black w-full shadow-lg shadow-orange-600/40 ring-2 ring-white/80">🎁 Teste grátis — sem cartão</button>
           </div>
         )}
       </nav>
@@ -1719,45 +1731,121 @@ export default function App() {
       <section className="pt-28 pb-10 sm:pt-32 lg:pt-44 lg:pb-12 px-4 bg-slate-50 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-[#5DA6AA]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#114552]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
-          <div>
-            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full mb-6">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-emerald-700 text-[10px] font-black uppercase tracking-widest">Teste grátis agora — sem cartão de crédito</span>
+        {/* Grid: col1 título+CTAs+mockup / col2 review / col1 row2 copy+vídeo — no mobile: título → mockup → review → copy */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-16 lg:gap-y-0 lg:items-center relative">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+            <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200/90 px-4 py-1.5 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              <span className="text-orange-900 text-[10px] font-black uppercase tracking-widest">Teste grátis agora — sem cartão de crédito</span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.05] mb-5 tracking-tight">
               Rápido de fazer.<br />
               Lindo pro cliente.<br />
               <span className="text-[#5DA6AA]">Feito pra vender mais.</span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
-              Orçamentos profissionais em minutos, propostas com a cara da sua agência, pipeline de vendas e financeiro — tudo em um sistema simples, sem planilha, sem complicação.
+            <p className="text-lg sm:text-xl text-[#114552] font-semibold leading-snug max-w-xl mb-4">
+              Pare de perder vendas em planilhas e conversas soltas no WhatsApp.{' '}
+              <strong className="font-black text-[#0d3b36]">Organize sua agência com o Agente Office</strong>
+              {' '}e foque no que importa: fechar o próximo roteiro.
             </p>
-            <div className="flex flex-col gap-4 mb-6">
-              <div>
-                <div className="relative w-full sm:w-auto inline-flex">
-                  <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping" />
-                  <button onClick={() => setSelectedPlan('Experimente')}
-                    className="relative inline-flex items-center justify-center gap-3 px-10 sm:px-12 py-5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-lg sm:text-xl active:scale-95 transition-all shadow-2xl shadow-emerald-500/30 group w-full sm:w-auto">
-                    🎁 Experimente de graça — é grátis!
-                    <ArrowRight className="group-hover:translate-x-1.5 transition-transform" size={22} />
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3">
-                  {['✓ Sem cartão de crédito','✓ Sem contrato','✓ Cancele quando quiser'].map((t,i) => (
-                    <span key={i} className="text-sm font-semibold text-slate-400">{t}</span>
-                  ))}
-                </div>
+
+            {/* CTA principal: experimentação grátis (destaque) · WhatsApp em segundo plano — depois vem o review da Clau */}
+            <div className="mt-2 max-w-xl space-y-4">
+              <div className="relative w-full sm:w-fit">
+                <span className="absolute inset-0 rounded-2xl bg-amber-300/50 blur-sm animate-pulse" aria-hidden="true" />
+                <span className="absolute inset-0 rounded-2xl bg-orange-400/30 animate-ping" aria-hidden="true" />
+                <button
+                  type="button"
+                  onClick={() => setSelectedPlan('Experimente')}
+                  className="relative w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 sm:px-11 py-5 rounded-2xl bg-gradient-to-b from-amber-400 via-amber-500 to-orange-600 hover:from-amber-300 hover:via-amber-400 hover:to-orange-500 text-white font-black text-[17px] sm:text-xl shadow-[0_14px_40px_rgba(234,88,12,0.5)] ring-[3px] ring-white/95 active:scale-[0.98] transition-all"
+                >
+                  <span className="text-2xl leading-none drop-shadow-sm" aria-hidden="true">🎁</span>
+                  <span className="text-left leading-tight drop-shadow-sm">
+                    Teste grátis — sem cartão<br />
+                    <span className="text-[12px] sm:text-[13px] font-bold text-white/95">3 orçamentos completos · Experimente o Turbo</span>
+                  </span>
+                  <ArrowRight className="shrink-0 opacity-95 text-white" size={22} />
+                </button>
               </div>
-              <button data-demo-btn onClick={() => setDemoOpen(true)}
-                className="inline-flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#5DA6AA] transition-colors w-fit">
-                <Play size={13} className="text-[#5DA6AA]" /> Ver demonstração em vídeo
-              </button>
+              <p className="text-[12px] sm:text-[13px] text-slate-500 font-semibold leading-snug">
+                ✓ Sem cadastro de cartão &nbsp;·&nbsp; ✓ Sem contrato &nbsp;·&nbsp; ✓ Cancele quando quiser
+              </p>
+              <a
+                href={WHATSAPP_ESPECIALISTA_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[13px] font-bold text-[#0F766E] hover:text-[#115e59] underline-offset-4 hover:underline decoration-[#5DA6AA]/50"
+              >
+                <svg className="w-[17px] h-[17px] shrink-0 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Falar com um especialista no WhatsApp
+              </a>
+            </div>
+
+            {/* Mockup Proposta/Voucher (troca com review: fica na coluna do texto, após CTAs) */}
+            <div className="relative w-full min-w-0 flex flex-col items-stretch sm:items-center gap-3 lg:items-center mt-8 lg:mt-10">
+              <div className="absolute -inset-3 sm:-inset-5 bg-gradient-to-tr from-[#5DA6AA]/14 to-[#114552]/08 rounded-[1.75rem] sm:rounded-[2rem] blur-2xl pointer-events-none lg:hidden" aria-hidden="true" />
+              <div className="relative z-[1] w-full max-w-[23.5rem] sm:max-w-[25rem] md:max-w-[27rem] mx-auto lg:mx-0 lg:max-w-full">
+                <HeroSlider />
+              </div>
+              <p className="relative z-[1] w-full max-w-[23.5rem] mx-auto lg:mx-0 text-center lg:text-left text-[11px] font-bold text-[#5DA6AA] leading-snug px-1">
+                Proposta e voucher — como seu cliente vê
+              </p>
             </div>
           </div>
-          <div className="relative hidden lg:block">
-            <div className="absolute -inset-6 bg-gradient-to-tr from-[#5DA6AA]/20 to-[#114552]/10 rounded-[3rem] blur-3xl" />
-            <div className="relative"><HeroSlider /></div>
+
+          {/* Review Clau a Viajante (troca com mockup: coluna direita, antes ocupava o slider) */}
+          <div className="relative w-full min-w-0 flex flex-col justify-center lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
+            <div className="absolute -inset-3 sm:-inset-5 lg:-inset-6 bg-gradient-to-tr from-[#5DA6AA]/10 to-[#114552]/06 rounded-[1.75rem] sm:rounded-[2rem] lg:rounded-[3rem] blur-2xl lg:blur-3xl pointer-events-none" aria-hidden="true" />
+            <figure className="relative z-[1] rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 via-white to-teal-50/40 p-4 sm:p-5 shadow-[0_10px_40px_rgba(17,69,82,0.07)] w-full max-w-xl mx-auto lg:max-w-none ring-1 ring-amber-100/60">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4 mb-3">
+                <img
+                  src="/clau-a-viajante-logo.png"
+                  alt="Logo de Clau a Viajante"
+                  width={150}
+                  height={150}
+                  className="w-[72px] h-[72px] sm:w-[88px] sm:h-[88px] rounded-full object-cover shrink-0 ring-2 ring-white shadow-md"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="flex flex-1 flex-col gap-2 min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <div className="flex items-center gap-0.5 text-amber-500" aria-hidden="true">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star key={i} size={18} className="fill-amber-400 text-amber-500 shrink-0" />
+                      ))}
+                    </div>
+                  </div>
+                  <blockquote className="text-[15px] sm:text-[16px] text-[#114552] leading-relaxed font-medium m-0">
+                    Troquei de sistema e não me arrependo, meus clientes ficaram encantados com os orçamentos lindos, os vouchers com anexos e ganhei muito tempo na gestão das viagens com a inteligência do Agente Office.
+                  </blockquote>
+                </div>
+              </div>
+              <figcaption className="mt-1 flex flex-col gap-1 pt-2 border-t border-amber-100/80">
+                <span className="text-[15px] font-black text-[#0F766E] tracking-tight">Clau a Viajante</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Agência de viagens</span>
+                <a
+                  href="https://www.instagram.com/clauaviajante/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Instagram — Clau a Viajante"
+                  className="text-[12px] font-bold text-[#0F766E] hover:text-[#115e59] underline-offset-2 hover:underline w-fit"
+                >
+                  @clauaviajante
+                </a>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="min-w-0 lg:col-start-1 lg:row-start-2">
+            <p className="text-base sm:text-lg text-slate-500 mb-6 leading-relaxed font-medium max-w-lg">
+              Orçamentos profissionais em minutos, propostas com a cara da sua agência, pipeline de vendas e financeiro — tudo em um sistema simples, sem planilha, sem complicação.
+            </p>
+            <button data-demo-btn onClick={() => setDemoOpen(true)}
+              className="inline-flex items-center gap-2 text-slate-500 font-semibold text-sm hover:text-[#5DA6AA] transition-colors w-fit mb-2">
+              <Play size={13} className="text-[#5DA6AA]" /> Ver demonstração em vídeo
+            </button>
           </div>
         </div>
       </section>
