@@ -185,6 +185,7 @@ function PlanModal({ planName, onClose, openDemo }) {
   const [form, setForm] = useState({
     agencia_nome: '', agencia_email: '', agencia_cnpj: '',
     admin_nome: '', admin_username: '', admin_senha: '', admin_senha2: '',
+    coupon: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -210,13 +211,14 @@ function PlanModal({ planName, onClose, openDemo }) {
           admin_nome: form.admin_nome,
           admin_username: form.admin_username,
           admin_senha: form.admin_senha,
+          ...(form.coupon.trim() && { coupon: form.coupon.trim() }),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Erro ao processar.');
       if (data.checkout_url) {
         window.location.href = data.checkout_url;
-      } else if (isTrial && data.access_token) {
+      } else if (data.access_token) {
         const params = new URLSearchParams({
           token: data.access_token,
           user: JSON.stringify(data.user),
@@ -270,12 +272,21 @@ function PlanModal({ planName, onClose, openDemo }) {
                 placeholder="contato@suaagencia.com.br" className={INPUT_CLS}/>
             </div>
             {!isTrial && (
-              <div>
-                <label className={LABEL_CLS}>CPF ou CNPJ *</label>
-                <input required value={form.agencia_cnpj} onChange={e => set('agencia_cnpj', e.target.value)}
-                  placeholder="00.000.000/0000-00 ou 000.000.000-00" className={INPUT_CLS}/>
-                <p className="text-[10px] text-slate-400 font-medium mt-1">Necessário para emissão da nota fiscal.</p>
-              </div>
+              <>
+                <div>
+                  <label className={LABEL_CLS}>CPF ou CNPJ {form.coupon.trim() ? '(opcional com cupom)' : '*'}</label>
+                  <input value={form.agencia_cnpj} onChange={e => set('agencia_cnpj', e.target.value)}
+                    required={!form.coupon.trim()}
+                    placeholder="00.000.000/0000-00 ou 000.000.000-00" className={INPUT_CLS}/>
+                  <p className="text-[10px] text-slate-400 font-medium mt-1">Necessário para emissão da nota fiscal.</p>
+                </div>
+                <div>
+                  <label className={LABEL_CLS}>Cupom de desconto <span className="normal-case font-medium">(opcional)</span></label>
+                  <input value={form.coupon} onChange={e => set('coupon', e.target.value.toUpperCase())}
+                    placeholder="CODIGO-DO-CUPOM"
+                    className={INPUT_CLS + ' font-mono tracking-widest uppercase'}/>
+                </div>
+              </>
             )}
           </>}
 
