@@ -183,7 +183,7 @@ const LABEL_CLS = 'text-[10px] font-black text-slate-400 uppercase tracking-wide
 function PlanModal({ planName, onClose, openDemo }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
-    agencia_nome: '', agencia_email: '', agencia_cnpj: '',
+    agencia_nome: '', agencia_email: '', agencia_telefone: '', agencia_cnpj: '',
     admin_nome: '', admin_username: '', admin_senha: '', admin_senha2: '',
     coupon: '',
   });
@@ -207,6 +207,7 @@ function PlanModal({ planName, onClose, openDemo }) {
           plano_slug: PLAN_SLUG[planName],
           agencia_nome: form.agencia_nome,
           agencia_email: form.agencia_email,
+          agencia_telefone: form.agencia_telefone,
           agencia_cnpj: form.agencia_cnpj,
           admin_nome: form.admin_nome,
           admin_username: form.admin_username,
@@ -270,6 +271,11 @@ function PlanModal({ planName, onClose, openDemo }) {
               <label className={LABEL_CLS}>E-mail *</label>
               <input required type="email" value={form.agencia_email} onChange={e => set('agencia_email', e.target.value)}
                 placeholder="contato@suaagencia.com.br" className={INPUT_CLS}/>
+            </div>
+            <div>
+              <label className={LABEL_CLS}>WhatsApp / Telefone</label>
+              <input type="tel" value={form.agencia_telefone} onChange={e => set('agencia_telefone', e.target.value)}
+                placeholder="(11) 99999-9999" className={INPUT_CLS}/>
             </div>
             {!isTrial && (
               <>
