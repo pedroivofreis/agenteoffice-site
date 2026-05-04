@@ -1092,7 +1092,7 @@ function PropostaShowcase() {
   );
 
   return (
-    <section className="py-24 overflow-hidden" style={{background:'linear-gradient(160deg,#0a1f24 0%,#0d2d35 40%,#0a1f24 100%)'}}>
+    <section className="py-14 md:py-24 overflow-hidden" style={{background:'linear-gradient(160deg,#0a1f24 0%,#0d2d35 40%,#0a1f24 100%)'}}>
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Heading */}
@@ -1100,7 +1100,7 @@ function PropostaShowcase() {
           <div className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-1.5 rounded-full mb-6">
             <Send className="w-3.5 h-3.5 text-[#5DA6AA]"/><span className="text-[#5DA6AA] text-[10px] font-black uppercase tracking-widest">O que o cliente recebe</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
             A proposta mais bonita<br />que seu cliente já recebeu.
           </h2>
           <p className="text-white/50 font-medium text-lg max-w-2xl mx-auto">
@@ -1112,7 +1112,7 @@ function PropostaShowcase() {
         <div className="lg:grid lg:grid-cols-[1fr_340px] gap-8 items-start">
 
           {/* ── Browser frame ── */}
-          <div className="relative">
+          <div className="relative hidden md:block">
             <div className="absolute -inset-4 bg-[#5DA6AA]/10 rounded-[3rem] blur-2xl pointer-events-none" />
             <div className="relative bg-white rounded-[1.5rem] shadow-2xl overflow-hidden border border-white/10">
 
@@ -1531,14 +1531,14 @@ function GestaoShowcase() {
   ];
 
   return (
-    <section className="py-24 bg-white px-4">
+    <section className="py-14 md:py-24 bg-white px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
             <LayoutDashboard className="w-3.5 h-3.5 text-[#5DA6AA]"/>
             <span className="text-xs font-black text-[#114552] uppercase tracking-widest">Gestão completa</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
             Tudo que você precisa ver,<br/><span className="text-[#5DA6AA]">numa tela só.</span>
           </h2>
           <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
@@ -1547,7 +1547,7 @@ function GestaoShowcase() {
         </div>
 
         {/* Slider */}
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-5xl mx-auto hidden md:block">
           <div className="absolute -inset-8 bg-gradient-to-tr from-[#5DA6AA]/15 to-[#114552]/8 rounded-[3rem] blur-3xl"/>
           <div className="relative overflow-hidden rounded-[2rem]">
             {slides.map((s,i)=>(
@@ -1673,20 +1673,20 @@ export default function App() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────── */}
-      <section className="pt-32 pb-10 lg:pt-44 lg:pb-12 px-4 bg-slate-50 overflow-hidden relative">
+      <section className="pt-28 pb-10 sm:pt-32 lg:pt-44 lg:pb-12 px-4 bg-slate-50 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-[#5DA6AA]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#114552]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
           <div>
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-7">
               <Zap className="w-3.5 h-3.5 text-[#5DA6AA]" />
-              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Orçamento Turbo · A partir de R$ 49,90/mês</span>
+              <span className="text-[#114552] text-[10px] font-black uppercase tracking-widest">Teste grátis — sem cartão de crédito</span>
             </div>
-            <h1 className="text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[68px] font-black text-[#114552] leading-[1.03] mb-6 tracking-tight">
               Proposta linda<br />para o cliente.<br />
               <span className="text-[#5DA6AA]">Em menos de 2 minutos.</span>
             </h1>
-            <p className="text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
+            <p className="text-base sm:text-xl text-slate-500 mb-8 leading-relaxed font-medium max-w-lg">
               Cole o texto da consolidadora, a IA lê tudo e monta o orçamento com comissão calculada. Aprovou — a proposta vai para o cliente com a cara da sua agência. Sem digitar nada de novo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -1711,7 +1711,7 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative hidden lg:block">
             <div className="absolute -inset-6 bg-gradient-to-tr from-[#5DA6AA]/20 to-[#114552]/10 rounded-[3rem] blur-3xl" />
             <div className="relative"><HeroSlider /></div>
           </div>
@@ -1807,13 +1807,13 @@ export default function App() {
       </div>
 
       {/* ── O AGENTEOFFICE É PARA VOCÊ? ──────────────── */}
-      <section className="py-20 bg-white px-4">
+      <section className="py-12 md:py-20 bg-white px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">O AgenteOffice é para você?</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
               Me identifiquei.<br className="hidden lg:block"/><span className="text-[#5DA6AA]">Quero ver o que muda.</span>
             </h2>
             <p className="text-slate-500 font-medium text-lg max-w-xl mx-auto">
@@ -1837,14 +1837,14 @@ export default function App() {
       </section>
 
       {/* ── FUNCIONALIDADES ──────────────────────────── */}
-      <section id="funcionalidades" className="py-20 bg-slate-50 px-4">
+      <section id="funcionalidades" className="py-12 md:py-20 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 px-4 py-1.5 rounded-full mb-6">
               <Zap className="w-3.5 h-3.5 text-[#5DA6AA]"/>
               <span className="text-[10px] font-black uppercase tracking-widest text-teal-700">Tudo dentro de um só sistema</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-4">
               Do texto da consolidadora<br />à proposta no celular do cliente.
               <span className="text-[#5DA6AA]"> Em 2 minutos.</span>
             </h2>
@@ -1859,7 +1859,7 @@ export default function App() {
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="p-10 lg:p-14 flex flex-col justify-center">
                 <SectionBadge icon={<Zap className="w-3.5 h-3.5"/>} label="Orçamento Turbo" color="bg-orange-50 border-orange-200 text-orange-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
                   Sakura, Flytour, Orinter,<br />CVC, Trend, Queensberry...<br />
                   <span className="text-[#5DA6AA]">Cole e pronto.</span>
                 </h2>
@@ -1880,7 +1880,7 @@ export default function App() {
                   ))}
                 </div>
               </div>
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
+              <div className="hidden lg:flex bg-slate-50 p-8 lg:p-10 items-center justify-center border-l border-slate-100">
                 <div className="w-full max-w-sm space-y-3">
                   {/* Terminal de confirmação */}
                   <div className="bg-[#0f1e2e] rounded-2xl shadow-xl overflow-hidden">
@@ -1958,7 +1958,7 @@ export default function App() {
                   <span className="text-[11px] font-black text-green-300 uppercase tracking-widest">API Oficial WhatsApp · Meta Business</span>
                 </div>
 
-                <h2 className="text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
                   Toda a equipe atendendo<br />no mesmo WhatsApp.
                   <span className="text-green-400"> Dentro do CRM.</span>
                 </h2>
@@ -1998,7 +1998,7 @@ export default function App() {
               </div>
 
               {/* Lado direito — mockup CRM + chat */}
-              <div className="p-8 lg:p-10 flex items-center justify-center">
+              <div className="hidden lg:flex p-8 lg:p-10 items-center justify-center">
                 <div className="w-full max-w-[360px]">
                   {/* Janela do CRM */}
                   <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style={{background:'#0f1923'}}>
@@ -2097,7 +2097,7 @@ export default function App() {
           {/* ── BLOCO 3: Proposta e Voucher ── */}
           <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
+              <div className="hidden lg:flex bg-slate-50 p-8 lg:p-10 items-center justify-center border-r border-slate-100 order-2 lg:order-1">
                 <div className="w-full max-w-xs space-y-3">
                   {/* Proposta bonita */}
                   <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
@@ -2153,7 +2153,7 @@ export default function App() {
               </div>
               <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
                 <SectionBadge icon={<FileText className="w-3.5 h-3.5"/>} label="Proposta + Voucher" color="bg-violet-50 border-violet-200 text-violet-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
                   Orçamento se torna proposta.<br />Aprovado, vira voucher.<br />
                   <span className="text-[#5DA6AA]">Cliente encantado.</span>
                 </h2>
@@ -2177,7 +2177,7 @@ export default function App() {
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="p-10 lg:p-14 flex flex-col justify-center">
                 <SectionBadge icon={<Wallet className="w-3.5 h-3.5"/>} label="Financeiro" color="bg-emerald-50 border-emerald-200 text-emerald-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
                   Sabe exatamente quanto<br />tem a receber — e quanto<br />
                   <span className="text-[#5DA6AA]">já entrou no caixa.</span>
                 </h2>
@@ -2193,7 +2193,7 @@ export default function App() {
                   ].map((t, i) => <FeatureCheck key={i}>{t}</FeatureCheck>)}
                 </ul>
               </div>
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-l border-slate-100">
+              <div className="hidden lg:flex bg-slate-50 p-8 lg:p-10 items-center justify-center border-l border-slate-100">
                 <div className="w-full max-w-sm space-y-3">
                   {/* Header do painel financeiro */}
                   <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
@@ -2258,7 +2258,7 @@ export default function App() {
           {/* ── BLOCO 5: Pipeline + Alertas ── */}
           <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
-              <div className="bg-slate-50 p-8 lg:p-10 flex items-center justify-center border-r border-slate-100 order-2 lg:order-1">
+              <div className="hidden lg:flex bg-slate-50 p-8 lg:p-10 items-center justify-center border-r border-slate-100 order-2 lg:order-1">
                 <div className="w-full max-w-sm space-y-3">
                   {/* Mini Kanban */}
                   <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
@@ -2325,7 +2325,7 @@ export default function App() {
               </div>
               <div className="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
                 <SectionBadge icon={<Kanban className="w-3.5 h-3.5"/>} label="Pipeline + Alertas" color="bg-blue-50 border-blue-200 text-blue-700" />
-                <h2 className="text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#114552] mb-5 tracking-tight">
                   Veja onde cada venda<br />está — e o que precisa<br />
                   <span className="text-[#5DA6AA]">de atenção agora.</span>
                 </h2>
@@ -2357,7 +2357,7 @@ export default function App() {
                   <span className="text-[11px] font-black text-green-300 uppercase tracking-widest">API Oficial WhatsApp · Meta Business</span>
                 </div>
 
-                <h2 className="text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-4 tracking-tight leading-tight">
                   Toda a equipe atendendo<br />no mesmo WhatsApp.
                   <span className="text-green-400"> Dentro do CRM.</span>
                 </h2>
@@ -2397,7 +2397,7 @@ export default function App() {
               </div>
 
               {/* Lado direito — mockup CRM + chat */}
-              <div className="p-8 lg:p-10 flex items-center justify-center">
+              <div className="hidden lg:flex p-8 lg:p-10 items-center justify-center">
                 <div className="w-full max-w-[360px]">
                   {/* Janela do CRM */}
                   <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style={{background:'#0f1923'}}>
@@ -2504,11 +2504,11 @@ export default function App() {
       <GestaoShowcase />
 
       {/* ── ROTEIRO PERSONALIZADO ────────────────────── */}
-      <section className="py-24 bg-slate-50 px-4">
+      <section className="py-14 md:py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="Roteiro Personalizado" color="bg-violet-50 border-violet-200 text-violet-700"/>
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-5 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] tracking-tight mb-5 leading-tight">
               Você conhece o cliente.<br/>A Mar.ia monta o roteiro.<br/>
               <span className="text-[#5DA6AA]">Você assina a viagem.</span>
             </h2>
@@ -2530,7 +2530,7 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative hidden lg:block">
             <div className="absolute -inset-6 bg-gradient-to-tr from-violet-200/30 to-[#5DA6AA]/10 rounded-[3rem] blur-3xl"/>
             <div className="relative"><ChatDemo/></div>
           </div>
@@ -2538,11 +2538,11 @@ export default function App() {
       </section>
 
       {/* ── PREÇOS ───────────────────────────────────── */}
-      <section id="precos" className="py-24 bg-slate-50 px-4">
+      <section id="precos" className="py-14 md:py-24 bg-slate-50 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <SectionBadge icon={<Sparkles className="w-3.5 h-3.5"/>} label="IA incluída em todos os planos" />
-            <h2 className="text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#114552] mb-4 tracking-tight">Planos transparentes.</h2>
             <p className="text-slate-500 font-medium">Sem taxa de setup. Cancele quando quiser. Usuário extra por <strong>+R$ 29,90/mês</strong>.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 items-start">
@@ -2595,13 +2595,13 @@ export default function App() {
       </section>
 
       {/* ── CTA FINAL ────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-[#114552] to-[#0a2c35] px-4 relative overflow-hidden">
+      <section className="py-14 md:py-24 bg-gradient-to-br from-[#114552] to-[#0a2c35] px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-30" style={{backgroundImage:`url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='g' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M10 0L0 0 0 10' fill='none' stroke='white' stroke-width='0.3' opacity='0.15'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E")`}} />
         <div className="max-w-3xl mx-auto text-center relative">
           <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
             <Zap className="w-8 h-8 text-[#5DA6AA]" />
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
             Sua agência merece<br />um sistema de verdade.<br />
             <span className="text-[#5DA6AA]">Simples assim.</span>
           </h2>
