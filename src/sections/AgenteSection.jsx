@@ -15,7 +15,7 @@ export default function AgenteSection() {
       <Container className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* texto */}
         <div>
-          <SectionBadge icon={Bot} tone="coral">① O Agente de IA</SectionBadge>
+          <SectionBadge icon={Bot} tone="coral">O Agente de IA</SectionBadge>
           <h2 className="mt-5 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-ink leading-[1.08] text-balance">
             Ele qualifica.<br />Você só fecha.
           </h2>

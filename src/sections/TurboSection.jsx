@@ -83,7 +83,7 @@ export default function TurboSection() {
         {/* Heading */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-1.5 rounded-full mb-6">
-            <Send className="w-3.5 h-3.5 text-[#5DA6AA]" /><span className="text-[#5DA6AA] text-[10px] font-black uppercase tracking-widest">③ Orçamentos Turbo</span>
+            <Send className="w-3.5 h-3.5 text-[#5DA6AA]" /><span className="text-[#5DA6AA] text-[10px] font-black uppercase tracking-widest">Orçamentos Turbo</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
             A proposta mais bonita<br />que seu cliente já recebeu.

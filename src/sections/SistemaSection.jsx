@@ -26,7 +26,7 @@ export default function SistemaSection() {
     <section id="sistema" className="relative py-20 sm:py-28 bg-sand-50 overflow-hidden">
       <Container className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* mock fiel ao sistema (esquerda no desktop) */}
-        <div className="order-2 lg:order-1">
+        <div className="order-2 lg:order-1 min-w-0">
           <div className="rounded-2xl bg-white shadow-card border border-slate-100 overflow-hidden">
             {/* chrome do navegador */}
             <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 border-b border-slate-200">
@@ -55,7 +55,7 @@ export default function SistemaSection() {
                 </div>
                 <div className="p-3 flex gap-2 bg-[#F6F7F9] overflow-x-auto">
                   {COLS.map((col) => (
-                    <div key={col.name} className="min-w-[92px] flex-1">
+                    <div key={col.name} className="w-[88px] shrink-0 sm:w-auto sm:flex-1">
                       <div className="flex items-center gap-1.5 mb-2">
                         <span className="w-2 h-2 rounded-full" style={{ background: col.color }} />
                         <span className="text-[9px] font-extrabold uppercase tracking-wide text-slate-500 truncate">{col.name}</span>
@@ -82,7 +82,7 @@ export default function SistemaSection() {
 
         {/* texto (direita no desktop) */}
         <div className="order-1 lg:order-2">
-          <SectionBadge icon={Kanban}>② O Sistema</SectionBadge>
+          <SectionBadge icon={Kanban}>O Sistema</SectionBadge>
           <h2 className="mt-5 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-ink leading-[1.08] text-balance">
             Sua agência inteira,<br />num lugar só.
           </h2>

@@ -14,17 +14,19 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  const onDark = !scrolled; // topo sobre a foto escura do hero
+  const link = `text-sm font-bold transition-colors ${onDark ? 'text-white/90 hover:text-white' : 'text-ink hover:text-brand-400'}`;
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/85 backdrop-blur-xl shadow-soft py-3' : 'bg-transparent py-5'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-soft py-3' : 'bg-transparent py-5'}`}>
       <Container className="flex items-center justify-between">
         <a href="#top" className="flex items-center">
-          <img src="/logo_hor_col.png" alt="AgenteOffice" className="h-9 w-auto" />
+          <img src={onDark ? '/logo_hor_white.png' : '/logo_hor_col.png'} alt="AgenteOffice" className="h-9 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {/* Produto dropdown */}
           <div className="relative" onMouseEnter={() => setProdOpen(true)} onMouseLeave={() => setProdOpen(false)}>
-            <button className="flex items-center gap-1 text-sm font-bold text-ink hover:text-brand-400 transition-colors">
+            <button className={`flex items-center gap-1 ${link}`}>
               Produto <ChevronDown size={15} className={`transition-transform ${prodOpen ? 'rotate-180' : ''}`} />
             </button>
             {prodOpen && (
@@ -40,9 +42,9 @@ export default function Nav() {
               </div>
             )}
           </div>
-          <a href="#precos" className="text-sm font-bold text-ink hover:text-brand-400 transition-colors">Preços</a>
-          <div className="w-px h-4 bg-slate-200" />
-          <a href={APP_URL} className="flex items-center gap-1.5 text-sm font-bold text-ink hover:text-brand-400 transition-colors">
+          <a href="#precos" className={link}>Preços</a>
+          <div className={`w-px h-4 ${onDark ? 'bg-white/30' : 'bg-slate-200'}`} />
+          <a href={APP_URL} className={`flex items-center gap-1.5 ${link}`}>
             <LogIn size={15} /> Já sou cliente
           </a>
           <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" className="bg-coral-500 hover:bg-coral-600 text-white px-5 py-2.5 rounded-xl text-sm font-extrabold shadow-glow ring-1 ring-white/40 transition-all active:scale-95">
@@ -50,7 +52,7 @@ export default function Nav() {
           </a>
         </div>
 
-        <button className="md:hidden p-2 text-ink" onClick={() => setMenuOpen((v) => !v)}>
+        <button className={`md:hidden p-2 ${onDark ? 'text-white' : 'text-ink'}`} onClick={() => setMenuOpen((v) => !v)}>
           {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </Container>
