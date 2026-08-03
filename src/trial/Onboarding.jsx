@@ -53,8 +53,8 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
     return (
       <Tela titulo="Sua conta está pronta." onVoltar={null}>
         <p className="text-[#b7d2d4] text-[15px] leading-relaxed mb-6">
-          A agência <strong className="text-white">{conta.user.agencia_nome}</strong> já existe no AgenteOffice, e
-          a viagem que você montou está no seu pipeline, em <strong className="text-white">Em orçamento</strong>.
+          Criamos a agência <strong className="text-white">{conta.user.agencia_nome}</strong> no AgenteOffice, e
+          a viagem que você montou já está no seu pipeline, em <strong className="text-white">Em orçamento</strong>.
         </p>
 
         <div className="bg-white/5 border border-brand-400/30 rounded-xl p-4 mb-6 text-left">
@@ -64,7 +64,9 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
             <div>Senha: <strong className="text-white">{conta.senha_temporaria}</strong></div>
           </div>
           <p className="text-[12.5px] text-[#7fa8ac] mt-2.5">
-            Também enviamos por e-mail. Você pode trocar a senha em Configurações.
+            {conta.email_enviado
+              ? <>Também enviamos para <strong className="text-white/80">{email}</strong>. Você pode trocar a senha em Configurações.</>
+              : <><strong className="text-amber-300">Anote agora</strong> — não conseguimos enviar o e-mail. Você pode trocar a senha em Configurações.</>}
           </p>
         </div>
 
