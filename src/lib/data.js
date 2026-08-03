@@ -69,4 +69,5 @@ export const PRODUCT_NAV = [
   { id: 'agente', label: 'Agente de IA', desc: 'Pré-atendimento 24/7 no WhatsApp' },
   { id: 'sistema', label: 'Sistema', desc: 'Viagens, clientes, agenda e financeiro' },
   { id: 'turbo', label: 'Orçamentos Turbo', desc: 'Proposta linda em minutos' },
+  { id: 'excursoes', label: 'Grupos e Excursões', desc: 'Embarque por QR e painel ao vivo' },
 ];

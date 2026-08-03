@@ -5,6 +5,7 @@ import LogosStrip from './sections/LogosStrip.jsx';
 import AgenteSection from './sections/AgenteSection.jsx';
 import SistemaSection from './sections/SistemaSection.jsx';
 import TurboSection from './sections/TurboSection.jsx';
+import ExcursaoSection from './sections/ExcursaoSection.jsx';
 import SolicitarSection from './sections/SolicitarSection.jsx';
 import TrialFlow from './trial/TrialFlow.jsx';
 import { Container } from './lib/ui.jsx';
@@ -24,6 +25,7 @@ export default function App() {
       <AgenteSection />
       <SistemaSection />
       <TurboSection />
+      <ExcursaoSection />
       <SolicitarSection />
 
       <footer className="bg-brand-900 text-white/70 py-10 text-center text-sm">
