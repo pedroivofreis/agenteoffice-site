@@ -67,9 +67,9 @@ export async function criarContaTrial({ email, agencia, whatsapp, viagem }) {
   return data
 }
 
-// URL de auto-login do app, já apontando para o card criado
+// URL de auto-login do app: cai no pipeline com a proposta aberta por cima
 export function urlDoApp({ access_token, user, orcamento_id }) {
-  const destino = orcamento_id ? `/app/pipeline?open=${orcamento_id}` : '/app/pipeline'
+  const destino = orcamento_id ? `/app/pipeline?proposta=${orcamento_id}` : '/app/pipeline'
   const params = new URLSearchParams({
     token: access_token,
     user: JSON.stringify(user),
