@@ -5,17 +5,19 @@ export const Container = ({ className = '', children }) => (
   <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
 );
 
-// Badge de seção (pílula com ícone)
-export const SectionBadge = ({ icon: Icon, children, tone = 'brand' }) => {
+// Abertura de seção: filete + rótulo. Sem pílula e sem ícone — a pílula
+// com ícone em caixa alta dá cara de template genérico.
+export const SectionBadge = ({ children, tone = 'brand' }) => {
   const tones = {
-    brand: 'bg-brand-50 border-brand-200 text-brand-700',
-    coral: 'bg-coral-50 border-coral-100 text-coral-600',
-    sun: 'bg-amber-50 border-amber-200 text-amber-700',
+    brand: { rule: 'bg-brand-400', text: 'text-brand-600' },
+    coral: { rule: 'bg-coral-500', text: 'text-coral-600' },
+    sun:   { rule: 'bg-sun-500',   text: 'text-amber-600' },
   };
+  const t = tones[tone] || tones.brand;
   return (
-    <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-[11px] font-extrabold uppercase tracking-widest ${tones[tone]}`}>
-      {Icon && <Icon size={14} />}
-      {children}
+    <span className="inline-flex items-center gap-3">
+      <span className={`h-px w-8 ${t.rule}`} />
+      <span className={`text-[12px] font-bold ${t.text}`}>{children}</span>
     </span>
   );
 };

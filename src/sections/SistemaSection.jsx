@@ -82,7 +82,7 @@ export default function SistemaSection() {
 
         {/* texto (direita no desktop) */}
         <div className="order-1 lg:order-2">
-          <SectionBadge icon={Kanban}>O Sistema</SectionBadge>
+          <SectionBadge>O Sistema</SectionBadge>
           <h2 className="mt-5 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-ink leading-[1.08] text-balance">
             Sua agência inteira,<br />num lugar só.
           </h2>

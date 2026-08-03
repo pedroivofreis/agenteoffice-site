@@ -53,7 +53,7 @@ export default function SolicitarSection() {
       <Container className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* texto */}
         <div>
-          <SectionBadge icon={MessageCircle} tone="coral">Vamos conversar</SectionBadge>
+          <SectionBadge tone="coral">Vamos conversar</SectionBadge>
           <h2 className="mt-5 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-white leading-[1.08] text-balance">
             Solicite um orçamento<br />pra sua agência.
           </h2>
