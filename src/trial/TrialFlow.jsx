@@ -4,7 +4,7 @@ import Generating from './Generating.jsx'
 import Preview from './Preview.jsx'
 import Workspace from './Workspace.jsx'
 import LeadWidget from './LeadWidget.jsx'
-import { analisar, gerarViagem, gerarDoPdf } from './mock.js'
+import { analisar, gerarViagem, gerarDoPdf, CREDITOS_INICIAIS, CUSTO_VIAGEM } from './mock.js'
 
 const STORAGE = 'ao_trial'
 
@@ -14,7 +14,7 @@ export default function TrialFlow({ inicio, onFechar }) {
   const [tela, setTela] = useState(null)
   const [viagem, setViagem] = useState(null)
   const [lead, setLead] = useState({ email: '', agencia: '', whats: '' })
-  const [creditos, setCreditos] = useState(10)
+  const [creditos, setCreditos] = useState(CREDITOS_INICIAIS)
   const [toasts, setToasts] = useState([])
   const custoPendente = useRef(0)
   const iniciado = useRef(false)
@@ -48,32 +48,36 @@ export default function TrialFlow({ inicio, onFechar }) {
     let l = lead
     try {
       const salvo = JSON.parse(localStorage.getItem(STORAGE) || 'null')
-      if (salvo) { l = salvo.lead; setLead(salvo.lead); setCreditos(salvo.creditos) }
+      if (salvo) {
+        l = salvo.lead
+        setLead(salvo.lead)
+        setCreditos(Math.min(salvo.creditos, CREDITOS_INICIAIS))
+      }
     } catch { /* estado novo */ }
 
     if (arquivo) {
       setViagem(gerarDoPdf(inicio.valor))
-      debitar(2, l)
+      debitar(CUSTO_VIAGEM, l)
       setTela('generating')
     } else if (analisar(inicio.valor).precisaChat) {
       setTela('chat')
     } else {
       setViagem(gerarViagem(inicio.valor))
-      debitar(1, l)
+      debitar(CUSTO_VIAGEM, l)
       setTela('generating')
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function onChatCompleto(fraseFinal) {
     setViagem(gerarViagem(fraseFinal))
-    debitar(1)
+    debitar(CUSTO_VIAGEM)
     setTela('generating')
   }
 
   function onUnlockEmail(email) {
     const novo = { ...lead, email }
     setLead(novo)
-    const c = 10 - custoPendente.current
+    const c = CREDITOS_INICIAIS - custoPendente.current
     custoPendente.current = 0
     setCreditos(c)
     persistir(novo, c)
@@ -93,9 +97,9 @@ export default function TrialFlow({ inicio, onFechar }) {
   function onSetWhats(numero) {
     const novo = { ...lead, whats: numero }
     setLead(novo)
-    debitar(1, novo)
+    persistir(novo, creditos)
     console.log('🎯 LEAD (whats):', numero)
-    toast('Enviado no seu WhatsApp! (simulado — 1 crédito)')
+    toast('Enviado no seu WhatsApp! (simulado)')
   }
 
   function resetDemo() {

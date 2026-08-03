@@ -3,6 +3,11 @@
 // tiver hotel). O que faltar de essencial vira pergunta da Mar.ia (Chat.jsx, via
 // Gemini em ia.js; sem key/erro, o fluxo local daqui assume).
 
+// Economia do trial (decisão 03/08): crédito = viagem criada, e só isso.
+// Chat da Mar.ia e envio no WhatsApp não consomem — capturar lead nunca custa crédito.
+export const CREDITOS_INICIAIS = 5
+export const CUSTO_VIAGEM = 1
+
 const FOTO = (id) => `https://images.unsplash.com/photo-${id}?w=800&q=70&fit=crop`
 
 const DESTINOS = [

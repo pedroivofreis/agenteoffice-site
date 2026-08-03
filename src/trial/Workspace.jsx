@@ -173,7 +173,7 @@ export default function Workspace({ viagem, lead, creditos, onSetAgencia, onSetW
             ) : (
               <>
                 <h3>Seu WhatsApp</h3>
-                <p>Te mandamos <strong>exatamente o que o cliente recebe</strong>, no seu número. Custa 1 crédito. <em>(simulado no protótipo)</em></p>
+                <p>Te mandamos <strong>exatamente o que o cliente recebe</strong>, no seu número — de graça, quantas vezes quiser. <em>(simulado no protótipo)</em></p>
                 <input value={campo} onChange={(e) => setCampo(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && confirmarCampo()} placeholder="(11) 98765-4321" autoFocus />
               </>
             )}

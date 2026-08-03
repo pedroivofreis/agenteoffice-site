@@ -58,7 +58,7 @@ export default function Preview({ viagem, lead, onUnlockEmail, onEntrar, onVolta
         <div className="t-overlay" onClick={(e) => e.target === e.currentTarget && setModal(false)}>
           <div className="t-modal">
             <h3>Veja a proposta pronta</h3>
-            <p>Seu card fica salvo e sua conta nasce com <strong>10 créditos</strong> pra testar à vontade. Sem cartão.</p>
+            <p>Seu card fica salvo e sua conta nasce com <strong>5 viagens de teste</strong> — cada viagem criada gasta 1 crédito. Sem cartão.</p>
             <input
               type="email"
               value={campo}
