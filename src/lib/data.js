@@ -22,7 +22,7 @@ export const PLANS = [
     cta: 'Começar grátis agora', highlight: false, trial: true,
   },
   {
-    name: 'Embarque', price: '59,90', priceLabel: null,
+    name: 'Embarque', price: '99,90', priceLabel: null,
     desc: 'Para o agente que quer vender mais e trabalhar menos.',
     badge: null,
     features: [
@@ -37,10 +37,10 @@ export const PLANS = [
       'Histórico completo (voos, hotéis, transfers, seguro)',
       'Suporte por e-mail',
     ],
-    cta: 'Assinar Embarque — R$ 59,90', highlight: false, trial: false,
+    cta: 'Assinar Embarque — R$ 99,90', highlight: false, trial: false,
   },
   {
-    name: 'Escala', price: '149,90', priceLabel: null,
+    name: 'Escala', price: '299,90', priceLabel: null,
     desc: 'Para a agência que quer crescer com controle e IA.',
     badge: 'Mais popular',
     features: [
@@ -54,7 +54,7 @@ export const PLANS = [
       'Roteiros IA completos',
       'Suporte prioritário + onboarding',
     ],
-    cta: 'Assinar Escala — R$ 149,90', highlight: true, trial: false,
+    cta: 'Assinar Escala — R$ 299,90', highlight: true, trial: false,
   },
 ];
 
