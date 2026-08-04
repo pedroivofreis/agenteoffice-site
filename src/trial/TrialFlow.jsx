@@ -4,7 +4,6 @@ import Generating from './Generating.jsx'
 import Preview from './Preview.jsx'
 import Onboarding from './Onboarding.jsx'
 import Workspace from './Workspace.jsx'
-import LeadWidget from './LeadWidget.jsx'
 import { analisar, gerarViagem, gerarDoPdf, CREDITOS_INICIAIS, CUSTO_VIAGEM } from './mock.js'
 
 const STORAGE = 'ao_trial'
@@ -84,7 +83,6 @@ export default function TrialFlow({ inicio, onFechar }) {
     custoPendente.current = 0
     setCreditos(c)
     persistir(novo, c)
-    console.log('🎯 LEAD (email):', email)
     setTela('onboarding')
   }
 
@@ -94,7 +92,6 @@ export default function TrialFlow({ inicio, onFechar }) {
     setLead(novo)
     setCreditos(conta.creditos)
     persistir(novo, conta.creditos)
-    console.log('🎯 LEAD (conta criada):', { ...novo, orcamento_id: conta.orcamento_id })
   }
 
   // API indisponível: mantém a demonstração no workspace mockado
@@ -110,7 +107,6 @@ export default function TrialFlow({ inicio, onFechar }) {
     const novo = { ...lead, agencia: nome }
     setLead(novo)
     persistir(novo, creditos)
-    console.log('🎯 LEAD (agência):', nome)
     toast(`✓ Proposta agora leva a marca de ${nome}`)
   }
 
@@ -118,13 +114,7 @@ export default function TrialFlow({ inicio, onFechar }) {
     const novo = { ...lead, whats: numero }
     setLead(novo)
     persistir(novo, creditos)
-    console.log('🎯 LEAD (whats):', numero)
     toast('Enviado no seu WhatsApp! (simulado)')
-  }
-
-  function resetDemo() {
-    localStorage.removeItem(STORAGE)
-    onFechar()
   }
 
   if (!tela) return null
@@ -155,8 +145,6 @@ export default function TrialFlow({ inicio, onFechar }) {
           onNova={onFechar}
         />
       )}
-
-      <LeadWidget lead={lead} onReset={resetDemo} />
 
       <div className="t-toasts">
         {toasts.map((t) => <div key={t.id} className="t-toast">{t.msg}</div>)}
