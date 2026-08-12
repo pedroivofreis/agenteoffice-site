@@ -4,10 +4,11 @@ import Generating from './Generating.jsx'
 import Preview from './Preview.jsx'
 import Onboarding from './Onboarding.jsx'
 import { analisar, gerarViagem, montarDeExtracao, CREDITOS_INICIAIS, CUSTO_VIAGEM } from './mock.js'
-import { extrairArquivo } from './api.js'
+import { extrairArquivo, urlDoApp } from './api.js'
 import { extrairTextoPdf } from './pdf.js'
 
 const STORAGE = 'ao_trial'
+const STORAGE_CONTA = 'ao_trial_conta'
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.agenteoffice.com.br'
 
 // Overlay full-screen com o funil do trial:
@@ -20,6 +21,7 @@ export default function TrialFlow({ inicio, onFechar }) {
   const [viagem, setViagem] = useState(null)
   const [lead, setLead] = useState({ email: '', agencia: '', whats: '' })
   const [creditos, setCreditos] = useState(CREDITOS_INICIAIS)
+  const [conta, setConta] = useState(null) // token/user da última conta criada nesta sessão — permite reabrir já logado
   const [erroArquivo, setErroArquivo] = useState('')
   const custoPendente = useRef(0)
   const iniciado = useRef(false)
@@ -87,6 +89,10 @@ export default function TrialFlow({ inicio, onFechar }) {
         setCreditos(Math.min(salvo.creditos, CREDITOS_INICIAIS))
       }
     } catch { /* estado novo */ }
+    try {
+      const contaSalva = JSON.parse(localStorage.getItem(STORAGE_CONTA) || 'null')
+      if (contaSalva?.access_token) setConta(contaSalva)
+    } catch { /* sem conta salva */ }
 
     if (arquivo) {
       void processarArquivo(l)
@@ -115,12 +121,23 @@ export default function TrialFlow({ inicio, onFechar }) {
     setTela('onboarding')
   }
 
-  // Conta criada de verdade na API — o botão da tela leva pro app real
-  function onContaCriada({ agencia, whats, conta }) {
+  // Conta criada de verdade na API — o botão da tela leva pro app real. Guarda o
+  // token pra, se a pessoa voltar nesta mesma sessão, "Abrir no meu AgenteOffice"
+  // já cair logada em vez de pedir os dados de novo.
+  function onContaCriada({ agencia, whats, conta: contaNova }) {
     const novo = { ...lead, agencia, whats }
     setLead(novo)
-    setCreditos(conta.creditos)
-    persistir(novo, conta.creditos)
+    setCreditos(contaNova.creditos)
+    persistir(novo, contaNova.creditos)
+    setConta(contaNova)
+    localStorage.setItem(STORAGE_CONTA, JSON.stringify(contaNova))
+  }
+
+  // Se já temos um token desta sessão, o CTA da preview pula o onboarding e manda
+  // direto pro app autenticado; sem token, segue o funil normal de criar conta.
+  function onEntrarNoApp() {
+    if (conta?.access_token) window.location.href = urlDoApp(conta)
+    else setTela('onboarding')
   }
 
   // API indisponível: em vez de cair num workspace mockado, manda pra plataforma de
@@ -142,7 +159,7 @@ export default function TrialFlow({ inicio, onFechar }) {
         <TelaErroArquivo mensagem={erroArquivo} onTentarDeNovo={() => processarArquivo(lead)} onVoltar={onFechar} />
       )}
       {tela === 'preview' && (
-        <Preview viagem={viagem} lead={lead} onUnlockEmail={onUnlockEmail} onEntrar={() => setTela('onboarding')} onVoltar={onFechar} />
+        <Preview viagem={viagem} lead={lead} onUnlockEmail={onUnlockEmail} onEntrar={onEntrarNoApp} onVoltar={onFechar} />
       )}
       {tela === 'onboarding' && (
         <Onboarding
