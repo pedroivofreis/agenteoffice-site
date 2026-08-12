@@ -301,13 +301,72 @@ export function gerarViagem(texto) {
   return montar(texto, acharDestino(texto.toLowerCase()), null)
 }
 
-export function gerarDoPdf(nomeArquivo) {
-  const t = nomeArquivo.toLowerCase()
-  let destino = DESTINOS.find((d) => d.match.some((m) => t.includes(m)))
-  if (!destino) destino = DESTINOS[hash(nomeArquivo) % DESTINOS.length]
-  const v = montar(nomeArquivo, { ...destino, conhecido: true }, nomeArquivo)
-  v.pax = { adultos: 2, criancas: 0 }
-  return v
+// Monta o card a partir do que a IA realmente leu no arquivo importado (ver
+// routes/trial.py:/extrair). Só usa o DESTINOS curado (foto/gradiente/aeroporto)
+// se o nome bater com um deles — senão mostra o nome real extraído com a capa
+// genérica, em vez de fingir ser um destino conhecido que não tem nada a ver.
+export function montarDeExtracao(ex, nomeArquivo) {
+  const seed = hash(nomeArquivo || JSON.stringify(ex))
+  const destinoTxt = (ex.destino || '').toLowerCase()
+  const conhecido = DESTINOS.find((d) => d.match.some((m) => destinoTxt.includes(m)))
+  const destino = conhecido
+    ? { ...conhecido, conhecido: true }
+    : { ...GENERICO, nome: ex.destino || null, conhecido: false }
+
+  const pax = { adultos: ex.pax_adultos || 2, criancas: ex.pax_criancas || 0 }
+
+  let ida
+  if (ex.data_inicio) {
+    ida = new Date(`${ex.data_inicio}T00:00:00`)
+    if (Number.isNaN(ida.getTime())) ida = null
+  }
+  if (!ida) {
+    ida = new Date()
+    ida.setDate(ida.getDate() + 40 + (seed % 20))
+  }
+
+  let volta = ex.data_fim ? new Date(`${ex.data_fim}T00:00:00`) : null
+  if (volta && Number.isNaN(volta.getTime())) volta = null
+  const noites = ex.noites || (volta ? Math.max(1, Math.round((volta - ida) / 86400000)) : 7)
+  if (!volta) { volta = new Date(ida); volta.setDate(volta.getDate() + noites) }
+
+  const fator = noites / 7
+  const venda = ex.venda ||
+    Math.round((destino.precoBase * pax.adultos + destino.precoBase * 0.7 * pax.criancas) * fator / 10) * 10
+  const custoEstimado = !ex.custo
+  const custo = ex.custo || Math.round(venda * 0.89)
+
+  return {
+    destino,
+    pax,
+    noites,
+    ida,
+    volta,
+    saida: '',
+    fonte: nomeArquivo || null,
+    cliente: ex.cliente || '',
+    codigo: String(1000 + (seed % 9000)),
+    itens: {
+      voo: ex.voo?.tem
+        ? { tem: true, cia: ex.voo.cia || 'Cia a definir', detalhe: ex.voo.detalhe || '', rota: destino.conhecido ? `→ ${destino.aeroporto}` : '' }
+        : { tem: false },
+      hotel: ex.hotel?.tem
+        ? { tem: true, nome: ex.hotel.nome || 'Hotel a definir', regime: ex.hotel.regime || '' }
+        : { tem: false },
+      transfer: ex.transfer?.tem
+        ? { tem: true, desc: ex.transfer.desc || 'Transfer incluso' }
+        : { tem: false },
+    },
+    financeiro: {
+      total: venda,
+      entrada: Math.round(venda * 0.25),
+      parcelas: 9,
+      parcela: Math.round((venda - Math.round(venda * 0.25)) / 9),
+      custo,
+      custoEstimado,
+      comissao: venda - custo,
+    },
+  }
 }
 
 export const fmtBRL = (v) =>

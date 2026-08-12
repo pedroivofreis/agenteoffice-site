@@ -13,18 +13,27 @@ const PASSOS_ARQUIVO = [
   'Criando a viagem dentro do seu sistema…',
 ]
 
-export default function Generating({ arquivo = false, onDone }) {
+// `pronto`: o trabalho real (extração por IA, no caso de arquivo) já terminou.
+// Texto não depende de nada assíncrono, então nasce pronto — mesmo timing de antes.
+// Arquivo só chama onDone quando a animação E a extração real já acabaram, o que
+// for mais lento — assim nunca mostra "pronto" antes da IA responder de verdade.
+export default function Generating({ arquivo = false, pronto = true, onDone }) {
   const passos = arquivo ? PASSOS_ARQUIVO : PASSOS_TEXTO
   const [atual, setAtual] = useState(0)
+  const animAcabou = atual >= passos.length - 1
 
   useEffect(() => {
     if (atual < passos.length - 1) {
       const t = setTimeout(() => setAtual((a) => a + 1), 620)
       return () => clearTimeout(t)
     }
-    const t = setTimeout(onDone, 900)
+  }, [atual])
+
+  useEffect(() => {
+    if (!animAcabou || !pronto) return
+    const t = setTimeout(onDone, 500)
     return () => clearTimeout(t)
-  }, [atual]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [animAcabou, pronto]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="min-h-full flex flex-col items-center justify-center gap-9 bg-gradient-to-br from-[#042F2E] to-[#114552] font-sans">
