@@ -3,33 +3,30 @@ import Chat from './Chat.jsx'
 import Generating from './Generating.jsx'
 import Preview from './Preview.jsx'
 import Onboarding from './Onboarding.jsx'
-import Workspace from './Workspace.jsx'
-import { analisar, gerarViagem, gerarDoPdf, CREDITOS_INICIAIS, CUSTO_VIAGEM } from './mock.js'
+import { analisar, gerarViagem, montarDeExtracao, CREDITOS_INICIAIS, CUSTO_VIAGEM } from './mock.js'
+import { extrairArquivo } from './api.js'
+import { extrairTextoPdf } from './pdf.js'
 
 const STORAGE = 'ao_trial'
+const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.agenteoffice.com.br'
 
 // Overlay full-screen com o funil do trial:
 //   chat → generating → preview → onboarding (cria conta REAL) → app real.
-// Se a API não responder, cai no workspace mockado para a demonstração não morrer.
+// Se a API não responder, manda pra plataforma de verdade (/app/dashboard) em vez de
+// um workspace mockado — sem token válido o app pede login, mas não há demonstração falsa.
 // `inicio` = { tipo: 'texto' | 'arquivo', valor } vindo do hero; onFechar volta pro site.
 export default function TrialFlow({ inicio, onFechar }) {
   const [tela, setTela] = useState(null)
   const [viagem, setViagem] = useState(null)
   const [lead, setLead] = useState({ email: '', agencia: '', whats: '' })
   const [creditos, setCreditos] = useState(CREDITOS_INICIAIS)
-  const [toasts, setToasts] = useState([])
+  const [erroArquivo, setErroArquivo] = useState('')
   const custoPendente = useRef(0)
   const iniciado = useRef(false)
   const arquivo = inicio.tipo === 'arquivo'
 
   function persistir(l, c) {
     localStorage.setItem(STORAGE, JSON.stringify({ lead: l, creditos: c }))
-  }
-
-  function toast(msg) {
-    const id = Date.now() + Math.random()
-    setToasts((t) => [...t, { id, msg }])
-    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3200)
   }
 
   function debitar(custo, l = lead) {
@@ -41,6 +38,40 @@ export default function TrialFlow({ inicio, onFechar }) {
       })
     } else {
       custoPendente.current = custo // desconta quando a conta nascer
+    }
+  }
+
+  // Lê o arquivo de verdade (imagem → visão da IA; PDF → texto extraído no navegador
+  // e mandado pro backend) — antes disso o card mostrava um destino sorteado do nome
+  // do arquivo, às vezes sem nenhuma relação com o que a pessoa importou.
+  async function processarArquivo(l) {
+    setErroArquivo('')
+    setTela('generating')
+    const file = inicio.valor
+    try {
+      const isImagem = String(file.type || '').startsWith('image/')
+      let payload
+      if (isImagem) {
+        const b64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result)
+          reader.onerror = () => reject(new Error('Não foi possível abrir esta imagem.'))
+          reader.readAsDataURL(file)
+        })
+        payload = { tipo: 'imagem', conteudo: b64 }
+      } else {
+        const texto = await extrairTextoPdf(file)
+        if (texto.trim().length < 40) {
+          throw new Error('Quase nenhum texto neste PDF (costuma ser só imagem escaneada). Tente enviar um print ou foto da cotação.')
+        }
+        payload = { tipo: 'texto', conteudo: texto }
+      }
+      const extraido = await extrairArquivo({ ...payload, nomeArquivo: file.name })
+      setViagem(montarDeExtracao(extraido, file.name))
+      debitar(CUSTO_VIAGEM, l)
+    } catch (e) {
+      setErroArquivo(e.message || 'Não foi possível ler este documento.')
+      setTela('erro-arquivo')
     }
   }
 
@@ -58,9 +89,7 @@ export default function TrialFlow({ inicio, onFechar }) {
     } catch { /* estado novo */ }
 
     if (arquivo) {
-      setViagem(gerarDoPdf(inicio.valor))
-      debitar(CUSTO_VIAGEM, l)
-      setTela('generating')
+      void processarArquivo(l)
     } else if (analisar(inicio.valor).precisaChat) {
       setTela('chat')
     } else {
@@ -94,27 +123,13 @@ export default function TrialFlow({ inicio, onFechar }) {
     persistir(novo, conta.creditos)
   }
 
-  // API indisponível: mantém a demonstração no workspace mockado
+  // API indisponível: em vez de cair num workspace mockado, manda pra plataforma de
+  // verdade (login pede autenticação já que não temos token, mas é o app real).
   function onOnboardingFalhou({ agencia, whats }) {
     const novo = { ...lead, agencia, whats }
     setLead(novo)
     persistir(novo, creditos)
-    toast('Modo demonstração — a API não respondeu agora')
-    setTela('app')
-  }
-
-  function onSetAgencia(nome) {
-    const novo = { ...lead, agencia: nome }
-    setLead(novo)
-    persistir(novo, creditos)
-    toast(`✓ Proposta agora leva a marca de ${nome}`)
-  }
-
-  function onSetWhats(numero) {
-    const novo = { ...lead, whats: numero }
-    setLead(novo)
-    persistir(novo, creditos)
-    toast('Enviado no seu WhatsApp! (simulado)')
+    window.location.href = `${APP_URL}/app/dashboard`
   }
 
   if (!tela) return null
@@ -122,7 +137,10 @@ export default function TrialFlow({ inicio, onFechar }) {
   return (
     <div className="trial-overlay trial-scope bg-[#f6f7f9]">
       {tela === 'chat' && <Chat textoInicial={inicio.valor} onCompleto={onChatCompleto} onVoltar={onFechar} />}
-      {tela === 'generating' && <Generating arquivo={arquivo} onDone={() => setTela('preview')} />}
+      {tela === 'generating' && <Generating arquivo={arquivo} pronto={!!viagem} onDone={() => setTela('preview')} />}
+      {tela === 'erro-arquivo' && (
+        <TelaErroArquivo mensagem={erroArquivo} onTentarDeNovo={() => processarArquivo(lead)} onVoltar={onFechar} />
+      )}
       {tela === 'preview' && (
         <Preview viagem={viagem} lead={lead} onUnlockEmail={onUnlockEmail} onEntrar={() => setTela('onboarding')} onVoltar={onFechar} />
       )}
@@ -135,19 +153,24 @@ export default function TrialFlow({ inicio, onFechar }) {
           onVoltar={() => setTela('preview')}
         />
       )}
-      {tela === 'app' && (
-        <Workspace
-          viagem={viagem}
-          lead={lead}
-          creditos={creditos}
-          onSetAgencia={onSetAgencia}
-          onSetWhats={onSetWhats}
-          onNova={onFechar}
-        />
-      )}
+    </div>
+  )
+}
 
-      <div className="t-toasts">
-        {toasts.map((t) => <div key={t.id} className="t-toast">{t.msg}</div>)}
+function TelaErroArquivo({ mensagem, onTentarDeNovo, onVoltar }) {
+  return (
+    <div className="min-h-full flex flex-col items-center justify-center px-5 py-16 bg-gradient-to-br from-[#042F2E] to-[#114552] relative text-center font-sans">
+      <button onClick={onVoltar} className="absolute top-5 left-6 text-sm text-brand-300 hover:text-white">← Voltar pro site</button>
+      <div className="max-w-[420px]">
+        <div className="text-4xl mb-4">🧐</div>
+        <h1 className="font-display font-extrabold text-white text-2xl mb-3">Não consegui ler esse arquivo</h1>
+        <p className="text-[#b7d2d4] text-[15px] leading-relaxed mb-7">{mensagem}</p>
+        <button
+          onClick={onTentarDeNovo}
+          className="bg-brand-400 hover:bg-brand-300 text-[#06272e] font-extrabold text-base px-7 py-3.5 rounded-xl transition-colors"
+        >
+          Tentar de novo
+        </button>
       </div>
     </div>
   )

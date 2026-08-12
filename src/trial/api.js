@@ -67,6 +67,24 @@ export async function criarContaTrial({ email, agencia, whatsapp, viagem }) {
   return data
 }
 
+// Lê de verdade o arquivo que o agente importou (imagem via visão, PDF via texto
+// extraído no navegador) e devolve os campos da viagem — sem isso, o card mostrava
+// um destino sorteado (às vezes nada a ver com o arquivo enviado).
+export async function extrairArquivo({ tipo, conteudo, nomeArquivo }) {
+  const resp = await fetch(`${API_URL}/api/trial/extrair`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tipo, conteudo, nome_arquivo: nomeArquivo || null }),
+  })
+  const data = await resp.json().catch(() => ({}))
+  if (!resp.ok) {
+    const err = new Error(data?.detail || 'Não foi possível ler este documento.')
+    err.status = resp.status
+    throw err
+  }
+  return data
+}
+
 // URL de auto-login do app: cai no pipeline com a proposta aberta por cima
 export function urlDoApp({ access_token, user, orcamento_id }) {
   const destino = orcamento_id ? `/app/pipeline?proposta=${orcamento_id}` : '/app/pipeline'

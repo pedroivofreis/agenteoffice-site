@@ -19,7 +19,7 @@ export default function App() {
       <Nav />
       <TrialHero
         onGerar={(texto) => setTrial({ tipo: 'texto', valor: texto })}
-        onArquivo={(file) => setTrial({ tipo: 'arquivo', valor: file.name })}
+        onArquivo={(file) => setTrial({ tipo: 'arquivo', valor: file })}
       />
       <LogosStrip />
       <AgenteSection />
@@ -32,7 +32,13 @@ export default function App() {
         <Container>© {new Date().getFullYear()} AgenteOffice — feito para agências de viagem.</Container>
       </footer>
 
-      {trial && <TrialFlow key={trial.valor} inicio={trial} onFechar={() => setTrial(null)} />}
+      {trial && (
+        <TrialFlow
+          key={typeof trial.valor === 'string' ? trial.valor : `${trial.valor.name}-${trial.valor.lastModified}`}
+          inicio={trial}
+          onFechar={() => setTrial(null)}
+        />
+      )}
     </div>
   );
 }

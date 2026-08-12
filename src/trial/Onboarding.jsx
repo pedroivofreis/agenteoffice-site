@@ -4,6 +4,16 @@ import { criarContaTrial, urlDoApp } from './api.js'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.agenteoffice.com.br'
 
+function maskPhoneBR(raw) {
+  const digits = String(raw || '').replace(/\D/g, '').slice(0, 11)
+  if (!digits) return ''
+  if (digits.length <= 2) return `(${digits}`
+  const rest = digits.slice(2)
+  if (rest.length <= 4) return `(${digits.slice(0, 2)}) ${rest}`
+  const cut = rest.length - 4
+  return `(${digits.slice(0, 2)}) ${rest.slice(0, cut)}-${rest.slice(cut)}`
+}
+
 // Passo 2 da captura (agência + WhatsApp opcional) → cria a conta de verdade →
 // tela "conta pronta" que joga a pessoa dentro do app, no card recém-criado.
 export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar }) {
@@ -109,9 +119,10 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
         </span>
         <input
           value={whats}
-          onChange={(e) => setWhats(e.target.value)}
+          onChange={(e) => setWhats(maskPhoneBR(e.target.value))}
           onKeyDown={(e) => e.key === 'Enter' && criar()}
           placeholder="(11) 98765-4321"
+          inputMode="numeric"
           className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 text-[15px] outline-none border-[1.5px] border-transparent focus:border-brand-400"
         />
       </label>

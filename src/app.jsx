@@ -29,7 +29,7 @@ const PLANS = [
     cta: 'Começar grátis agora', highlight: false, trial: true,
   },
   {
-    name: 'Embarque', price: '59,90', priceLabel: null,
+    name: 'Embarque', price: '99,90', priceLabel: null,
     desc: 'Para o agente que quer vender mais e trabalhar menos.',
     badge: null,
     features: [
@@ -44,7 +44,7 @@ const PLANS = [
       'Histórico completo (voos, hotéis, transfers, seguro)',
       'Suporte por e-mail',
     ],
-    cta: 'Assinar Embarque — R$ 59,90', highlight: false, trial: false,
+    cta: 'Assinar Embarque — R$ 99,90', highlight: false, trial: false,
   },
   {
     name: 'Escala', price: '149,90', priceLabel: null,
@@ -195,7 +195,7 @@ function PlanModal({ planName, onClose, openDemo }) {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const isTrial = planName === 'Experimente';
-  const priceMap = { Experimente: 'Grátis · sem cartão', Embarque: 'R$ 59,90/mês', Escala: 'R$ 149,90/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
+  const priceMap = { Experimente: 'Grátis · sem cartão', Embarque: 'R$ 99,90/mês', Escala: 'R$ 149,90/mês', Founder: 'R$ 90/mês · Oferta Fundador' };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -369,7 +369,7 @@ const PROFILES = [
     modal: {
       heading: 'Para o agente que quer impressionar',
       desc: 'Você atende bem, conhece o produto — só faltava a ferramenta certa para mostrar isso. Com o AgenteOffice, você chega na frente de 90% dos concorrentes com uma proposta que o cliente abre no celular e já quer confirmar.',
-      plan: 'Embarque', price: 'R$ 59,90/mês',
+      plan: 'Embarque', price: 'R$ 99,90/mês',
       highlights: [
         { icon: '⚡', title: 'Orçamento Turbo', desc: 'Cole o texto da Sakura, CVC, Orinter, Flytour... O orçamento sai pronto com comissão calculada. Em menos de 2 minutos.' },
         { icon: '🎨', title: 'Proposta com a sua marca', desc: 'Seu cliente recebe um link bonito no celular — com seu logo, suas cores, sua mensagem. Nada de PDF feio por e-mail.' },
