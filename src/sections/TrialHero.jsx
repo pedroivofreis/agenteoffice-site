@@ -16,7 +16,7 @@ export default function TrialHero({ onGerar, onArquivo }) {
   const fileInput = useRef(null)
 
   function enviar(t = texto) {
-    if (t.trim().length < 8) return
+    if (!t.trim()) return
     onGerar(t.trim())
   }
 

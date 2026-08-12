@@ -22,6 +22,16 @@ const DESTINOS = [
     destaques: ['Piscinas naturais de jangada', 'Day use em Muro Alto', 'Jantar pé na areia'],
   },
   {
+    match: ['recife', 'boa viagem'],
+    nome: 'Recife', uf: 'PE', grad: ['#0f766e', '#22c55e'],
+    foto: FOTO('1658044552345-df3ea485f77f'),
+    aeroporto: 'REC · Recife', cia: 'GOL', voo: 'direto · 2h30',
+    hotel: 'Hotel Atlante Plaza', regime: 'Café da manhã',
+    transfer: 'Privativo aeroporto ⇄ hotel',
+    precoBase: 3200,
+    destaques: ['Marco Zero e Recife Antigo', 'Praia de Boa Viagem', 'Instituto Ricardo Brennand'],
+  },
+  {
     match: ['orlando', 'disney', 'universal'],
     nome: 'Orlando', uf: 'EUA', grad: ['#7c3aed', '#2563eb'],
     foto: FOTO('1597466599360-3b9775841aec'),
@@ -106,6 +116,19 @@ const MESES = {
   julho: 6, agosto: 7, setembro: 8, outubro: 9, novembro: 10, dezembro: 11,
 }
 
+const ORDEM_MESES = [
+  'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+  'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
+]
+
+// "mês que vem" etc não tem nome de mês nenhum — sem isso extrairQuando nunca
+// resolve e o chat repete a pergunta pra sempre.
+function mesRelativo(offsetMeses) {
+  const hoje = new Date()
+  const idx = ((hoje.getMonth() + offsetMeses) % 12 + 12) % 12
+  return ORDEM_MESES[idx]
+}
+
 const SAIDAS = {
   gru: 'GRU · Guarulhos', guarulhos: 'GRU · Guarulhos',
   cgh: 'CGH · Congonhas', congonhas: 'CGH · Congonhas',
@@ -137,6 +160,12 @@ function extrairPax(t) {
   else if (pessoas) a = +pessoas[1]
   else if (/\bcasal\b|lua de mel/.test(t)) a = 2
   else if (/fam[íi]lia/.test(t)) { a = 2; c = 2 }
+  else {
+    // Respondeu só o número (ex.: "2" pra "quantas pessoas vão?"), sem palavra
+    // ao lado — sem isso o chat fica repetindo a pergunta pra sempre.
+    const bare = t.split(',').map((s) => s.trim()).find((s) => /^\d{1,2}$/.test(s))
+    if (bare) a = +bare
+  }
   if (criancas) c = +criancas[1]
   return a === null ? null : { adultos: a, criancas: c }
 }
@@ -154,6 +183,10 @@ function extrairQuando(t) {
   if (/r[ée]veillon|ano novo/.test(t)) return 'dezembro'
   if (/f[ée]rias de julho/.test(t)) return 'julho'
   if (/\d{1,2}\/\d{1,2}/.test(t)) return 'data'
+  const daqui = t.match(/daqui\s+a\s+(\d+)\s*m[êe]s/)
+  if (daqui) return mesRelativo(+daqui[1])
+  if (/pr[óo]ximo\s+m[êe]s|m[êe]s\s+que\s+vem/.test(t)) return mesRelativo(1)
+  if (/\b(esse|este|nesse|neste)\s+m[êe]s\b/.test(t)) return mesRelativo(0)
   return null
 }
 
@@ -212,7 +245,17 @@ function acharDestino(t) {
     if (d.match.some((m) => t.includes(m))) return { ...d, conhecido: true }
   }
   const g = { ...GENERICO, conhecido: false }
-  const m = t.match(/(?:para|pra|em|destino)\s+([a-záàâãéêíóôõúç]+(?:\s+(?:de|do|da|dos|das)?\s*[a-záàâãéêíóôõúç]+)?)/i)
+  let m = t.match(/(?:para|pra|em|destino)\s+([a-záàâãéêíóôõúç]+(?:\s+(?:de|do|da|dos|das)?\s*[a-záàâãéêíóôõúç]+)?)/i)
+  if (!m) {
+    // Sem preposição (ex.: o chat pergunta "pra onde é a viagem?" e a pessoa
+    // responde só "recife") — o destino é sempre o 1º trecho da frase, porque é
+    // sempre a 1ª coisa perguntada. Sem isso, uma cidade fora da lista curada
+    // nunca resolve e a Mar.ia fica repetindo a pergunta pra sempre.
+    const primeiro = t.split(',')[0].trim()
+    if (/^[a-záàâãéêíóôõúç]+(?:\s+[a-záàâãéêíóôõúç]+){0,3}$/i.test(primeiro) && primeiro.length >= 3 && primeiro.length <= 40) {
+      m = [null, primeiro]
+    }
+  }
   if (m && !/^(uns|umas|o|a|os|as|r\$)/.test(m[1])) {
     g.nome = m[1].trim().split(/\s+/).slice(0, 3).map((w) => (w.length > 2 ? w[0].toUpperCase() + w.slice(1) : w)).join(' ')
   }

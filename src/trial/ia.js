@@ -1,9 +1,9 @@
-// Mar.ia de verdade: Gemini conduz a conversa até ter o mínimo da proposta.
+// Mar.ia de verdade: GPT conduz a conversa até ter o mínimo da proposta.
 // Se a primeira frase já tiver tudo, ele devolve completo=true de cara (sem chat).
 // Qualquer erro/timeout → null, e o Chat.vue cai no fluxo mockado local.
 
-const KEY = import.meta.env.VITE_GEMINI_API_KEY
-const MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash'
+const KEY = import.meta.env.VITE_OPENAI_API_KEY
+const MODEL = import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o-mini'
 
 export const iaDisponivel = !!KEY
 
@@ -26,29 +26,28 @@ Responda SEMPRE em JSON puro: {"completo": boolean, "pergunta": string|null, "su
 
 export async function conversar(mensagens) {
   if (!KEY) return null
-  const contents = mensagens.map((m) => ({
-    role: m.de === 'usuario' ? 'user' : 'model',
-    parts: [{ text: m.texto }],
-  }))
+  const messages = [
+    { role: 'system', content: INSTRUCOES },
+    ...mensagens.map((m) => ({ role: m.de === 'usuario' ? 'user' : 'assistant', content: m.texto })),
+  ]
   const ctrl = new AbortController()
   const timeout = setTimeout(() => ctrl.abort(), 14000)
   try {
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: ctrl.signal,
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: INSTRUCOES }] },
-          contents,
-          generationConfig: { response_mime_type: 'application/json', temperature: 0.3, maxOutputTokens: 4096 },
-        }),
-      },
-    )
+    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
+      signal: ctrl.signal,
+      body: JSON.stringify({
+        model: MODEL,
+        messages,
+        response_format: { type: 'json_object' },
+        temperature: 0.3,
+        max_tokens: 700,
+      }),
+    })
     if (!resp.ok) return null
     const data = await resp.json()
-    const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text
+    const texto = data?.choices?.[0]?.message?.content
     if (!texto) return null
     const json = JSON.parse(texto)
     if (typeof json.completo !== 'boolean') return null
