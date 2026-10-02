@@ -5,6 +5,9 @@ import { Container } from '../lib/ui.jsx';
  * Quem faz: a Metra e os produtos da casa. Mesmo bloco do site do Agente Bank,
  * para as duas marcas se apresentarem como irmãs.
  */
+const RAZAO_SOCIAL = 'Metra Tecnologia Desenvolvimento de Software Customizável Ltda.';
+const CNPJ = '69.285.469/0001-10';
+
 const PRODUTOS = [
   { n: 'AgenteOffice', d: 'O sistema operacional da agência de viagem: CRM, propostas, financeiro e a Mar.ia.', url: '/', icon: Compass, atual: true },
   { n: 'Agente Bank', d: 'A conta da agência de viagens, com o Agente Pay: link de pagamento com split e cartão para o fornecedor.', url: 'https://app-agentepay.agenteoffice.com.br', icon: Landmark },
@@ -55,7 +58,11 @@ export default function MetraFooter() {
         </div>
         <div className="mt-12 pt-6 border-t border-white/10 text-[12.5px] text-white/50 flex flex-col md:flex-row md:items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} AgenteOffice — feito para agências de viagem.</span>
-          <span>Uma empresa Metra.</span>
+          <span className="md:text-right">
+            AgenteOffice é uma empresa{' '}
+            <a href="https://somosmetra.com.br" target="_blank" rel="noopener" className="text-white/70 hover:text-white">Metra</a>
+            <span className="block text-white/40 text-[11.5px] mt-0.5">{RAZAO_SOCIAL} · CNPJ {CNPJ}</span>
+          </span>
         </div>
       </Container>
     </footer>
