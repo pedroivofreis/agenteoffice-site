@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, LogIn, ChevronDown } from 'lucide-react';
-import { Container } from '../lib/ui.jsx';
+import { Container, comecarTeste, CTA_TESTE } from '../lib/ui.jsx';
 import { PRODUCT_NAV, APP_URL, WHATSAPP_ESPECIALISTA_HREF } from '../lib/data.js';
 
 export default function Nav() {
@@ -47,9 +47,12 @@ export default function Nav() {
           <a href={APP_URL} className={`flex items-center gap-1.5 ${link}`}>
             <LogIn size={15} /> Já sou cliente
           </a>
-          <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" className="bg-coral-500 hover:bg-coral-600 text-white px-5 py-2.5 rounded-xl text-sm font-extrabold shadow-glow ring-1 ring-white/40 transition-all active:scale-95">
+          <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" className={link}>
             Falar com a gente
           </a>
+          <button type="button" onClick={comecarTeste} className="bg-coral-500 hover:bg-coral-600 text-white px-5 py-2.5 rounded-xl text-sm font-extrabold shadow-glow ring-1 ring-white/40 transition-all active:scale-95">
+            {CTA_TESTE}
+          </button>
         </div>
 
         <button className={`md:hidden p-2 ${onDark ? 'text-white' : 'text-ink'}`} onClick={() => setMenuOpen((v) => !v)}>
@@ -64,9 +67,12 @@ export default function Nav() {
           ))}
           <a href="#precos" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-ink">Preços</a>
           <a href={APP_URL} className="text-sm font-bold text-ink">Já sou cliente</a>
-          <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" onClick={() => setMenuOpen(false)} className="bg-coral-500 text-white text-center py-3.5 rounded-xl text-sm font-extrabold w-full shadow-glow">
+          <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-ink">
             Falar com a gente
           </a>
+          <button type="button" onClick={() => { setMenuOpen(false); comecarTeste(); }} className="bg-coral-500 text-white text-center py-3.5 rounded-xl text-sm font-extrabold w-full shadow-glow">
+            {CTA_TESTE}
+          </button>
         </div>
       )}
     </nav>

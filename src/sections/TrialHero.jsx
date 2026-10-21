@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Search, Plane } from 'lucide-react'
 import PropostaMock from '../components/PropostaMock.jsx'
+import { ID_CAMPO_VIAGEM, NOTA_TESTE } from '../lib/ui.jsx'
 
 const EXEMPLOS = [
   'Casal, Porto de Galinhas, 7 noites, saída GRU, uns R$ 9 mil',
@@ -64,6 +65,7 @@ export default function TrialHero({ onGerar, onArquivo }) {
             <div className="flex items-center gap-2.5 border-[1.5px] border-slate-300 rounded-b-xl rounded-tr-xl p-1 pl-4 focus-within:border-ink">
               <Search size={20} className="text-slate-400 shrink-0" />
               <input
+                id={ID_CAMPO_VIAGEM}
                 value={texto}
                 onChange={(e) => setTexto(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && enviar()}
@@ -103,8 +105,9 @@ export default function TrialHero({ onGerar, onArquivo }) {
           </div>
 
           <p className="mt-5 text-[13px] text-brand-300/80">
-            Sem cadastro, sem cartão — você vê a proposta pronta antes de criar conta.
+            Você vê a proposta pronta antes de criar conta.
           </p>
+          <p className="mt-1.5 text-[12px] text-brand-300/60">{NOTA_TESTE}</p>
         </div>
 
         {/* ── coluna da proposta que sai dali ── */}

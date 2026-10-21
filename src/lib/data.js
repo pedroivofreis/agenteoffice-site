@@ -1,8 +1,6 @@
 // Dados compartilhados da landing (reaproveitados do app.jsx legado).
 
 export const WHATSAPP_ESPECIALISTA_HREF = 'https://wa.me/5512936182479';
-// Agente de IA real — para testar ao vivo (botão "Demonstração")
-export const AGENTE_WHATSAPP_HREF = 'https://wa.me/5512991032731?text=Oi!%20Quero%20testar%20o%20agente%20de%20IA%20da%20AgenteOffice';
 export const APP_URL = 'https://app.agenteoffice.com.br';
 export const USE_PLAN_CHECKOUT_MODAL = true;
 
@@ -46,11 +44,8 @@ export const PLANS = [
     features: [
       '3 usuários (+R$ 29,90/extra)',
       'Tudo do Embarque',
-      'Agente de IA — pré-atendimento 24/7',
-      'Mar.ia — IA secretária virtual',
       'Grupos e Excursões com landing pública',
       'Contratos digitais com aceite online',
-      'WhatsApp centralizado',
       'Roteiros IA completos',
       'Suporte prioritário + onboarding',
     ],
@@ -64,10 +59,9 @@ export const TESTIMONIALS = [
   { name: 'Carla N.', role: 'Agente — Curitiba', text: 'O voucher digital é lindo. O cliente abre no celular, vê a viagem organizada e me manda elogio. Virou o diferencial da minha agência.', stars: 5 },
 ];
 
-// Navegação — produto em 3 pilares (Agente → Sistema → Turbo)
+// Navegação — produto em 3 pilares (Proposta rápida → CRM → Excursões)
 export const PRODUCT_NAV = [
-  { id: 'agente', label: 'Agente de IA', desc: 'Pré-atendimento 24/7 no WhatsApp' },
-  { id: 'sistema', label: 'Sistema', desc: 'Viagens, clientes, agenda e financeiro' },
-  { id: 'turbo', label: 'Orçamentos Turbo', desc: 'Proposta linda em minutos' },
+  { id: 'turbo', label: 'Proposta rápida', desc: 'Da cotação à proposta com a sua marca em minutos' },
+  { id: 'sistema', label: 'CRM da agência', desc: 'Vendas, clientes, agenda e financeiro' },
   { id: 'excursoes', label: 'Grupos e Excursões', desc: 'Embarque por QR e painel ao vivo' },
 ];

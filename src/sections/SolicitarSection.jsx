@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Send, CheckCircle2, MessageCircle } from 'lucide-react';
-import { Container, SectionBadge } from '../lib/ui.jsx';
+import { Container, SectionBadge, Button, comecarTeste, CTA_TESTE, NOTA_TESTE } from '../lib/ui.jsx';
 
 // Número do especialista (sem o https://wa.me/ para montar o link com texto)
 const WPP_NUMBER = '5512936182479';
 
 const BENEFITS = [
-  'Agente de IA de pré-atendimento 24/7',
-  'Sistema completo: pipeline, clientes e financeiro',
-  'Orçamentos Turbo com proposta da sua marca',
+  'Proposta pronta em minutos, com a sua marca',
+  'CRM completo: vendas, clientes, agenda e financeiro',
+  'Grupos e excursões com embarque por QR',
   'Onboarding e suporte de verdade',
 ];
 
@@ -53,12 +53,12 @@ export default function SolicitarSection() {
       <Container className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* texto */}
         <div>
-          <SectionBadge tone="coral">Vamos conversar</SectionBadge>
+          <SectionBadge tone="coral">Comece hoje</SectionBadge>
           <h2 className="mt-5 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-white leading-[1.08] text-balance">
-            Solicite um orçamento<br />pra sua agência.
+            Sua próxima proposta<br />sai em minutos.
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed max-w-md">
-            Conte um pouco sobre sua operação e a gente monta a melhor proposta pra você — sem compromisso.
+            Descreva uma viagem ou solte a cotação da operadora: a proposta fica pronta e a venda já entra no seu CRM.
           </p>
           <ul className="mt-7 space-y-2.5">
             {BENEFITS.map((b) => (
@@ -67,6 +67,10 @@ export default function SolicitarSection() {
               </li>
             ))}
           </ul>
+          <div className="mt-8">
+            <Button type="button" size="lg" onClick={comecarTeste}>{CTA_TESTE}</Button>
+            <p className="mt-3 text-[12.5px] text-white/50">{NOTA_TESTE}</p>
+          </div>
         </div>
 
         {/* formulário / sucesso */}
@@ -86,6 +90,10 @@ export default function SolicitarSection() {
           </div>
         ) : (
         <form onSubmit={submit} className="bg-white rounded-3xl shadow-card p-6 sm:p-8">
+          <div className="mb-5">
+            <div className="font-display font-extrabold text-xl text-ink">Prefere conversar antes?</div>
+            <p className="text-sm text-slate-500 mt-1">Deixe seu contato e a gente te chama no WhatsApp.</p>
+          </div>
           <div className="space-y-4">
             <Field label="Seu nome" value={form.nome} onChange={set('nome')} placeholder="Ex.: Maria Silva" required />
             <Field label="Nome da agência" value={form.agencia} onChange={set('agencia')} placeholder="Ex.: Silva Turismo" required />
@@ -97,7 +105,7 @@ export default function SolicitarSection() {
             </div>
           </div>
           <button type="submit" className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-coral-500 hover:bg-coral-600 text-white font-extrabold py-4 rounded-2xl shadow-glow ring-1 ring-white/40 transition-all active:scale-[0.98]">
-            <Send size={18} /> Solicitar orçamento
+            <Send size={18} /> Falar com a gente
           </button>
           <p className="mt-3 text-center text-xs text-slate-400">Enviamos por e-mail e abrimos o WhatsApp com seus dados. 💙</p>
         </form>

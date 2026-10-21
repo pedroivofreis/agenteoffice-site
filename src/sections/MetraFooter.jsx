@@ -1,16 +1,16 @@
-import { ArrowRight, Compass, Landmark } from 'lucide-react';
+import { ArrowRight, Compass, Coins } from 'lucide-react';
 import { Container } from '../lib/ui.jsx';
 
 /**
- * Quem faz: a Metra e os produtos da casa. Mesmo bloco do site do Agente Bank,
+ * Quem faz: a Metra e os produtos da casa. Mesmo bloco do site do Agente Cash,
  * para as duas marcas se apresentarem como irmãs.
  */
 const RAZAO_SOCIAL = 'Metra Tecnologia Desenvolvimento de Software Customizável Ltda.';
 const CNPJ = '69.285.469/0001-10';
 
 const PRODUTOS = [
-  { n: 'AgenteOffice', d: 'O sistema operacional da agência de viagem: CRM, propostas, financeiro e a Mar.ia.', url: '/', icon: Compass, atual: true },
-  { n: 'Agente Bank', d: 'A conta da agência de viagens, com o Agente Pay: link de pagamento com split e cartão para o fornecedor.', url: 'https://app-agentepay.agenteoffice.com.br', icon: Landmark },
+  { n: 'AgenteOffice', d: 'O sistema da agência de viagem: proposta rápida, CRM, financeiro e excursões.', url: '/', icon: Compass, atual: true },
+  { n: 'Agente Cash', d: 'A conta digital da agência de viagens, com link de pagamento com split.', url: 'https://agentepay.agenteoffice.com.br', icon: Coins },
 ];
 
 export default function MetraFooter() {
@@ -24,7 +24,7 @@ export default function MetraFooter() {
               metra<span className="w-2.5 h-2.5 rounded-full bg-[#2ead5e] mb-1" />
             </a>
             <p className="text-white/60 text-[14px] mt-4 max-w-[38ch]">
-              O AgenteOffice é um produto da Metra, a software house por trás do Agente Bank. Mesmo time, mesma stack,
+              O AgenteOffice é um produto da Metra, a software house por trás do Agente Cash. Mesmo time, mesma stack,
               mesma obsessão pela rotina de quem vende viagem.
             </p>
             <a href="https://somosmetra.com.br" target="_blank" rel="noopener"
