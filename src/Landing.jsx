@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Nav from './components/Nav.jsx';
 import TrialHero from './sections/TrialHero.jsx';
 import LogosStrip from './sections/LogosStrip.jsx';
-import AgenteSection from './sections/AgenteSection.jsx';
 import SistemaSection from './sections/SistemaSection.jsx';
 import TurboSection from './sections/TurboSection.jsx';
 import ExcursaoSection from './sections/ExcursaoSection.jsx';
@@ -23,9 +22,8 @@ export default function App() {
         onArquivo={(file) => setTrial({ tipo: 'arquivo', valor: file })}
       />
       <LogosStrip />
-      <AgenteSection />
-      <SistemaSection />
       <TurboSection />
+      <SistemaSection />
       <ExcursaoSection />
       <SolicitarSection />
 

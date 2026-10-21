@@ -1,5 +1,15 @@
 import { ArrowRight } from 'lucide-react';
 
+// "Comece agora, grátis*": o começo do teste é o campo "monte a viagem" do topo.
+// Rola até ele e já deixa o cursor no campo.
+export const ID_CAMPO_VIAGEM = 'campo-monte-viagem';
+export function comecarTeste() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => document.getElementById(ID_CAMPO_VIAGEM)?.focus({ preventScroll: true }), 450);
+}
+export const CTA_TESTE = 'Comece agora, grátis*';
+export const NOTA_TESTE = '*Grátis para começar: 5 viagens de teste, sem cartão de crédito.';
+
 // Container padrão
 export const Container = ({ className = '', children }) => (
   <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
