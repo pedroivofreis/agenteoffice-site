@@ -21,8 +21,12 @@ tire conclusão dele.
 ```
 src/
   main.jsx            → monta Landing.jsx (com React.StrictMode)
-  Landing.jsx         composição da página: Nav → TrialHero → LogosStrip → Agente →
-                      Sistema → Turbo → Excursao → Solicitar → footer
+  Landing.jsx         composição da página: Nav → TrialHero → LogosStrip → Turbo →
+                      Sistema → Excursao → Planos (#precos) → Solicitar → footer
+  sections/PlanosSection.jsx  cards Grátis/Embarque/Escala (Mensal | Anual) + tabela
+                      "Tudo o que vem no AgenteOffice" — conteúdo em lib/data.js
+  checkout/           formulário de assinatura → POST /api/billing/checkout: abre a
+                      fatura do Asaas numa aba nova e entra no app já logado
   components/Nav.jsx, ChatAnimated.jsx, PropostaMock.jsx
   sections/           TrialHero, AgenteSection, SistemaSection, TurboSection,
                       ExcursaoSection, SolicitarSection, LogosStrip

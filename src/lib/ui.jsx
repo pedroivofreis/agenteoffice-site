@@ -8,7 +8,7 @@ export function comecarTeste() {
   setTimeout(() => document.getElementById(ID_CAMPO_VIAGEM)?.focus({ preventScroll: true }), 450);
 }
 export const CTA_TESTE = 'Comece agora, grátis*';
-export const NOTA_TESTE = '*Grátis para começar: 5 viagens de teste, sem cartão de crédito.';
+export const NOTA_TESTE = '*Grátis para sempre: 3 viagens por mês, sem cartão de crédito.';
 
 // Container padrão
 export const Container = ({ className = '', children }) => (
