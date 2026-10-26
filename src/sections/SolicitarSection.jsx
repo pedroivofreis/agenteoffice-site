@@ -47,7 +47,7 @@ export default function SolicitarSection() {
   };
 
   return (
-    <section id="precos" className="relative py-20 sm:py-28 bg-ink overflow-hidden">
+    <section id="comecar" className="relative py-20 sm:py-28 bg-ink overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       <div className="absolute -top-24 -right-24 w-[520px] h-[520px] bg-gradient-to-bl from-brand-400/30 to-transparent rounded-full blur-3xl pointer-events-none" />
       <Container className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

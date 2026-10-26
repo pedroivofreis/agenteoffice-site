@@ -5,7 +5,7 @@
 
 // Economia do trial (decisão 03/08): crédito = viagem criada, e só isso.
 // Chat da Mar.ia e envio no WhatsApp não consomem — capturar lead nunca custa crédito.
-export const CREDITOS_INICIAIS = 5
+export const CREDITOS_INICIAIS = 3 // plano Grátis: 3 viagens novas por mês (plano_regras.py)
 export const CUSTO_VIAGEM = 1
 
 const FOTO = (id) => `https://images.unsplash.com/photo-${id}?w=800&q=70&fit=crop`

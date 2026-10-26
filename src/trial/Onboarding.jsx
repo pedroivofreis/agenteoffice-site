@@ -82,7 +82,7 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
 
         <div className="flex items-center gap-2 text-[13.5px] text-[#b7d2d4] mb-7">
           <Check size={16} className="text-emerald-400 shrink-0" />
-          Restam <strong className="text-white">{conta.creditos} viagens</strong> no seu teste grátis.
+          Restam <strong className="text-white">{conta.creditos} {conta.creditos === 1 ? 'viagem' : 'viagens'}</strong> grátis neste mês.
         </div>
 
         <a

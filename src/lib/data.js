@@ -4,52 +4,135 @@ export const WHATSAPP_ESPECIALISTA_HREF = 'https://wa.me/5512936182479';
 export const APP_URL = 'https://app.agenteoffice.com.br';
 export const USE_PLAN_CHECKOUT_MODAL = true;
 
-export const PLAN_SLUG = { Experimente: 'trial', Embarque: 'embarque', Escala: 'escala', Founder: 'founder' };
+// ─── Planos ─────────────────────────────────────────────────────────────────
+// O preço COBRADO mora em `PLANS` de routes/billing.py (API) — o Asaas cobra de lá.
+// O que cada plano LIBERA mora em plano_regras.py. Mudou aqui, mude lá (e vice-versa).
+export const PLAN_SLUG = { Gratis: 'gratis', Embarque: 'embarque', Escala: 'escala', Founder: 'founder' };
+
+// Usuários do Embarque — o mesmo USUARIOS_EMBARQUE da API.
+export const USUARIOS_EMBARQUE = 1;
+const usuariosEmbarque = `${USUARIOS_EMBARQUE} usuário${USUARIOS_EMBARQUE === 1 ? '' : 's'}`;
+
+// `anual` = total cobrado de uma vez (ciclo YEARLY do Asaas).
+export const PRECOS = {
+  embarque: { mensal: 129, anual: 1188 },
+  escala: { mensal: 249, anual: 2388 },
+};
+
+export const NOTA_MIGRACAO = '*Consulte os sistemas que já importamos.';
+export const NOTA_CONTRATO = '**Assinatura eletrônica com registro de data, hora e IP, nos termos da MP 2.200-2/2001.';
+export const LINHA_CREDIBILIDADE = [
+  'Migração gratuita do seu sistema atual*',
+  'Integração com o Tripadvisor',
+  'Cancele quando quiser no plano mensal',
+];
 
 export const PLANS = [
   {
-    name: 'Experimente', price: null, priceLabel: 'Grátis',
-    desc: 'Sem cartão. Explore o sistema com 3 orçamentos completos.',
-    badge: null,
+    slug: 'gratis', name: 'Grátis',
+    desc: 'Para começar hoje, sem cartão. Para sempre.',
     features: [
-      '3 orçamentos/viagens',
-      'Orçamento Turbo completo',
-      'Proposta com sua marca',
-      'Voucher digital',
+      'Até 3 viagens novas por mês',
+      'Proposta online com a sua marca (com o selo "feito com AgenteOffice")',
+      'Mar.ia monta a viagem a partir do texto ou do PDF da operadora (3 por mês)',
+      'CRM com funil de vendas e cadastro de clientes (pessoa física e empresa)',
     ],
-    cta: 'Começar grátis agora', highlight: false, trial: true,
+    cta: 'Comece agora, grátis',
   },
   {
-    name: 'Embarque', price: '99,90', priceLabel: null,
-    desc: 'Para o agente que quer vender mais e trabalhar menos.',
-    badge: null,
+    slug: 'embarque', name: 'Embarque',
+    desc: 'Para o agente que vende todo dia.',
+    destaqueLinha: '1º mês com tudo do Escala',
     features: [
-      '1 usuário',
-      'Orçamentos ilimitados',
-      'Orçamento Turbo',
-      'Proposta premium com sua marca',
-      'Voucher digital',
-      'Estúdio de Vendas',
-      'Financeiro — recebimentos e comissões',
-      'Agenda do Agente + alertas',
-      'Histórico completo (voos, hotéis, transfers, seguro)',
-      'Suporte por e-mail',
+      'Viagens e propostas ilimitadas, sem selo',
+      'IA de montagem de orçamento: cole a cotação ou solte o PDF da consolidadora e a viagem sai pronta',
+      'Hotéis com fotos e avaliações (integração com o Tripadvisor)',
+      'Financeiro: recebimentos, pagamentos a fornecedores e comissões',
+      'Recibo para o viajante e agenda com alertas',
+      'Migração gratuita do seu sistema atual*',
+      usuariosEmbarque,
     ],
-    cta: 'Assinar Embarque — R$ 99,90', highlight: false, trial: false,
+    cta: 'Assinar Embarque',
   },
   {
-    name: 'Escala', price: '299,90', priceLabel: null,
-    desc: 'Para a agência que quer crescer com controle e IA.',
-    badge: 'Mais popular',
+    slug: 'escala', name: 'Escala',
+    desc: 'Para a agência com equipe, grupos e excursões.',
+    badge: 'Usuários ilimitados',
     features: [
-      '3 usuários (+R$ 29,90/extra)',
-      'Tudo do Embarque',
-      'Grupos e Excursões com landing pública',
-      'Contratos digitais com aceite online',
-      'Roteiros IA completos',
-      'Suporte prioritário + onboarding',
+      'Tudo do Embarque, com usuários ilimitados',
+      'Grupos e excursões: link por passageiro, check-in por QR Code, pontos de embarque e mapa de assentos',
+      'Contratos com aceite online',
+      'Mar.ia completa: roteiros com IA, áudio transcrito e lembretes de follow-up',
+      'Suporte prioritário e onboarding',
     ],
-    cta: 'Assinar Escala — R$ 299,90', highlight: true, trial: false,
+    cta: 'Assinar Escala',
+    highlight: true,
+  },
+];
+
+// Tabela "Tudo o que vem no AgenteOffice". Célula: true (tem), false (não tem) ou texto.
+// Colunas na ordem [Grátis, Embarque, Escala] — alinhadas com as flags de plano_regras.py.
+export const COMPARATIVO = [
+  {
+    grupo: 'Vendas e propostas',
+    itens: [
+      ['Funil de vendas (CRM) com etapas', [true, true, true]],
+      ['Proposta online com a sua marca, com até 5 opções para o cliente escolher', ['Com selo', true, true]],
+      ['IA de montagem: cole a cotação ou solte o PDF da consolidadora e a viagem sai pronta', ['3 por mês', true, true]],
+      ['Hotéis com fotos e avaliações do Tripadvisor', [false, true, true]],
+      ['Imagens de capa para a proposta (busca integrada)', [false, true, true]],
+      ['Página de captação de leads com formulário próprio', [false, true, true]],
+      ['Estúdio de Vendas: artes de divulgação a partir dos seus modelos', [false, false, true]],
+    ],
+  },
+  {
+    grupo: 'Clientes e documentos',
+    itens: [
+      ['Cadastro de clientes pessoa física e empresa', [true, true, true]],
+      ['Office Drive: documentos da agência e de cada viagem salvos na nuvem', [false, true, true]],
+      ['Anexos por viagem e por passageiro', [false, true, true]],
+      ['Histórico de reservas: voos, hotéis, transfers e seguros', [false, true, true]],
+    ],
+  },
+  {
+    grupo: 'Financeiro',
+    itens: [
+      ['Recebimentos, pagamentos a fornecedores e comissões', [false, true, true]],
+      ['Recibo para o viajante com a logo da agência', [false, true, true]],
+      ['Agenda, tarefas e lembretes de follow-up', [false, true, true]],
+    ],
+  },
+  {
+    grupo: 'Contratos',
+    itens: [
+      ['Contratos com aceite digital com validade jurídica**', [false, false, true]],
+    ],
+  },
+  {
+    grupo: 'Grupos e excursões',
+    itens: [
+      ['Página pública de venda da excursão', [false, false, true]],
+      ['Link individual por passageiro, check-in por QR Code', [false, false, true]],
+      ['Pontos de embarque e mapa de assentos por veículo', [false, false, true]],
+      ['Painel de embarque ao vivo para vários operadores', [false, false, true]],
+    ],
+  },
+  {
+    grupo: 'Mar.ia, a secretária virtual',
+    itens: [
+      ['Monta a viagem a partir da cotação', ['3 por mês', '30 por mês', 'Sem limite']],
+      ['Roteiros completos com IA, áudio transcrito', [false, false, true]],
+      ['Lembra prazos e follow-ups', [false, true, true]],
+    ],
+  },
+  {
+    grupo: 'Plataforma',
+    itens: [
+      ['App no celular (instalável)', [true, true, true]],
+      ['Usuários', ['1', String(USUARIOS_EMBARQUE), 'Ilimitados']],
+      ['Migração gratuita do seu sistema atual*', [false, true, true]],
+      ['Suporte', ['Central de ajuda', 'E-mail', 'Prioritário + onboarding']],
+    ],
   },
 ];
 
