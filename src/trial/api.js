@@ -85,13 +85,38 @@ export async function extrairArquivo({ tipo, conteudo, nomeArquivo }) {
   return data
 }
 
-// URL de auto-login do app: cai no pipeline com a proposta aberta por cima
-export function urlDoApp({ access_token, user, orcamento_id }) {
-  const destino = orcamento_id ? `/app/pipeline?proposta=${orcamento_id}` : '/app/pipeline'
+// "Comece agora, grátis": só a conta, sem viagem, com a senha que a pessoa escolheu.
+// A API cria no Grátis e devolve o token — a pessoa já entra no app.
+export async function criarContaGratis({ email, agencia, senha, whatsapp }) {
+  const resp = await fetch(`${API_URL}/api/trial/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email,
+      agencia_nome: agencia,
+      senha,
+      whatsapp: whatsapp || null,
+      origem: 'site-cta',
+    }),
+  })
+  const data = await resp.json().catch(() => ({}))
+  if (!resp.ok) {
+    const d = data?.detail
+    const err = new Error(typeof d === 'string' ? d : 'Não foi possível criar sua conta agora. Tente de novo.')
+    err.status = resp.status
+    throw err
+  }
+  return data
+}
+
+// URL de auto-login do app: cai no pipeline com a proposta aberta por cima.
+// `destino` troca para onde a pessoa vai (a conta sem viagem abre a "Nova viagem").
+export function urlDoApp({ access_token, user, orcamento_id }, destino = null) {
+  const para = destino || (orcamento_id ? `/app/pipeline?proposta=${orcamento_id}` : '/app/pipeline')
   const params = new URLSearchParams({
     token: access_token,
     user: JSON.stringify(user),
-    redirect: destino,
+    redirect: para,
   })
   return `${APP_URL}/app/auto-login?${params.toString()}`
 }

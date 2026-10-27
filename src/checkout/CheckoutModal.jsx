@@ -5,9 +5,9 @@ import { precoDoPlano } from '../lib/precos.js';
 import TogglePeriodo from '../components/TogglePeriodo.jsx';
 import { assinarPlano, urlEntrarNoApp } from './api.js';
 
-const INPUT = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-ink placeholder-slate-400 focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20';
+export const INPUT = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-ink placeholder-slate-400 focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20';
 
-function maskPhoneBR(raw) {
+export function maskPhoneBR(raw) {
   const d = String(raw || '').replace(/\D/g, '').slice(0, 11);
   if (!d) return '';
   if (d.length <= 2) return `(${d}`;
@@ -29,7 +29,7 @@ function maskCpfCnpj(raw) {
 const usuarioDoEmail = (email) =>
   String(email || '').split('@')[0].toLowerCase().normalize('NFKD').replace(/[^a-z0-9._-]/g, '').slice(0, 24);
 
-function Campo({ label, dica, children }) {
+export function Campo({ label, dica, children }) {
   return (
     <label className="block">
       <span className="block text-[13px] font-bold text-ink mb-1.5">{label}</span>

@@ -1,14 +1,12 @@
 import { ArrowRight } from 'lucide-react';
 
-// "Comece agora, grátis*": o começo do teste é o campo "monte a viagem" do topo.
-// Rola até ele, deixa o cursor no campo e avisa o hero para mostrar o que fazer —
-// só o cursor no campo passava a impressão de que o botão não fazia nada.
+// "Comece agora, grátis*": abre o cadastro curto (e-mail, agência e senha) e a
+// pessoa já entra no app. O campo "monte a viagem" do topo segue como o outro
+// caminho — quem prefere ver a proposta pronta antes de criar a conta.
 export const ID_CAMPO_VIAGEM = 'campo-monte-viagem';
 export const EVENTO_COMECAR = 'ao:comecar-teste';
 export function comecarTeste() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   window.dispatchEvent(new Event(EVENTO_COMECAR));
-  setTimeout(() => document.getElementById(ID_CAMPO_VIAGEM)?.focus({ preventScroll: true }), 450);
 }
 export const CTA_TESTE = 'Comece agora, grátis*';
 export const NOTA_TESTE = '*Grátis para sempre: 3 viagens por mês, sem cartão de crédito.';
