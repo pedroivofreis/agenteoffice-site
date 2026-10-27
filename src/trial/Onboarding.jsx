@@ -26,6 +26,7 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
   async function criar() {
     const nome = agencia.trim()
     if (nome.length < 2) { setErro('Digite o nome da sua agência'); return }
+    if (whats.replace(/\D/g, '').length < 10) { setErro('Informe o WhatsApp com DDD'); return }
     setErro('')
     setEnviando(true)
     try {
@@ -115,7 +116,7 @@ export default function Onboarding({ email, viagem, onPronto, onFalhou, onVoltar
 
       <label className="block text-left mb-5">
         <span className="block text-[12.5px] font-semibold text-white/80 mb-1.5">
-          WhatsApp <span className="font-normal text-[#7fa8ac]">— opcional, para receber a proposta pronta</span>
+          WhatsApp <span className="font-normal text-[#7fa8ac]">— para receber a proposta pronta</span>
         </span>
         <input
           value={whats}
