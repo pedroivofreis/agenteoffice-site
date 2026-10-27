@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Search, Plane } from 'lucide-react'
 import PropostaMock from '../components/PropostaMock.jsx'
-import { ID_CAMPO_VIAGEM, NOTA_TESTE } from '../lib/ui.jsx'
+import { ID_CAMPO_VIAGEM, NOTA_TESTE, EVENTO_COMECAR } from '../lib/ui.jsx'
 
 const EXEMPLOS = [
   'Casal, Porto de Galinhas, 7 noites, saída GRU, uns R$ 9 mil',
@@ -14,10 +14,25 @@ const EXEMPLOS = [
 export default function TrialHero({ onGerar, onArquivo }) {
   const [texto, setTexto] = useState('')
   const [arrastando, setArrastando] = useState(false)
+  // Campo vazio no "Gerar" (ou vindo de um "Comece agora, grátis"): antes nada
+  // acontecia e parecia botão quebrado. Agora o campo acende e diz o que escrever.
+  const [guia, setGuia] = useState(false)
   const fileInput = useRef(null)
+  const campo = useRef(null)
+
+  useEffect(() => {
+    const mostrar = () => setGuia(true)
+    window.addEventListener(EVENTO_COMECAR, mostrar)
+    return () => window.removeEventListener(EVENTO_COMECAR, mostrar)
+  }, [])
 
   function enviar(t = texto) {
-    if (!t.trim()) return
+    if (!t.trim()) {
+      setGuia(true)
+      campo.current?.focus({ preventScroll: true })
+      return
+    }
+    setGuia(false)
     onGerar(t.trim())
   }
 
@@ -53,7 +68,7 @@ export default function TrialHero({ onGerar, onArquivo }) {
 
           <div
             className={`mt-8 bg-white rounded-2xl p-4 pb-2 text-left relative shadow-[0_30px_80px_rgba(2,20,24,0.5)] border-2 transition-colors ${
-              arrastando ? 'border-brand-400 bg-teal-50' : 'border-transparent'
+              arrastando ? 'border-brand-400 bg-teal-50' : guia ? 'border-coral-500' : 'border-transparent'
             }`}
             onDragOver={(e) => { e.preventDefault(); setArrastando(true) }}
             onDragLeave={(e) => { e.preventDefault(); setArrastando(false) }}
@@ -66,8 +81,9 @@ export default function TrialHero({ onGerar, onArquivo }) {
               <Search size={20} className="text-slate-400 shrink-0" />
               <input
                 id={ID_CAMPO_VIAGEM}
+                ref={campo}
                 value={texto}
-                onChange={(e) => setTexto(e.target.value)}
+                onChange={(e) => { setTexto(e.target.value); if (guia) setGuia(false) }}
                 onKeyDown={(e) => e.key === 'Enter' && enviar()}
                 placeholder="Casal, Porto de Galinhas, 7 noites, saída GRU…"
                 className="flex-1 border-none outline-none text-base py-3.5 min-w-0 placeholder:text-slate-400"
@@ -80,6 +96,12 @@ export default function TrialHero({ onGerar, onArquivo }) {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M3 20v-6l8-2-8-2V4l19 8z" /></svg>
               </button>
             </div>
+            {guia && (
+              <p role="status" data-testid="guia-campo" className="mt-2.5 px-1 text-[13.5px] leading-snug font-semibold text-ink">
+                Comece por aqui: escreva a viagem que você está cotando (destino, quando, quantas pessoas e o valor)
+                e toque na seta. Ou escolha um dos exemplos abaixo.
+              </p>
+            )}
             <button onClick={() => fileInput.current?.click()} className="block w-full text-center text-slate-400 hover:text-ink text-[13.5px] pt-3 pb-2">
               ou <u className="underline-offset-[3px]">arraste o PDF ou o print da cotação</u> aqui
             </button>

@@ -228,9 +228,52 @@ function extrairTransfer(t) {
   return { desc: m[1] ? `Transfer ${m[1]}` : 'Transfer incluso' }
 }
 
-function extrairCliente(texto) {
-  const m = texto.match(/\bpara\s+(?:a\s+|o\s+)?([A-ZÀ-Ú][a-zà-úâêôãõç]+(?:\s+(?:e\s+)?[A-ZÀ-Ú][a-zà-úâêôãõç]+)?)/)
-  return m ? m[1] : ''
+// Nome com maiúscula: "Ana", "Mariana e João".
+const NOME_CLIENTE = '([A-ZÀ-Ú][a-zà-úâêôãõç]+(?:\\s+(?:e\\s+)?[A-ZÀ-Ú][a-zà-úâêôãõç]+)?)'
+const PADROES_CLIENTE = [
+  new RegExp(`\\b[Ff]am[íi]lia\\s+(?:da|do|de|dos)\\s+${NOME_CLIENTE}`, 'g'),
+  new RegExp(`\\b[Cc]liente:?\\s+${NOME_CLIENTE}`, 'g'),
+  new RegExp(`\\bpara\\s+(?:a\\s+|o\\s+)?${NOME_CLIENTE}`, 'g'),
+]
+
+// "para Porto de Galinhas" é o destino, não a cliente "Porto".
+function ehODestino(nome, destino) {
+  const n = nome.toLowerCase()
+  if ((destino?.nome || '').toLowerCase().startsWith(n)) return true
+  return DESTINOS.some((d) => d.match.some((m) => m.startsWith(n)))
+}
+
+function extrairCliente(texto, destino) {
+  for (const re of PADROES_CLIENTE) {
+    for (const m of texto.matchAll(re)) {
+      if (!ehODestino(m[1], destino)) return m[1]
+    }
+  }
+  return ''
+}
+
+// Datas exatas: "10/03/2027", "10/03", "10 de março (de 2027)". Sem ano, vale a
+// próxima vez que a data acontece. Sem isto a data digitada era ignorada e o card
+// nascia com uma data sorteada.
+function extrairDatas(t) {
+  const hoje = new Date()
+  hoje.setHours(0, 0, 0, 0)
+  const data = (dia, mes, anoTxt) => {
+    const valida = (ano) => {
+      const d = new Date(ano, mes, dia)
+      return d.getMonth() === mes && d.getDate() === dia ? d : null
+    }
+    if (anoTxt) return valida(+anoTxt < 100 ? 2000 + +anoTxt : +anoTxt)
+    const esteAno = valida(hoje.getFullYear())
+    return esteAno && esteAno >= hoje ? esteAno : valida(hoje.getFullYear() + 1)
+  }
+  const re = /\b(\d{1,2})\/(\d{1,2})(?:\/(\d{4}|\d{2}))?\b|\b(\d{1,2})\s+de\s+(janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)(?:\s+de\s+(\d{4}))?/g
+  const datas = []
+  for (const m of t.matchAll(re)) {
+    const d = m[1] ? data(+m[1], +m[2] - 1, m[3]) : data(+m[4], MESES[m[5]], m[6])
+    if (d) datas.push(d)
+  }
+  return datas
 }
 
 function extrairSaida(t) {
@@ -279,21 +322,26 @@ function montar(texto, destino, fonte) {
   const t = texto.toLowerCase()
   const seed = hash(texto)
   const pax = extrairPax(t) || { adultos: 2, criancas: 0 }
-  const noites = extrairNoites(t) || 7
   const valores = extrairValores(t)
+  const datas = extrairDatas(t)
 
   const hoje = new Date()
   let ida
   const mes = extrairQuando(t)
-  if (mes && MESES[mes] !== undefined) {
+  if (datas.length) {
+    ida = datas[0]
+  } else if (mes && MESES[mes] !== undefined) {
     const ano = MESES[mes] >= hoje.getMonth() ? hoje.getFullYear() : hoje.getFullYear() + 1
     ida = new Date(ano, MESES[mes], 8 + (seed % 14))
   } else {
     ida = new Date(hoje)
     ida.setDate(ida.getDate() + 40 + (seed % 20))
   }
-  const volta = new Date(ida)
-  volta.setDate(volta.getDate() + noites)
+  // "de 10/03 a 17/03": a volta e as noites saem das datas
+  const voltaDigitada = datas[1] && datas[1] > ida ? datas[1] : null
+  const noites = voltaDigitada ? Math.round((voltaDigitada - ida) / 86400000) : extrairNoites(t) || 7
+  const volta = voltaDigitada || new Date(ida)
+  if (!voltaDigitada) volta.setDate(volta.getDate() + noites)
 
   // Venda é a âncora; custo real se informado, senão estimado (comissão ~11%)
   const fator = noites / 7
@@ -315,7 +363,7 @@ function montar(texto, destino, fonte) {
     volta,
     saida: extrairSaida(t) || (doPdf ? 'GRU · Guarulhos' : ''),
     fonte,
-    cliente: extrairCliente(texto),
+    cliente: extrairCliente(texto, destino),
     codigo: String(1000 + (seed % 9000)),
     itens: {
       voo: vooInfo
