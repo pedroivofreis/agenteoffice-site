@@ -35,6 +35,7 @@ export default function ContaGratisModal({ onFechar }) {
     setErro('');
     setJaTemConta(false);
     if (form.senha.length < 6) { setErro('A senha precisa ter pelo menos 6 caracteres.'); return; }
+    if (form.whatsapp.replace(/\D/g, '').length < 10) { setErro('Informe o WhatsApp com DDD.'); return; }
     setEnviando(true);
     try {
       const conta = await criarContaGratis({
@@ -77,8 +78,8 @@ export default function ContaGratisModal({ onFechar }) {
             <input required type="password" autoComplete="new-password" minLength={6} value={form.senha} onChange={set('senha')}
               placeholder="••••••" className={INPUT} />
           </Campo>
-          <Campo label="WhatsApp (opcional)">
-            <input inputMode="numeric" autoComplete="tel" value={form.whatsapp} onChange={set('whatsapp')}
+          <Campo label="WhatsApp">
+            <input required inputMode="numeric" autoComplete="tel" value={form.whatsapp} onChange={set('whatsapp')}
               placeholder="(11) 98765-4321" className={INPUT} />
           </Campo>
 
