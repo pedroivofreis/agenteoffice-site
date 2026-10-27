@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Search, Plane } from 'lucide-react'
 import PropostaMock from '../components/PropostaMock.jsx'
-import { ID_CAMPO_VIAGEM, NOTA_TESTE, EVENTO_COMECAR } from '../lib/ui.jsx'
+import { ID_CAMPO_VIAGEM, NOTA_TESTE } from '../lib/ui.jsx'
 
 const EXEMPLOS = [
   'Casal, Porto de Galinhas, 7 noites, saída GRU, uns R$ 9 mil',
@@ -14,17 +14,11 @@ const EXEMPLOS = [
 export default function TrialHero({ onGerar, onArquivo }) {
   const [texto, setTexto] = useState('')
   const [arrastando, setArrastando] = useState(false)
-  // Campo vazio no "Gerar" (ou vindo de um "Comece agora, grátis"): antes nada
-  // acontecia e parecia botão quebrado. Agora o campo acende e diz o que escrever.
+  // Campo vazio no "Gerar": antes nada acontecia e parecia botão quebrado.
+  // Agora o campo acende e diz o que escrever.
   const [guia, setGuia] = useState(false)
   const fileInput = useRef(null)
   const campo = useRef(null)
-
-  useEffect(() => {
-    const mostrar = () => setGuia(true)
-    window.addEventListener(EVENTO_COMECAR, mostrar)
-    return () => window.removeEventListener(EVENTO_COMECAR, mostrar)
-  }, [])
 
   function enviar(t = texto) {
     if (!t.trim()) {
