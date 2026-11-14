@@ -44,11 +44,11 @@ export default function Nav() {
           </div>
           <a href="#precos" className={link}>Preços</a>
           <div className={`w-px h-4 ${onDark ? 'bg-white/30' : 'bg-slate-200'}`} />
-          <a href={APP_URL} className={`flex items-center gap-1.5 ${link}`}>
-            <LogIn size={15} /> Já sou cliente
-          </a>
           <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" className={link}>
             Falar com a gente
+          </a>
+          <a href={APP_URL} className={`flex items-center gap-1.5 ${link}`}>
+            <LogIn size={15} /> Já sou cliente
           </a>
           <button type="button" onClick={comecarTeste} className="bg-coral-500 hover:bg-coral-600 text-white px-5 py-2.5 rounded-xl text-sm font-extrabold shadow-glow ring-1 ring-white/40 transition-all active:scale-95">
             {CTA_TESTE}
@@ -66,10 +66,10 @@ export default function Nav() {
             <a key={p.id} href={`#${p.id}`} onClick={() => setMenuOpen(false)} className="text-sm font-bold text-ink">{p.label}</a>
           ))}
           <a href="#precos" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-ink">Preços</a>
-          <a href={APP_URL} className="text-sm font-bold text-ink">Já sou cliente</a>
           <a href={WHATSAPP_ESPECIALISTA_HREF} target="_blank" rel="noopener" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-ink">
             Falar com a gente
           </a>
+          <a href={APP_URL} className="text-sm font-bold text-ink">Já sou cliente</a>
           <button type="button" onClick={() => { setMenuOpen(false); comecarTeste(); }} className="bg-coral-500 text-white text-center py-3.5 rounded-xl text-sm font-extrabold w-full shadow-glow">
             {CTA_TESTE}
           </button>
